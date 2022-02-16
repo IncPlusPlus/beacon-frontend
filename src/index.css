@@ -11,3 +11,19 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.serverIcon {
+
+}
+.serverIcon:hover {
+  color: grey;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.channelIcon {
+  margin-left: 32px;
+}
+.channelIcon:hover {
+  margin-left: 40px;
+}
