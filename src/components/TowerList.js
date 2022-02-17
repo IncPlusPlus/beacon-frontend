@@ -9,15 +9,13 @@ class TowerList extends React.Component {
 
         Object.values(this.props.towers).forEach(tower => {
             let displayedName = tower.name;
-            if (tower.id === this.props.selected) {
-                displayedName = ">" + displayedName;
-            }
             // create list element
-            towers.push(<li key={tower.id} class='serverIcon' onClick={() => this.props.onClick(tower.id)}>{displayedName}</li>);
+            towers.push(<li className={'towerIcon' + (tower.id == this.props.selected ? ' selected' : '')}
+                key={tower.id} onClick={() => this.props.onClick(tower.id)}>{displayedName}</li>);
         })
 
         return (
-            <ul>
+            <ul className='towerList'>
                 {towers}
             </ul>
         );

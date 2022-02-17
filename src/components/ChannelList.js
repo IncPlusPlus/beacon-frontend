@@ -6,17 +6,18 @@ class ChannelList extends React.Component {
         let channels = [];
         Object.values(this.props.channels).forEach(channel => {
             let displayedName = channel.name;
-            if (channel.id === this.props.selected) {
-                displayedName = ">" + displayedName;
-            }
             // create list element
-            channels.push(<li key={channel.id} class='channelIcon' onClick={() => this.props.onClick(channel.id)}>{displayedName}</li>);
+            channels.push(<li  className={'channelIcon' + (channel.id == this.props.selected ? ' selected' : '')} 
+                key={channel.id} onClick={() => this.props.onClick(channel.id)}>{displayedName}</li>);
         })
 
         return (
-            <ul>
-                {channels}
-            </ul>
+            <div className='serverDetailsPanel'>
+                <h2>{this.props.serverName}</h2>
+                <ul className='channelList'> 
+                    {channels}
+                </ul>
+            </div>
         );
     }
 }

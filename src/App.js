@@ -1,5 +1,3 @@
-import './App.css';
-
 import TowerList from './components/TowerList.js';
 import ChannelList from './components/ChannelList.js';
 import React from 'react';
@@ -19,7 +17,47 @@ const DUMMY_DATA = {
               id: "00000000",
               author: "000000000",
               content: "Hello, world!"
-            }
+            },
+            {
+              id: "00000000",
+              author: "000000000",
+              content: "Hello, world!"
+            },
+            {
+              id: "00000000",
+              author: "000000000",
+              content: "Hello, world!"
+            },
+            {
+              id: "00000000",
+              author: "000000000",
+              content: "Hello, world!"
+            },
+            {
+              id: "00000000",
+              author: "000000000",
+              content: "Hello, world!"
+            },
+            {
+              id: "00000000",
+              author: "000000000",
+              content: "Hello, world!"
+            },
+            {
+              id: "00000000",
+              author: "000000000",
+              content: "Hello, world!"
+            },
+            {
+              id: "00000000",
+              author: "000000000",
+              content: "Hello, world!"
+            },
+            {
+              id: "00000000",
+              author: "000000000",
+              content: "Hello, world!"
+            },
           ]
         }
       },
@@ -78,6 +116,9 @@ class App extends React.Component {
       let cache = this.state.selectedChannelCache;
       cache[this.state.towerId] = id;
 
+      // this is just a nice little feature
+      document.title = '#' + DUMMY_DATA.towers[this.state.towerId].channels[id].name;
+
       this.setState({
         towerId: this.state.towerId,
         channelId: id,
@@ -91,19 +132,14 @@ class App extends React.Component {
 
     // only show the channel list when valid
     const channelList = this.state.towerId !== "" ? 
-    <ChannelList channels={DUMMY_DATA.towers[this.state.towerId].channels} selected={this.state.channelId} onClick={this.selectChannel}/>
+    <ChannelList serverName={DUMMY_DATA.towers[this.state.towerId].name} channels={DUMMY_DATA.towers[this.state.towerId].channels} selected={this.state.channelId} onClick={this.selectChannel}/>
       : (<div></div>);
 
-      console.log(2);
-    const messagePane = this.state.towerId !== "" && this.state.channelId !== "" ? 
-      <MessagePane messages={DUMMY_DATA.towers[this.state.towerId].channels[this.state.channelId].messages}/>
-      : <div></div>
-
     return (
-      <div>
+      <div className='appContainer'>
         <TowerList towers={DUMMY_DATA.towers} selected={this.state.towerId} onClick={this.selectTower}/>
         {channelList}
-        {messagePane}
+        <MessagePane messages={(this.state.towerId !== "" && this.state.channelId !== "") ? DUMMY_DATA.towers[this.state.towerId].channels[this.state.channelId].messages : []}/>
       </div>
     );
   }
