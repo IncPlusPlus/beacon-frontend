@@ -1,9 +1,9 @@
 import './App.css';
 
-import './ServerList.js';
-import ServerList from './ServerList.js';
-import ChannelList from './ChannelList.js';
+import TowerList from './components/TowerList.js';
+import ChannelList from './components/ChannelList.js';
 import React from 'react';
+import MessagePane from './components/MessagePane';
 
 const DUMMY_DATA = {
   towers: {
@@ -59,31 +59,51 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      serverId: "",
-      channelId: ""
+      towerId: "",
+      channelId: "",
+      selectedChannelCache: {}
     }
 
     // selectors
-    this.selectServer = (id) => {
+    this.selectTower = (id) => {
       this.setState({
-        serverId: id,
-        channelId: ""
+        towerId: id,
+        channelId: (id in this.state.selectedChannelCache ? this.state.selectedChannelCache[id] : ""),
+        selectedChannelCache: this.state.selectedChannelCache
       });
     }
+    
     this.selectChannel = (id) => {
+      // Mark this channel as being the last one selected for this server
+      let cache = this.state.selectedChannelCache;
+      cache[this.state.towerId] = id;
+
       this.setState({
-        serverId: this.state.serverId,
-        channelId: id
+        towerId: this.state.towerId,
+        channelId: id,
+        selectedChannelCache: cache
       });
     }
 
   }
 
   render() {
+
+    // only show the channel list when valid
+    const channelList = this.state.towerId !== "" ? 
+    <ChannelList channels={DUMMY_DATA.towers[this.state.towerId].channels} selected={this.state.channelId} onClick={this.selectChannel}/>
+      : (<div></div>);
+
+      console.log(2);
+    const messagePane = this.state.towerId !== "" && this.state.channelId !== "" ? 
+      <MessagePane messages={DUMMY_DATA.towers[this.state.towerId].channels[this.state.channelId].messages}/>
+      : <div></div>
+
     return (
       <div>
-        <ServerList servers={DUMMY_DATA.towers} selectedServerId={this.state.serverId} onClick={this.selectServer}/>
-        <ChannelList channels={this.state.serverId == "" ? [] : DUMMY_DATA.towers[this.state.serverId].channels} selectedChannelId={this.state.channelId} onClick={this.selectChannel}/>
+        <TowerList towers={DUMMY_DATA.towers} selected={this.state.towerId} onClick={this.selectTower}/>
+        {channelList}
+        {messagePane}
       </div>
     );
   }

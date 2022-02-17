@@ -6,7 +6,7 @@ class ChannelList extends React.Component {
         let channels = [];
         Object.values(this.props.channels).forEach(channel => {
             let displayedName = channel.name;
-            if (channel.id === this.props.selectedChannelId) {
+            if (channel.id === this.props.selected) {
                 displayedName = ">" + displayedName;
             }
             // create list element
