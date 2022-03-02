@@ -1,5 +1,6 @@
 import TowerList from './components/TowerList.js';
-import ChannelList from './components/ChannelList.js';
+import ServerDetailsPanel from './components/ServerDetailsPanel.js';
+import UserDetailsPanel from './components/UserDetailsPanel.js';
 import React from 'react';
 import MessagePane from './components/MessagePane';
 
@@ -8,6 +9,7 @@ const DUMMY_DATA = {
     "00000000":{
       id: "00000000",
       name: "Cool Tower",
+      iconUrl: "https://static01.nyt.com/images/2021/09/14/science/07CAT-STRIPES/07CAT-STRIPES-mediumSquareAt3X-v2.jpg",
       channels: {
         "00000006":{
           id: "00000006",
@@ -59,6 +61,17 @@ const DUMMY_DATA = {
               content: "Hello, world!"
             },
           ]
+        },
+        "00000007":{
+          id: "00000007",
+          name: "general",
+          messages: [
+            {
+              id: "00000000",
+              author: "000000000",
+              content: "Hello, world!"
+            }
+          ]
         }
       },
       members: [
@@ -70,6 +83,7 @@ const DUMMY_DATA = {
     "00000069":{
       id: "00000069",
       name: "Cool Tower 2",
+      iconUrl: "",
       channels: {
         "00000008":{
           id: "00000008",
@@ -110,6 +124,14 @@ class App extends React.Component {
         selectedChannelCache: this.state.selectedChannelCache
       });
     }
+
+    this.selectUserProfile = () => {
+      this.setState({
+        towerId: 'USER',
+        channelId: '',
+        selectedChannelCache: this.state.selectedChannelCache
+      });
+    }
     
     this.selectChannel = (id) => {
       // Mark this channel as being the last one selected for this server
@@ -131,15 +153,20 @@ class App extends React.Component {
   render() {
 
     // only show the channel list when valid
-    const channelList = this.state.towerId !== "" ? 
-    <ChannelList serverName={DUMMY_DATA.towers[this.state.towerId].name} channels={DUMMY_DATA.towers[this.state.towerId].channels} selected={this.state.channelId} onClick={this.selectChannel}/>
+    const serverDetailsPanel = (this.state.towerId !== "" && this.state.towerId !== "USER")  ? 
+    <ServerDetailsPanel serverName={DUMMY_DATA.towers[this.state.towerId].name} channels={DUMMY_DATA.towers[this.state.towerId].channels} selected={this.state.channelId} onClick={this.selectChannel}/>
       : (<div></div>);
+    
+      // Show user info or messages?
+      const detailedPanel = (this.state.towerId === "USER")  ? 
+      (<UserDetailsPanel/>)
+      : (<MessagePane messages={(this.state.towerId !== "" && this.state.channelId !== "") ? DUMMY_DATA.towers[this.state.towerId].channels[this.state.channelId].messages : []}/>);
 
     return (
       <div className='appContainer'>
-        <TowerList towers={DUMMY_DATA.towers} selected={this.state.towerId} onClick={this.selectTower}/>
-        {channelList}
-        <MessagePane messages={(this.state.towerId !== "" && this.state.channelId !== "") ? DUMMY_DATA.towers[this.state.towerId].channels[this.state.channelId].messages : []}/>
+        <TowerList towers={DUMMY_DATA.towers} selected={this.state.towerId} onClick={this.selectTower} onUserIconSelected={this.selectUserProfile}/>
+        {serverDetailsPanel}
+        {detailedPanel}
       </div>
     );
   }
