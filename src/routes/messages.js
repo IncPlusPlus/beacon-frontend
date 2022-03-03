@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import MessagePane from '../components/MessagePane';
+import {MessagePane} from '../components/MessagePane';
 import {useParams} from 'react-router-dom';
 import {TowerContext} from "../context/towerContext";
 

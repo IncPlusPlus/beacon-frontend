@@ -1,7 +1,7 @@
 import React from 'react';
-import Message from './Message';
+import {Message} from './Message';
 
-function MessagePane(props) {
+export const MessagePane = (props) => {
     return (
         <ul className='messagePane'>
             {props.messages.map(
@@ -10,5 +10,3 @@ function MessagePane(props) {
         </ul>
     );
 }
-
-export default MessagePane;
