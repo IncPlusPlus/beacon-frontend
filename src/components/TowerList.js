@@ -8,7 +8,7 @@ class TowerList extends React.Component {
                 <li className={'towerIcon' + (this.props.selected === "USER" ? ' selected' : '')}
                     key='USER'
                     onClick={() => this.props.onUserIconSelected()}>
-                    <img src='https://sciman.info/assets/img/icon.png'/>
+                    <img src='https://sciman.info/assets/img/icon.png' alt="Your Profile"/>
                 </li>
                 <hr/>
 
