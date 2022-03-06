@@ -95,7 +95,7 @@ export function TowerContextProvider({children}) {
 
     useEffect(() => {
         setTowerContext(hardCodedTowers);
-    }, []);
+    }, [hardCodedTowers]);
 
     return (
         <TowerContext.Provider value={{towerContext: towerContext}}>

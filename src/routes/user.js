@@ -6,7 +6,7 @@ export const UserDetails = (props) => {
         <div className='userDetailsPane'>
             <div className='userDetails'>
 				<span className='username'>Username</span>
-				<img alt="Profile Picture" src={default_avatar}/>
+				<img alt="Your Avatar" src={default_avatar}/>
 			</div>
         </div>
     );
