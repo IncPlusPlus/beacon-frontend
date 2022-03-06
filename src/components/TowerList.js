@@ -19,7 +19,7 @@ export const TowerList = (props) => {
                     className={'towerIcon' + (tower.id === props.selected ? ' selected' : '')}
                     key={tower.id}
                     onClick={() => props.onClick(tower.id)}>
-                        {tower.iconUrl === '' ? <span>{tower.name}</span> : <img src={tower.iconUrl} alt={tower.name}/>}
+                        {tower.iconUrl && tower.iconUrl === '' ? <span>{tower.name}</span> : <img src={tower.iconUrl} alt={tower.name}/>}
                     </li>
             })}
         </ol>
