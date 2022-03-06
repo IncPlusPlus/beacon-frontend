@@ -95,7 +95,9 @@ export function TowerContextProvider({children}) {
 
     useEffect(() => {
         setTowerContext(hardCodedTowers);
-    }, [hardCodedTowers]);
+        // TODO: This is temporary until real data can fill it. As such, it's fine that we're breaking some React best practices.
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <TowerContext.Provider value={{towerContext: towerContext}}>
