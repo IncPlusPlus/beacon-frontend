@@ -113,13 +113,14 @@ body {
   display: flex;
   flex-direction: column;
   align-items: stretch;
+  overflow: auto;
 }
 .messagePane ol {
   margin: 0;
   padding: 0;
   flex-grow: 1;
 
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 .messageInputField {
   box-sizing: border-box;
