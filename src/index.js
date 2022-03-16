@@ -5,13 +5,16 @@ import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from "react-router-dom";
 import {AppRoutes} from './AppRoutes';
 import {TowerContextProvider} from "./context/towerContext";
+import {SignInContextProvider} from "./context/signInContext";
 
 ReactDOM.render(
     <React.StrictMode>
         <BrowserRouter>
-            <TowerContextProvider>
-                <AppRoutes/>
-            </TowerContextProvider>
+            <SignInContextProvider>
+                <TowerContextProvider>
+                    <AppRoutes/>
+                </TowerContextProvider>
+            </SignInContextProvider>
         </BrowserRouter>
     </React.StrictMode>,
     document.getElementById('root')
