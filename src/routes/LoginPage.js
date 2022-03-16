@@ -44,8 +44,8 @@ export const LoginPage = (props, context) => {
     }, [countdownInProgress, timeLeft]);
 
     return (
-        <div className='userDetailsPane'>
-            <div className='userDetails'>{signedIn ?
+        <div id='loginPane'>
+            <div id='loginField'>{signedIn ?
                 <div style={{flexDirection: 'column'}}>
                     <div>You're already signed in!</div>
                     <div>Redirecting back to "{redirectToAfterLoginSuccess}" in {timeLeft / 1000} seconds...</div>
@@ -54,17 +54,10 @@ export const LoginPage = (props, context) => {
                         <Navigate to={redirectToAfterLoginSuccess}/> : <></>}
                 </div> :
                 <>
-                    <div>Not signed in!</div>
+                    <h1>Sign in</h1>
                     <form onSubmit={tryCredentials}>
-                        <label>
-                            Username:
-                            <input type="text" value={username} onChange={event => setUsername(event.target.value)}/>
-                        </label>
-                        <label>
-                            Password:
-                            <input type="password" value={password}
-                                   onChange={event => setPassword(event.target.value)}/>
-                        </label>
+                        <input type="text" placeholder="Username" value={username} onChange={event => setUsername(event.target.value)}/>
+                        <input type="password" placeholder="Password" value={password} onChange={event => setPassword(event.target.value)}/>
                         <button type="submit">Submit</button>
                     </form>
                 </>}
