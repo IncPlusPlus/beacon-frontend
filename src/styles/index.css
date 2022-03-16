@@ -16,11 +16,6 @@ body {
   height:100%;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
-
 .appContainer {
   display: flex;
   flex-direction: row;
@@ -30,35 +25,55 @@ code {
 
 .towerList {
   background-color: #FFD800;
- 
-  padding: 16px;
-  max-width: 128px;
-
+  padding: 0;
   list-style: none;
   margin: 0;
 }
+.towerList hr {
+  margin: 0 8px;
+  color: black;
+}
 
 .towerIcon {
-  margin: 16px 0
+  margin: 16px 8px;
+  width: 72px;
+  height: 72px;
+  background-color: #404040;
+
+  text-align: center;
+
+  overflow: hidden;
+
+  border-radius: 72px;
+  transition: 0.1s;
 }
 .towerIcon:hover {
-  font-weight: bold;
   cursor: pointer;
+  border-radius: 20px;
+  transition: 0.1s;
 }
 .towerIcon.selected {
   background-color: #404040;
+  border-radius: 20px;
+}
+.towerIcon span {
+  height: 72px;
+  display: table-cell;
+  vertical-align: middle;
   color:white;
-  padding: 8px;
-  padding-left: 16px;
+  font-weight: bold;
+}
+.towerIcon img {
   width: 100%;
-
-  border-radius: 16px 0 0 16px;
+  height: 100%;
+  object-fit: cover;
 }
 
 .serverDetailsPanel {
   color: white;
   background-color: #404040;
-
+  max-width: 300px;
+  width: 50%;
   padding: 16px;
   margin: 0;
 }
@@ -89,10 +104,34 @@ code {
 .messagePane {
   background-color: #72716A;
   margin: 0;
-  width: 100%;
+  padding: 16px;
 
-  padding: 16px 0 0 16px;
-  overflow: scroll;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  overflow: auto;
+}
+.messagePane ol {
+  margin: 0;
+  padding: 0;
+  flex-grow: 1;
+
+  overflow-y: auto;
+}
+.messageInputField {
+  box-sizing: border-box;
+  width: 100%;
+  flex-grow: 0;
+
+  background-color: #404040;
+  border:none;
+  color:white;
+  padding: 16px;
+  border-radius: 16px;
 }
 .message {
   color: white;
@@ -104,4 +143,26 @@ code {
 
 .selected::before {
   font-style: italic;
+}
+
+.userDetailsPane {
+  background-color: #404040;
+  width: 100%;
+  padding: 32px;
+}
+.userDetails {
+  background-color: #54524A;
+  width:50%;
+  height:100%;
+  border-radius: 32px;
+  box-shadow: inset 0 0 3px black;
+
+  color: white;
+
+  padding: 32px;
+  box-sizing: border-box;
+}
+.userDetails .username {
+  font-weight: bolder;
+  font-size: 3em;
 }

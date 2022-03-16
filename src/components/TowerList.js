@@ -1,25 +1,27 @@
 import React from 'react';
+import default_avatar from '../assets/default-avatar.png';
 
-class TowerList extends React.Component {
+export const TowerList = (props) => {
 
-    render() {
+    return (
+        <ol className='towerList'>
+            {/*User profile selector*/}
+            <li className={'towerIcon' + (props.selected === "USER" ? ' selected' : '')}
+                key='USER'
+                onClick={() => props.onUserIconSelected()}>
+                <img src={default_avatar} alt="Your Profile"/>
+            </li>
+            <hr/>
 
-        // build server list
-        let towers = [];
-
-        Object.values(this.props.towers).forEach(tower => {
-            let displayedName = tower.name;
-            // create list element
-            towers.push(<li className={'towerIcon' + (tower.id === this.props.selected ? ' selected' : '')}
-                key={tower.id} onClick={() => this.props.onClick(tower.id)}>{displayedName}</li>);
-        })
-
-        return (
-            <ul className='towerList'>
-                {towers}
-            </ul>
-        );
-    }
+            {/*Map towers*/}
+            {Object.values(props.towers).map(tower => {
+                return <li 
+                    className={'towerIcon' + (tower.id === props.selected ? ' selected' : '')}
+                    key={tower.id}
+                    onClick={() => props.onClick(tower.id)}>
+                        {tower.iconUrl ? <img src={tower.iconUrl} alt={tower.name}/> : <span>{tower.name}</span>}
+                    </li>
+            })}
+        </ol>
+    );
 }
-
-export default TowerList;
