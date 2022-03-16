@@ -1,7 +1,10 @@
 import {AccountManagementApi, CityManagementApi, Configuration} from "beacon-central-identity-server";
 
+// eslint-disable-next-line
 const QA_URL = "https://beacon-cis-main-staging.herokuapp.com";
+// eslint-disable-next-line
 const PROD_URL = "https://beacon-cis-main-staging.herokuapp.com";
+// eslint-disable-next-line
 const LOCAL_URL = "http://localhost:9876";
 
 // Is of type ConfigurationParameters
