@@ -5,7 +5,7 @@ import {TowerContext} from "../context/towerContext";
 
 export const Messages = (props) => {
     let {channelId, towerId} = useParams();
-    const {towerContext} = useContext(TowerContext);
+    const towerContext = useContext(TowerContext);
 
     return <MessagePane
         messages={(towerId !== "" && channelId !== "") ? towerContext[towerId].channels[channelId].messages : []}/>;

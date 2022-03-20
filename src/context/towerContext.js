@@ -100,7 +100,7 @@ export function TowerContextProvider({children}) {
     }, []);
 
     return (
-        <TowerContext.Provider value={{towerContext: towerContext}}>
+        <TowerContext.Provider value={towersById}>
             {children}
         </TowerContext.Provider>
     );

@@ -6,7 +6,7 @@ import {TowerContext} from "../context/towerContext";
 export const Towers = (props) => {
     let {towerId} = useParams();
     let navigate = useNavigate();
-    const {towerContext} = useContext(TowerContext);
+    const towerContext = useContext(TowerContext);
 
     return (
         <div className='appContainer'>

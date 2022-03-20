@@ -6,7 +6,7 @@ import {TowerContext} from "../context/towerContext";
 export const Channels = (props) => {
     let {towerId, channelId} = useParams();
     let navigate = useNavigate();
-    const {towerContext} = useContext(TowerContext);
+    const towerContext = useContext(TowerContext);
 
     return <>{
         // The towerContext may be empty at this time (might have only just initialized)
