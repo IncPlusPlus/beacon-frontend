@@ -5,9 +5,9 @@ export const UserDetails = (props) => {
     return (
         <div className='userDetailsPane'>
             <div className='userDetails'>
-				<span className='username'>Username</span>
-				<img alt="Your Avatar" src={default_avatar}/>
-			</div>
+                <span className='username'>Username</span>
+                <img alt="Your Avatar" src={default_avatar}/>
+            </div>
         </div>
     );
-}
+};
