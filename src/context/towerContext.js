@@ -1,106 +1,130 @@
-import {createContext, useEffect, useState} from "react";
+import {createContext, useContext} from "react";
+import {makeAutoObservable, observable} from "mobx";
+import {Configuration as CityConfiguration, UsersApi} from "beacon-city";
+import {ObservableTower} from "../observables/ObservableTower";
+import {SignInContext} from "./signInContext";
+import {CityManagementApi, Configuration as CisConfiguration} from "beacon-central-identity-server";
 
-export const TowerContext = createContext({});
+class Towers {
+    cisBasePath
+    signedIn
+    currentUsername
+    currentPassword
+    invalidateSession
+    // observable.map (https://mobx.js.org/api.html#observablemap) uses the ES6 Map API (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map)
+    towers = observable.map()
+    /**
+     * A map from city IDs to URLs
+     */
+    cityUrlsById = observable.map()
 
-export function TowerContextProvider({children}) {
-    const hardCodedTowers = {
-        "00000000": {
-            id: "00000000",
-            name: "Cool Tower",
-            channels: {
-                "00000006": {
-                    id: "00000006",
-                    name: "general",
-                    messages: [
-                        {
-                            id: "00000000",
-                            author: "000000000",
-                            content: "Hello, world!"
-                        },
-                        {
-                            id: "00000001",
-                            author: "000000000",
-                            content: "Hello, world!"
-                        },
-                        {
-                            id: "00000002",
-                            author: "000000000",
-                            content: "Hello, world!"
-                        },
-                        {
-                            id: "00000003",
-                            author: "000000000",
-                            content: "Hello, world!"
-                        },
-                        {
-                            id: "00000004",
-                            author: "000000000",
-                            content: "Hello, world!"
-                        },
-                        {
-                            id: "00000005",
-                            author: "000000000",
-                            content: "Hello, world!"
-                        },
-                        {
-                            id: "00000006",
-                            author: "000000000",
-                            content: "Hello, world!"
-                        },
-                        {
-                            id: "00000007",
-                            author: "000000000",
-                            content: "Hello, world!"
-                        },
-                        {
-                            id: "00000008",
-                            author: "000000000",
-                            content: "Hello, world!"
-                        },
-                    ]
+    constructor(cisBasePath, signedIn, currentUsername, currentPassword, invalidateSession) {
+        makeAutoObservable(this,
+            {},
+            // https://mobx.js.org/actions.html#actionbound to allow for "this" in actions
+            {autoBind: true}
+        );
+        this.cisBasePath = cisBasePath;
+        this.signedIn = signedIn;
+        this.currentUsername = currentUsername;
+        this.currentPassword = currentPassword;
+        this.invalidateSession = invalidateSession;
+    }
+
+    get invalidateWhenUnauthorizedMiddleware() {
+        /*
+        To specify middleware to the OpenAPI-Generator client, we need to provide a class that implements either a post or pre method.
+        See here for what that class would look like: https://github.com/OpenAPITools/openapi-generator/issues/2594#issuecomment-808808097
+        Although we're declaring an object and not a class, the "this" reference will point to the object itself as a class is sorta created here.
+        However, we want it to point to the Towers class reference. To do this, we sneak the reference into the object we're making.
+         */
+        const towersRef = this;
+        return {
+            post(responseContext) {
+                console.log(`called invalidateWhenUnauthorizedMiddleware`);
+                if (responseContext.response.status === 401) {
+                    towersRef.invalidateSession();
                 }
-            },
-            members: [
-                "00000000",
-                "00000001",
-                "00000002",
-            ]
-        },
-        "00000069": {
-            id: "00000069",
-            name: "Cool Tower 2",
-            channels: {
-                "00000008": {
-                    id: "00000008",
-                    name: "memes",
-                    messages: [
-                        {
-                            id: "00000000",
-                            author: "000000000",
-                            content: "Hello, world!"
-                        }
-                    ]
-                }
-            },
-            members: [
-                "00000000",
-                "00000001",
-                "00000002",
-            ]
+                return Promise.resolve(responseContext.response);
+            }
         }
     }
 
+    /**
+     * Get the Configuration object usable with a CIS API client.
+     */
+    get cisConfig() {
+        return new CisConfiguration({
+            basePath: this.cisBasePath,
+            middleware: [this.invalidateWhenUnauthorizedMiddleware],
+            username: this.currentUsername,
+            password: this.currentPassword,
+        });
+    }
 
-    const [towerContext, setTowerContext] = useState({});
+    /**
+     * Get the Configuration object usable with a City API client. The tower ID must be provided so that the URL of
+     * the city that owns that Tower may be discovered, cached, and specified in the returned Configuration object.
+     *
+     * Hopefully there won't be any conflicts where the same tower ID exists on two Cities the user is a member of.
+     * It's possible but that's a problem to solve later. This gets the job done for now.
+     */
+    cityConfig(towerId) {
+        const cityId = this.towers.get(towerId).cityId;
+        const cityUrl = this.cityUrlsById.get(cityId);
+        return this.cityConfigKnownUrl(cityUrl);
+    }
 
-    useEffect(() => {
-        setTowerContext(hardCodedTowers);
-        // TODO: This is temporary until real data can fill it. As such, it's fine that we're breaking some React best practices.
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    /**
+     * Get the Configuration object usable with a City API client when the base URL of the city is already known.
+     */
+    cityConfigKnownUrl(cityUrl) {
+        return new CityConfiguration({
+            basePath: cityUrl,
+            middleware: [this.invalidateWhenUnauthorizedMiddleware],
+            username: this.currentUsername,
+            password: this.currentPassword,
+        });
+    }
 
+    /**
+     * Update the towers object to contain only the towers this user is a member of. Dispatch this flow when the app
+     * starts and any other applicable time (such as after attempting to join, leave, or create a server)
+     */
+    * updateTowers() {
+        //TODO: Add try/catch like what ObservableTower.refreshChannels() has
+        const cityManagementApi = new CityManagementApi(this.cisConfig);
+        const memberCities = yield cityManagementApi.listCitiesMemberOf();
+        // Flush the cache of City URLs and IDs
+        this.cityUrlsById.clear();
+        // Update our cache of City URLs and IDs
+        memberCities.forEach(city => {
+            this.cityUrlsById.set(city.id, city.basePath);
+        });
+
+        for (const city of memberCities) {
+            const usersApi = new UsersApi(this.cityConfigKnownUrl(city.basePath));
+            const towersFromThisCity = yield usersApi.getUserTowerMemberships();
+            for (const memberTower of towersFromThisCity) {
+                // If this tower is not present in our Map, we should add it!
+                if (!this.towers.has(memberTower.id)) {
+                    this.towers.set(memberTower.id, new ObservableTower(this.cityConfig, memberTower.id, city.id, memberTower.name, memberTower.adminAccountId, memberTower.moderatorAccountIds, memberTower.memberAccountIds, {}));
+                }
+            }
+        }
+        // TODO: This only checks for any Towers we DON'T know about yet. We should probably also make sure that any
+        //  Towers that are present in this.towers but not present in this response get deleted from this.towers.
+        //  We could use a method similar to how ObservableTower.refreshChannels() manages deleting old entities.
+    }
+}
+
+export const TowerContext = createContext(new Towers());
+
+export function TowerContextProvider({children}) {
+    const {cisBasePath, signedIn, accountUsername, accountPassword, invalidateSession} = useContext(SignInContext);
     return (
-        <TowerContext.Provider value={towersById}>
+        <TowerContext.Provider
+            value={new Towers(cisBasePath, signedIn, accountUsername, accountPassword, invalidateSession)}>
             {children}
         </TowerContext.Provider>
     );

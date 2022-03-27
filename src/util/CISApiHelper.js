@@ -1,16 +1,6 @@
-import {AccountManagementApi, CityManagementApi, Configuration} from "beacon-central-identity-server";
-
 // eslint-disable-next-line
-const LOCAL_URL = "http://localhost:9876";
+export const CIS_LOCAL_URL = "http://localhost:9876";
 // eslint-disable-next-line
-const QA_URL = "https://beacon-cis-main-staging.herokuapp.com";
+export const CIS_QA_URL = "https://beacon-cis-main-staging.herokuapp.com";
 // eslint-disable-next-line
-const PROD_URL = "https://beacon-cis-main-staging.herokuapp.com";
-
-// Is of type ConfigurationParameters
-export const DefaultConfig = {
-    basePath: QA_URL,
-};
-
-export const AccountManagementHelper = new AccountManagementApi(new Configuration(DefaultConfig));
-export const CityManagementHelper = new CityManagementApi(new Configuration(DefaultConfig));
+export const CIS_PROD_URL = "https://beacon-cis-main-staging.herokuapp.com";
