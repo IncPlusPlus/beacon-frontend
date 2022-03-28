@@ -30,7 +30,7 @@ export class ObservableMessage {
     * deleteMessage() {
         console.log(`Deleting message ${this.id} in channel ${this.channelId} in tower ${this.towerId}`);
         try {
-            const deletedMessage = yield new MessagesApi(this.cityConfig(this.towerId)).deleteMessage({
+            yield new MessagesApi(this.cityConfig(this.towerId)).deleteMessage({
                 towerId: this.towerId,
                 channelId: this.channelId,
                 messageId: this.id
