@@ -71,4 +71,22 @@ export class ObservableChannel {
         console.log(`Received message delete event for message`);
         this.messages.delete(message.id);
     }
+
+    * sendMessage(messageBody) {
+        console.log(`Sending message in tower ${this.towerId}, channel ${this.id}.`);
+
+        try {
+            const request = {
+                towerId: this.towerId,
+                channelId: this.id,
+                message: {messageBody: messageBody}
+            };
+            yield new MessagesApi(this.cityConfig(this.towerId)).createMessage(request);
+        }catch (error) {
+            // TODO: Make this a snackbar with notistack
+            //  see https://github.com/iamhosseindhv/notistack
+            console.log(`sendMessage error: ${error}`);
+            throw error;
+        }
+    }
 }
