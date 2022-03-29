@@ -1,21 +1,24 @@
 import {TowerList} from "../components/TowerList";
 import {Outlet, useNavigate, useParams} from "react-router-dom";
-import React, {useContext} from "react";
-import {TowerContext} from "../context/towerContext";
+import React from "react";
+import {observer} from "mobx-react-lite";
 
-export const Towers = (props) => {
+export const Towers = observer((props) => {
     let {towerId} = useParams();
     let navigate = useNavigate();
-    const {towerContext} = useContext(TowerContext);
 
     return (
         <div className='appContainer'>
             {/*TODO: Show something if there are no towers in the towerContext*/}
-            <TowerList towers={towerContext} selected={towerId} 
-                onClick={(clickedTower) => {navigate(`/channels/${clickedTower}`)}}
-                onUserIconSelected={(t) => {navigate(`/me`)}}
+            <TowerList selected={towerId}
+                       onClick={(clickedTower) => {
+                           navigate(`/channels/${clickedTower}`)
+                       }}
+                       onUserIconSelected={(t) => {
+                           navigate(`/me`)
+                       }}
             />
             <Outlet/>
         </div>
     );
-}
+});

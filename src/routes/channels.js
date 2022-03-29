@@ -2,21 +2,23 @@ import {TowerDetails} from '../components/TowerDetails.js';
 import React, {useContext} from 'react';
 import {Outlet, useNavigate, useParams} from 'react-router-dom';
 import {TowerContext} from "../context/towerContext";
+import {observer} from "mobx-react-lite";
 
-export const Channels = (props) => {
+export const Channels = observer((props) => {
     let {towerId, channelId} = useParams();
     let navigate = useNavigate();
-    const {towerContext} = useContext(TowerContext);
+    const {towers} = useContext(TowerContext);
 
     return <>{
         // The towerContext may be empty at this time (might have only just initialized)
-        towerContext[towerId] ? <>
-            <TowerDetails serverName={towerContext[towerId].name} 
-                channels={towerContext[towerId].channels}
-                selected={channelId}
-                onClick={(clickedChannel) => {navigate(`/channels/${towerId}/${clickedChannel}`)}}
+        towers.get(towerId) ? <>
+            <TowerDetails tower={towers.get(towerId)}
+                          selected={channelId}
+                          onClick={(clickedChannel) => {
+                              navigate(`/channels/${towerId}/${clickedChannel}`)
+                          }}
             />
             <Outlet/>
         </> : <div>Tower not found!</div>
     }</>;
-}
+});
