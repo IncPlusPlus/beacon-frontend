@@ -11,7 +11,7 @@ export const MessagePane = observer(function MessagePane(props) {
     let {channelId, towerId} = useParams();
 
     const handleKeyDown = (e,field) => {
-        if (e.key === 'Enter') {
+        if (e.key === 'Enter' && !e.shiftKey) {
             // Try and send message
             const messageBody = e.target.value;
             e.target.disabled = true;
@@ -40,7 +40,7 @@ export const MessagePane = observer(function MessagePane(props) {
                     ) : <div>No messages</div>
                 }
             </ol>
-            <input id="messageInput" type="text" placeholder='Message' className='messageInputField' onKeyDown={(e) => handleKeyDown(e,this)}/>
+            <textarea id="messageInput" rows="1" type="text" placeholder='Message' className='messageInputField' onKeyDown={(e) => handleKeyDown(e,this)}/>
         </div>
     );
 })

@@ -1,5 +1,6 @@
 import React from 'react';
 import {observer} from "mobx-react-lite";
+import ReactMarkdown from 'react-markdown'
 
 export const Message = observer(function Message(props) {
     /*
@@ -10,7 +11,7 @@ export const Message = observer(function Message(props) {
     return (
         <div className='message'>
             <strong>{props.message.senderId}</strong><br/>
-            <span>{props.message.messageBody}</span>
+            <span><ReactMarkdown>{props.message.messageBody}</ReactMarkdown></span>
         </div>
     );
 });
