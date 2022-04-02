@@ -24,7 +24,7 @@ export const TowerList = observer(function TowerList(props) {
             {/*Map towers*/}
             {Array.from(towers.values()).map(tower => {
                 return <li
-                    className={'towerIcon' + (tower.id === props.selected ? ' selected' : '')}
+                    className={'towerIcon' + (tower.id === props.selectedTowerId ? ' selected' : '')}
                     key={tower.id}
                     onClick={() => props.onClick(tower.id)}>
                     {tower.iconUrl ? <img src={tower.iconUrl} alt={tower.name}/> : <span>{tower.name}</span>}
