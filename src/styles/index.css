@@ -186,7 +186,7 @@ body {
   box-sizing: border-box;
 
   width: 50%;
-  height: 50%;
+/*  height: 50%;*/
 
   padding: 32px;
 }
@@ -229,6 +229,15 @@ body {
 }
 #loginField button:hover:after {
   content: " >";
+}
+#loginField .error {
+  color:black;
+  padding: 4px;
+  margin: 8px;
+  padding-left: 32px;
+  width:50%;
+  border-radius: 8px;
+  background-color: lightcoral;
 }
 
 code {
