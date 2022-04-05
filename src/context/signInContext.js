@@ -1,6 +1,6 @@
 import {createContext, useState} from "react";
 import {CIS_QA_URL} from "../util/CISApiHelper";
-import {CityManagementApi, Configuration} from "beacon-central-identity-server";
+import {AccountManagementApi, CityManagementApi, Configuration} from "beacon-central-identity-server";
 import {useLocalStorage} from "react-use";
 
 export const SignInContext = createContext({
@@ -14,6 +14,9 @@ export const SignInContext = createContext({
      */
     signedIn: false,
     attemptSignIn: (username, password) => console.log('WARNING: Attempted to sign in but hit a no-op function. This means that the SignInContext was never set up properly!!!'),
+
+    signupState: '',
+    attemptSignUp: (username, email, password) => console.log('WARNING: Attempted to sign up but hit a no-op function. This means that the SignInContext was never set up properly!!!'),
     /**
      * True when there's an active login attempt (meaning an API call).
      */
@@ -35,6 +38,7 @@ export const SignInContext = createContext({
 export function SignInContextProvider({children}) {
     const [signedIn, setSignedIn] = useLocalStorage('signedIn', false);
     const [signInInProgress, setSignInInProgress] = useState(false);
+    const [signupState, setSignupState] = useState(false);
     /*
     The current username and password are NOT to be confused with the credentials that are being used with a sign-in attempt.
     These variables refer to the last known valid username and password. The attemptSignIn function will set these itself
@@ -45,11 +49,13 @@ export function SignInContextProvider({children}) {
     const [currentPassword, setCurrentPassword] = useLocalStorage('currentPassword', '');
     const [cisBasePath] = useLocalStorage('cisBasePath', CIS_QA_URL);
     const attemptSignIn = (username, password) => signInWithCredentials(cisBasePath, username, password, signInInProgress, setSignInInProgress, setSignedIn, setCurrentUsername, setCurrentPassword);
+    const attemptSignup = (username, email, password) => signUpWithCredentials(cisBasePath, username, email, password, setSignupState);
     /**
      * To be used
      */
     const invalidateSession = () => {
-        setSignedIn(false)
+        setSignedIn(false);
+        setSignupState('');
         setCurrentUsername('');
         setCurrentPassword('');
     };
@@ -58,7 +64,9 @@ export function SignInContextProvider({children}) {
         <SignInContext.Provider value={{
             cisBasePath: cisBasePath,
             signedIn: signedIn,
+            signupState: signupState,
             attemptSignIn: attemptSignIn,
+            attemptSignup: attemptSignup,
             signInInProgress: signInInProgress,
             accountUsername: currentUsername,
             accountPassword: currentPassword,
@@ -67,6 +75,32 @@ export function SignInContextProvider({children}) {
             {children}
         </SignInContext.Provider>
     );
+}
+
+function signUpWithCredentials(cisBasePath, username, email, password, setSignupState) {
+    console.log('Attempting to create new account');
+
+    const configuration = new Configuration({
+        basePath: cisBasePath
+    });
+
+    new AccountManagementApi(configuration).createNewAccount({
+        emailAddress: email,
+        username: username,
+        password: password
+    }).catch(reason => {
+        if (reason instanceof Response) {
+            reason.json().then(value => {
+                console.log(value)
+                setSignupState(value);
+            });
+        }
+        console.log('Sign up failed.');
+    }).then(acct => {
+        console.log(acct);
+        setSignupState('success');
+    });
+
 }
 
 function signInWithCredentials(cisBasePath, username, password, signInInProgress, setSignInInProgress, setSignedIn, setCurrentUsername, setCurrentPassword) {

@@ -6,9 +6,11 @@ import {UserDetails} from "./routes/user"
 import {SignInContext} from "./context/signInContext";
 import {useContext} from "react";
 import {LoginPage} from "./routes/LoginPage";
+import { SignupPage } from "./routes/SignupPage";
 
 export const AppRoutes = (props) => <Routes>
     <Route path="/login" element={<LoginPage/>}/>
+    <Route path="/signup" element={<SignupPage/>}/>
     <Route path="/" element={
         // https://reactrouter.com/docs/en/v6/upgrading/v5#refactor-custom-routes
         <RequireAuth redirectTo="/login">

@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from "react";
 import {SignInContext} from "../context/signInContext";
-import {Navigate, useSearchParams} from "react-router-dom";
+import {Navigate, useNavigate, useSearchParams} from "react-router-dom";
 import useCountDown from "react-countdown-hook";
 
 export const LoginPage = (props, context) => {
@@ -20,6 +20,8 @@ export const LoginPage = (props, context) => {
     const [timeLeft, {start}] = useCountDown(initialTime, interval);
     // The timeLeft value starts at 0 which makes testing for 0 in a useEffect useless .-.
     const [countdownInProgress, setCountdownInProgress] = useState(false);
+    // Used if we press the 'sign up' button
+    const navigate = useNavigate();
 
     const tryCredentials = (event) => {
         attemptSignIn(username, password);
@@ -60,6 +62,8 @@ export const LoginPage = (props, context) => {
                         <input type="password" placeholder="Password" value={password} onChange={event => setPassword(event.target.value)}/>
                         <button type="submit">Submit</button>
                     </form>
+
+                    <button onClick={()=>navigate('/signup')}>Create an account</button>
                 </>}
             </div>
         </div>
