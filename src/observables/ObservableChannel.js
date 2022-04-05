@@ -9,6 +9,7 @@ export class ObservableChannel {
     name = "UNKNOWN NAME"
     order = -1
     messages = observable.map()
+    messagesLoadedOnce
 
     constructor(cityConfig, id, towerId, name, order, messages) {
         makeAutoObservable(this,
@@ -22,6 +23,7 @@ export class ObservableChannel {
         this.name = name;
         this.order = order;
         this.messages = observable.map(messages);
+        this.messagesLoadedOnce = false;
     }
 
     * fetchMessages() {
@@ -38,6 +40,7 @@ export class ObservableChannel {
             respone.forEach(message => {
                 this.messages.set(message.id, new ObservableMessage(this.cityConfig, message.id, message.channelId, message.towerId, message.senderId, message.sentTime, message.messageBody, message.attachments));
             });
+            this.messagesLoadedOnce = true;
             console.log(`Updated messages for tower ${this.towerId}, and channel ${this.id}`);
         } catch (error) {
             // TODO: Make this a snackbar with notistack
