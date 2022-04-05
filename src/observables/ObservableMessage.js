@@ -12,11 +12,6 @@ export class ObservableMessage {
     attachments
 
     constructor(cityConfig, id, channelId, towerId, senderId, sentTime, messageBody, attachments) {
-        makeAutoObservable(this,
-            {},
-            // https://mobx.js.org/actions.html#actionbound to allow for "this" in actions
-            {autoBind: true}
-        );
         this.cityConfig = cityConfig;
         this.id = id;
         this.channelId = channelId;
@@ -25,6 +20,11 @@ export class ObservableMessage {
         this.sentTime = sentTime;
         this.messageBody = messageBody;
         this.attachments = attachments;
+        makeAutoObservable(this,
+            {},
+            // https://mobx.js.org/actions.html#actionbound to allow for "this" in actions
+            {autoBind: true}
+        );
     }
 
     * deleteMessage() {

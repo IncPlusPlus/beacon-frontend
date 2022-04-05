@@ -7,7 +7,7 @@ export const TowerDetails = observer(function TowerDetails(props) {
     useEffectOnce(() => props.tower.refreshChannels())
 
     let channels = [];
-    Array.from(props.tower.channels.values()).forEach(channel => {
+    Array.from(props.tower.channels.values()).sort((a, b) => a.order - b.order).forEach(channel => {
         let displayedName = channel.name;
         // create list element
         channels.push(<li className={'channelIcon' + (channel.id === props.selected ? ' selected' : '')}

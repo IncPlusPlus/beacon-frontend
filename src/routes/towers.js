@@ -10,7 +10,7 @@ export const Towers = observer((props) => {
     return (
         <div className='appContainer'>
             {/*TODO: Show something if there are no towers in the towerContext*/}
-            <TowerList selected={towerId}
+            <TowerList selectedTowerId={towerId}
                        onClick={(clickedTower) => {
                            navigate(`/channels/${clickedTower}`)
                        }}

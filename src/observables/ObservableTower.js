@@ -6,14 +6,13 @@ export class ObservableTower {
     cityConfig
     id
     cityId
-    name = "UNKNOWN NAME"
-    adminAccountId = ""
+    name
+    adminAccountId
     moderator_account_ids = observable.array()
-    member_acount_ids = observable.array()
+    member_account_ids = observable.array()
     channels = observable.map()
 
-    constructor(cityConfig, id, cityId, name, adminAccountId, moderator_account_ids, member_account_ids, channels) {
-        console.log('Making a new ObservableTower instance.');
+    constructor(cityConfig, id, cityId, name, adminAccountId, moderator_account_ids, member_account_ids) {
         makeAutoObservable(this,
             {},
             // https://mobx.js.org/actions.html#actionbound to allow for "this" in actions
@@ -26,7 +25,6 @@ export class ObservableTower {
         this.adminAccountId = adminAccountId;
         this.moderator_account_ids = observable.array(moderator_account_ids);
         this.member_account_ids = observable.array(member_account_ids);
-        this.channels = observable.map(channels);
     }
 
     * refreshChannels() {
@@ -46,7 +44,7 @@ export class ObservableTower {
                     existingChannel.order = channel.order;
                 } else {
                     // Add this as a new channel
-                    this.channels.set(channel.id, new ObservableChannel(this.cityConfig, channel.id, channel.towerId, channel.name, channel.order, channel.message));
+                    this.channels.set(channel.id, new ObservableChannel(this.cityConfig, channel.id, channel.towerId, channel.name, channel.order));
                 }
             });
         } catch (error) {
@@ -60,5 +58,25 @@ export class ObservableTower {
             .filter(channelId => !channelIdsFromBackend.includes(channelId))
             .forEach(idOfChannelToDelete => this.channels.delete(idOfChannelToDelete));
         console.log(`Finished refreshing channels for tower ${this.id}.`);
+    }
+
+    handleChannelCreated(channel) {
+        console.log(`New channel ${channel.id} has been created in tower ${this.id}`);
+        // Field names use snake_case for some reason when we receive objects through STOMP/Websockets
+        this.channels.set(channel.id, new ObservableChannel(this.cityConfig, channel.id, channel.tower_id, channel.name, channel.order));
+    }
+
+    handleChannelEdited(channel) {
+        console.log(`Channel ${channel.id} in tower ${this.id} has been edited`);
+        // Field names use snake_case for some reason when we receive objects through STOMP/Websockets
+        const existingChannel = this.channels.get(channel.id);
+        // Update the two properties of a channel that might be new
+        existingChannel.name = channel.name;
+        existingChannel.order = channel.order;
+    }
+
+    handleChannelDeleted(channel) {
+        console.log(`Channel ${channel.id} in tower ${this.id} has been deleted`);
+        this.channels.delete(channel.id);
     }
 }
