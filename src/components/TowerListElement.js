@@ -12,7 +12,9 @@ export const TowerListElement = observer(function TowerListElement(props) {
     const tower = props.tower;
     const {currentUsername, currentPassword} = useContext(TowerContext);
     const wsSourceUrl = tower.cityConfig(tower.id).basePath + "/beacon-ws";
-    // connected will be true if we have a working websocket connection
+    // connected will be true if we have a working websocket connection.
+    // We could maybe show some sort of indicator if connected is false. For now, it's unused
+    // eslint-disable-next-line no-unused-vars
     const [connected, setConnected] = useState(false);
     // TODO: Can this be const?
     let stompClientRef = useRef(null);
