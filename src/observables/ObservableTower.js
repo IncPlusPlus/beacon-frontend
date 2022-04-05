@@ -6,8 +6,8 @@ export class ObservableTower {
     cityConfig
     id
     cityId
-    name = "UNKNOWN NAME"
-    adminAccountId = ""
+    name
+    adminAccountId
     moderator_account_ids = observable.array()
     member_account_ids = observable.array()
     channels = observable.map()

@@ -6,23 +6,23 @@ export class ObservableChannel {
     cityConfig
     id
     towerId
-    name = "UNKNOWN NAME"
-    order = -1
+    name
+    order
     messages = observable.map()
     messagesLoadedOnce
 
     constructor(cityConfig, id, towerId, name, order) {
-        makeAutoObservable(this,
-            {},
-            // https://mobx.js.org/actions.html#actionbound to allow for "this" in actions
-            {autoBind: true}
-        );
         this.cityConfig = cityConfig;
         this.id = id;
         this.towerId = towerId;
         this.name = name;
         this.order = order;
         this.messagesLoadedOnce = false;
+        makeAutoObservable(this,
+            {},
+            // https://mobx.js.org/actions.html#actionbound to allow for "this" in actions
+            {autoBind: true}
+        );
     }
 
     * fetchMessages() {
