@@ -9,7 +9,7 @@ export class ObservableTower {
     name = "UNKNOWN NAME"
     adminAccountId = ""
     moderator_account_ids = observable.array()
-    member_acount_ids = observable.array()
+    member_account_ids = observable.array()
     channels = observable.map()
 
     constructor(cityConfig, id, cityId, name, adminAccountId, moderator_account_ids, member_account_ids) {

@@ -31,12 +31,12 @@ export class ObservableChannel {
         //  Right now, this is being done inside messages.js and it's really ugly. We could prob just add a "pending"
         //  property to this class and check that before proceeding.
         try {
-            const respone = yield new MessagesApi(this.cityConfig(this.towerId)).getMessages({
+            const response = yield new MessagesApi(this.cityConfig(this.towerId)).getMessages({
                 towerId: this.towerId,
                 channelId: this.id
             });
             this.messages.clear();
-            respone.forEach(message => {
+            response.forEach(message => {
                 this.messages.set(message.id, new ObservableMessage(this.cityConfig, message.id, message.channelId, message.towerId, message.senderId, message.sentTime, message.messageBody, message.attachments));
             });
             this.messagesLoadedOnce = true;
