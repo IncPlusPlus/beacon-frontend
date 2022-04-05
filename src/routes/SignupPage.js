@@ -1,9 +1,9 @@
 import React, {useContext, useEffect, useState} from "react";
 import {SignInContext} from "../context/signInContext";
-import {Navigate} from "react-router-dom";
+import {Navigate, useNavigate} from "react-router-dom";
 
 export const SignupPage = (props, context) => {
-    const {signedIn, signupState, attemptSignUp} = useContext(SignInContext);
+    const {signedIn, signupState, attemptSignup} = useContext(SignInContext);
 
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
@@ -11,6 +11,8 @@ export const SignupPage = (props, context) => {
     const [passwordConfirm, setPasswordConfirm] = useState('');
 
     const [signupError, setSignupError] = useState('');
+
+    const navigate = useNavigate();
 
     const trySignup = (event) => {
         // Confirm matching passwords
@@ -21,7 +23,7 @@ export const SignupPage = (props, context) => {
         }else{
 
             // TODO validate email
-            attemptSignUp(username,email,password);
+            attemptSignup(username,email,password);
 
             // Without this, the page reloads for some weird reason.
             // See https://reactjs.org/docs/forms.html#controlled-components
@@ -31,7 +33,7 @@ export const SignupPage = (props, context) => {
 
     useEffect(() => {
         if (signupState === 'success') {
-            alert('wahoo!');
+            navigate('/login');
         }else if (signupState !== '') {
             setSignupError(signupState);
         }
