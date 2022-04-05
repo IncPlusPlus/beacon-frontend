@@ -84,11 +84,11 @@ function signUpWithCredentials(cisBasePath, username, email, password, setSignup
         basePath: cisBasePath
     });
 
-    new AccountManagementApi(configuration).createNewAccount({
+    new AccountManagementApi(configuration).createNewAccount({createAccountRequest:{
         emailAddress: email,
         username: username,
         password: password
-    }).catch(reason => {
+    }}).catch(reason => {
         if (reason instanceof Response) {
             reason.json().then(value => {
                 console.log(value)
