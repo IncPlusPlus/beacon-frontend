@@ -13,7 +13,6 @@ export class ObservableTower {
     channels = observable.map()
 
     constructor(cityConfig, id, cityId, name, adminAccountId, moderator_account_ids, member_account_ids) {
-        console.log('Making a new ObservableTower instance.');
         makeAutoObservable(this,
             {},
             // https://mobx.js.org/actions.html#actionbound to allow for "this" in actions
