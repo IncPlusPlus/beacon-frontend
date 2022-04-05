@@ -3,6 +3,7 @@ import default_avatar from '../assets/default-avatar.png';
 import {observer} from "mobx-react-lite";
 import {TowerContext} from "../context/towerContext";
 import {useEffectOnce} from "react-use";
+import {TowerListElement} from "./TowerListElement";
 
 export const TowerList = observer(function TowerList(props) {
     const {towers, updateTowers} = useContext(TowerContext);
@@ -23,12 +24,12 @@ export const TowerList = observer(function TowerList(props) {
 
             {/*Map towers*/}
             {Array.from(towers.values()).map(tower => {
-                return <li
-                    className={'towerIcon' + (tower.id === props.selectedTowerId ? ' selected' : '')}
+                return <TowerListElement
+                    selected={tower.id === props.selectedTowerId}
                     key={tower.id}
-                    onClick={() => props.onClick(tower.id)}>
-                    {tower.iconUrl ? <img src={tower.iconUrl} alt={tower.name}/> : <span>{tower.name}</span>}
-                </li>
+                    onClick={() => props.onClick(tower.id)}
+                    tower={tower}>
+                </TowerListElement>
             })}
         </ol>
     );

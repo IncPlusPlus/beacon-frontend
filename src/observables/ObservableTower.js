@@ -61,4 +61,24 @@ export class ObservableTower {
             .forEach(idOfChannelToDelete => this.channels.delete(idOfChannelToDelete));
         console.log(`Finished refreshing channels for tower ${this.id}.`);
     }
+
+    handleChannelCreated(channel) {
+        console.log(`New channel ${channel.id} has been created in tower ${this.id}`);
+        // Field names use snake_case for some reason when we receive objects through STOMP/Websockets
+        this.channels.set(channel.id, new ObservableChannel(this.cityConfig, channel.id, channel.tower_id, channel.name, channel.order, observable.map()))
+    }
+
+    handleChannelEdited(channel) {
+        console.log(`Channel ${channel.id} in tower ${this.id} has been edited`);
+        // Field names use snake_case for some reason when we receive objects through STOMP/Websockets
+        const existingChannel = this.channels.get(channel.id);
+        // Update the two properties of a channel that might be new
+        existingChannel.name = channel.name;
+        existingChannel.order = channel.order;
+    }
+
+    handleChannelDeleted(channel) {
+        console.log(`Channel ${channel.id} in tower ${this.id} has been deleted`);
+        this.channels.delete(channel.id);
+    }
 }
