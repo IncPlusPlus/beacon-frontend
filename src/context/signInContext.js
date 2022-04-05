@@ -38,7 +38,7 @@ export const SignInContext = createContext({
 export function SignInContextProvider({children}) {
     const [signedIn, setSignedIn] = useLocalStorage('signedIn', false);
     const [signInInProgress, setSignInInProgress] = useState(false);
-    const [signupState, setSignupState] = useState(false);
+    const [signupState, setSignupState] = useState('');
     /*
     The current username and password are NOT to be confused with the credentials that are being used with a sign-in attempt.
     These variables refer to the last known valid username and password. The attemptSignIn function will set these itself
