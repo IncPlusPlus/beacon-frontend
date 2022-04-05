@@ -12,7 +12,7 @@ export class ObservableTower {
     member_acount_ids = observable.array()
     channels = observable.map()
 
-    constructor(cityConfig, id, cityId, name, adminAccountId, moderator_account_ids, member_account_ids, channels) {
+    constructor(cityConfig, id, cityId, name, adminAccountId, moderator_account_ids, member_account_ids) {
         console.log('Making a new ObservableTower instance.');
         makeAutoObservable(this,
             {},
@@ -26,7 +26,6 @@ export class ObservableTower {
         this.adminAccountId = adminAccountId;
         this.moderator_account_ids = observable.array(moderator_account_ids);
         this.member_account_ids = observable.array(member_account_ids);
-        this.channels = observable.map(channels);
     }
 
     * refreshChannels() {
@@ -46,7 +45,7 @@ export class ObservableTower {
                     existingChannel.order = channel.order;
                 } else {
                     // Add this as a new channel
-                    this.channels.set(channel.id, new ObservableChannel(this.cityConfig, channel.id, channel.towerId, channel.name, channel.order, channel.message));
+                    this.channels.set(channel.id, new ObservableChannel(this.cityConfig, channel.id, channel.towerId, channel.name, channel.order));
                 }
             });
         } catch (error) {
@@ -65,7 +64,7 @@ export class ObservableTower {
     handleChannelCreated(channel) {
         console.log(`New channel ${channel.id} has been created in tower ${this.id}`);
         // Field names use snake_case for some reason when we receive objects through STOMP/Websockets
-        this.channels.set(channel.id, new ObservableChannel(this.cityConfig, channel.id, channel.tower_id, channel.name, channel.order, observable.map()))
+        this.channels.set(channel.id, new ObservableChannel(this.cityConfig, channel.id, channel.tower_id, channel.name, channel.order));
     }
 
     handleChannelEdited(channel) {

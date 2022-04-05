@@ -11,7 +11,7 @@ export class ObservableChannel {
     messages = observable.map()
     messagesLoadedOnce
 
-    constructor(cityConfig, id, towerId, name, order, messages) {
+    constructor(cityConfig, id, towerId, name, order) {
         makeAutoObservable(this,
             {},
             // https://mobx.js.org/actions.html#actionbound to allow for "this" in actions
@@ -22,7 +22,6 @@ export class ObservableChannel {
         this.towerId = towerId;
         this.name = name;
         this.order = order;
-        this.messages = observable.map(messages);
         this.messagesLoadedOnce = false;
     }
 
