@@ -4,7 +4,6 @@ import {TowerContext} from "../context/towerContext";
 import {observer} from "mobx-react-lite";
 import {get} from "mobx";
 import {useParams} from 'react-router-dom';
-import { useEffectOnce } from 'react-use';
 
 export const MessagePane = observer(function MessagePane(props) {
 
@@ -24,6 +23,7 @@ export const MessagePane = observer(function MessagePane(props) {
         setScrollAtBottom(event.target.scrollHeight - event.target.scrollTop === event.target.clientHeight);
     };
 
+    // Send a message when enter is pressed (ignoring shift)
     const handleKeyDown = (e,field) => {
         if (e.key === 'Enter' && !e.shiftKey) {
             // Try and send message
@@ -39,15 +39,15 @@ export const MessagePane = observer(function MessagePane(props) {
         }
     }
 
+    // Scroll to bottom when a message is sent or we just loaded
     useEffect(() => {
-        // Scroll
         if (scrollAtBottom || !initialized) {
             messageList.current.scrollTop = messageList.current.scrollHeight;
         }
         setInitialized(true);
     });
 
-    // Get the channel id
+    // Set the channel name
     useEffect(() => {
         if (channelInitialized) {
             setChannelName(tower.channels.get(channelId).name);

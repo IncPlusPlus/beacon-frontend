@@ -7,7 +7,7 @@ class Users {
 	cisBasePath
 	currentUsername
     currentPassword
-	users = observable.map()
+	users
 
 	constructor(cisBasePath,currentUsername,currentPassword) {
 		makeAutoObservable(this,
@@ -16,6 +16,7 @@ class Users {
 		this.cisBasePath = cisBasePath;
 		this.currentUsername = currentUsername;
         this.currentPassword = currentPassword;
+		this.users = observable.map();
 	}
 
 	/**
@@ -34,17 +35,19 @@ class Users {
 	 * app starts and when the user joins a new server
 	 * TODO figure out how to make this trigger when a user joins
 	 */
-	* getUserInfo(userId) {
-		/*if (!this.users.has(userId)) {
+	* retrieveUserInfo(userId,callback) {
+		if (!this.users.has(userId)) {
 			try {
-				const response = yield new AccountManagementApi(this.cisConfig()).getAccount({userId:userId});
+				const response = yield new AccountManagementApi(this.cisConfig).getAccount({userAccountId:userId});
 				this.users.set(userId,response);
 			}catch(error) {
 				console.log(`fetchMessages error: ${error}`);
             	throw error;
 			}
-		}*/
-		return this.users.get(userId);
+		}
+		if (callback) {
+			callback();
+		}
 	}
 }
 
