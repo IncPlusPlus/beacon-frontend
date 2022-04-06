@@ -28,9 +28,9 @@ export const TowerDetails = observer(function TowerDetails(props) {
                 <h2>{props.tower.name}</h2>
                 <div onClick={inviteHandler} class='inviteButton'>+ Invite others!</div>
             </div>
-            <ul className='channelList'>
+            <ol className='channelList'>
                 {channels}
-            </ul>
+            </ol>
         </div>
     );
 
