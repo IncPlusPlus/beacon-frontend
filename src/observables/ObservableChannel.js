@@ -88,6 +88,7 @@ export class ObservableChannel {
             console.log(`sendMessage error: ${error}`);
             throw error;
         }
+    }
     /**
      * Update the state of this channel to include a new message. This action should be dispatched if the client
      * was notified of a new message.

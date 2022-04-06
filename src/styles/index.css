@@ -127,6 +127,8 @@ body {
   width: 100%;
   flex-grow: 0;
 
+  resize: none;
+
   background-color: #404040;
   border:none;
   color:white;

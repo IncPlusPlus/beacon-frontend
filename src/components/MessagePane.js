@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect, useRef} from 'react';
 import {Message} from './Message';
 import {TowerContext} from "../context/towerContext";
 import {observer} from "mobx-react-lite";
@@ -9,7 +9,9 @@ export const MessagePane = observer(function MessagePane(props) {
     const {towers} = useContext(TowerContext);
     let {channelId, towerId} = useParams();
 
-    const handleKeyDown = (e, field) => {
+    const messageList = useRef(null);
+
+    const handleKeyDown = (e,field) => {
         if (e.key === 'Enter' && !e.shiftKey) {
             // Try and send message
             const messageBody = e.target.value;
@@ -24,9 +26,14 @@ export const MessagePane = observer(function MessagePane(props) {
         }
     }
 
+    useEffect(() => {
+        // Scroll
+        messageList.current.scrollTop = messageList.current.scrollHeight;
+    });
+
     return (
         <div className='messagePane'>
-            <ol>
+            <ol ref={messageList}>
                 {
                     props.messages ? Array.from(props.messages.values()).map(
                         (msg) => <Message key={msg.id} message={msg}/>
