@@ -2,13 +2,20 @@ import React, {useContext, useEffect, useRef} from 'react';
 import {Message} from './Message';
 import {TowerContext} from "../context/towerContext";
 import {observer} from "mobx-react-lite";
+import {get} from "mobx";
 import {useParams} from 'react-router-dom';
+import { useEffectOnce } from 'react-use';
 
 export const MessagePane = observer(function MessagePane(props) {
 
     const {towers} = useContext(TowerContext);
     const [scrollAtBottom, setScrollAtBottom] = useState(false);
+    const [initialized, setInitialized] = useState(false);
+    const [channelName, setChannelName] = useState('');
     let {channelId, towerId} = useParams();
+
+    const tower = get(towers, towerId);
+    const channelInitialized = tower.channels.get(channelId) !== undefined;
 
     const messageList = useRef(null);
 
@@ -34,24 +41,29 @@ export const MessagePane = observer(function MessagePane(props) {
 
     useEffect(() => {
         // Scroll
-        if (scrollAtBottom) {
+        if (scrollAtBottom || !initialized) {
             messageList.current.scrollTop = messageList.current.scrollHeight;
         }
+        setInitialized(true);
     });
 
+    // Get the channel id
     useEffect(() => {
-        messageList.current.scrollTop = messageList.current.scrollHeight;
-    },[]);
+        if (channelInitialized) {
+            setChannelName(tower.channels.get(channelId).name);
+        }
+    }, [channelId, channelInitialized, tower.channels, towerId]);
 
     return (
-        <div className='messagePane'>
-            <ol ref={messageList} onScroll={scrollHandler}>
-                {
-                    props.messages ? Array.from(props.messages.values()).map(
-                        (msg) => <Message key={msg.id} message={msg}/>
-                        // TODO: Replace this with skeletons from react-content-loader or react-loading-skeleton
-                    ) : <div>No messages</div>
-                }
+        <div className='channelPane'>
+            <h3 className='messageChannelTitle'>#{channelName}</h3>
+            <ol className='messagePane' ref={messageList} onScroll={scrollHandler}>
+                    {
+                        props.messages ? Array.from(props.messages.values()).map(
+                            (msg) => <Message key={msg.id} message={msg}/>
+                            // TODO: Replace this with skeletons from react-content-loader or react-loading-skeleton
+                        ) : <div>No messages</div>
+                    }
             </ol>
             <textarea id="messageInput" rows="1" type="text" placeholder='Message' className='messageInputField'
                       onKeyDown={(e) => handleKeyDown(e, this)}/>

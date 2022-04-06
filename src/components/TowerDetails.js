@@ -17,9 +17,17 @@ export const TowerDetails = observer(function TowerDetails(props) {
         </li>);
     })
 
+    // Called when the 'invite people' button is pressed
+    const inviteHandler = () => {
+        alert("This doesn't do anything yet! Sorry!");
+    };
+
     return (
         <div className='serverDetailsPanel'>
-            <h2>{props.tower.name}</h2>
+            <div className='title'>
+                <h2>{props.tower.name}</h2>
+                <div onClick={inviteHandler} class='inviteButton'>+ Invite others!</div>
+            </div>
             <ul className='channelList'>
                 {channels}
             </ul>

@@ -74,12 +74,33 @@ body {
   background-color: #404040;
   max-width: 300px;
   width: 50%;
-  padding: 16px;
+  min-width: 15%;
   margin: 0;
+}
+.serverDetailsPanel .title {
+  background-color:#292929;
+  padding: 16px;
+  margin-top: 0;
+  border-radius: 0 0 16px 16px;
+}
+.serverDetailsPanel h2 {
+  margin: 0;
+  margin-bottom: 16px;
+}
+.inviteButton {
+  background-color: #54524A;
+  color:#cac7bb;
+  padding: 4px;
+  border-radius: 8px;
+  font-weight: bold;
+}
+.inviteButton:hover {
+  color:white;
+  cursor:pointer;
 }
 .channelList {
   list-style: none;
-  padding: 0;
+  padding-left: 16px;
 }
 .channelIcon {
   margin: 16px 0
@@ -100,11 +121,10 @@ body {
 .channelIcon::before {
   content: '#';
 }
-
-.messagePane {
+.channelPane {
   background-color: #72716A;
   margin: 0;
-  padding: 16px;
+  padding: 0;
 
   width: 100%;
   height: 100%;
@@ -113,34 +133,49 @@ body {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  overflow: auto;
+  overflow: hidden;
 }
-.messagePane ol {
+.messageChannelTitle {
   margin: 0;
-  padding: 0;
-  flex-grow: 1;
+  background-color: #a7942d;
+  color: white;
+  padding: 16px;
+  padding-bottom: 8px;
+}
+.messagePane {
+  background-color: #72716A;
+  margin: 0;
+  padding-left: 16px;
+
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
 
   overflow-y: auto;
 }
 .messageInputField {
   box-sizing: border-box;
-  width: 100%;
-  flex-grow: 0;
+  margin: 8px;
+  padding: 24px;
 
   resize: none;
 
   background-color: #404040;
   border:none;
   color:white;
-  padding: 16px;
   border-radius: 16px;
 }
 .message {
   color: white;
-  background-color: #54524A;
-  margin: 8px 32px 8px 0;
-  padding: 16px;
-  border-radius: 32px;
+  background-color: #5f5d59;
+  margin: 4px 4px 4px 0;
+  padding: 8px;
+  padding-left: 16px;
+  border-radius: 16px;
 }
 
 .selected::before {
