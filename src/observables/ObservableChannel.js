@@ -88,5 +88,26 @@ export class ObservableChannel {
             console.log(`sendMessage error: ${error}`);
             throw error;
         }
+    /**
+     * Update the state of this channel to include a new message. This action should be dispatched if the client
+     * was notified of a new message.
+     */
+    handleMessageCreated(message) {
+        console.log(`Received new message for tower ${this.towerId}, channel ${this.id}`);
+        // Field names use snake_case for some reason when we receive objects through STOMP/Websockets
+        this.messages.set(message.id, new ObservableMessage(this.cityConfig, message.id, message.channel_id, message.tower_id, message.sender_id, message.sent_time, message.message_body, message.attachments));
+    }
+
+    handleMessageEdited(message) {
+        console.log(`Message ${message.id} for tower ${this.towerId}, channel ${this.id} has been edited`);
+        // Field names use snake_case for some reason when we receive objects through STOMP/Websockets
+        const existingMessage = this.messages.get(message.id);
+        // Only the message body is editable
+        existingMessage.messageBody = message.message_body;
+    }
+
+    handleMessageDeleted(message) {
+        console.log(`Received message delete event for message`);
+        this.messages.delete(message.id);
     }
 }
