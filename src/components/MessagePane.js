@@ -7,9 +7,15 @@ import {useParams} from 'react-router-dom';
 export const MessagePane = observer(function MessagePane(props) {
 
     const {towers} = useContext(TowerContext);
+    const [scrollAtBottom, setScrollAtBottom] = useState(false);
     let {channelId, towerId} = useParams();
 
     const messageList = useRef(null);
+
+    // Used to determine whether or not we've scrolled to the bottom of the page
+    const scrollHandler = (event) => {
+        setScrollAtBottom(event.target.scrollHeight - event.target.scrollTop === event.target.clientHeight);
+    };
 
     const handleKeyDown = (e,field) => {
         if (e.key === 'Enter' && !e.shiftKey) {
@@ -28,12 +34,18 @@ export const MessagePane = observer(function MessagePane(props) {
 
     useEffect(() => {
         // Scroll
-        messageList.current.scrollTop = messageList.current.scrollHeight;
+        if (scrollAtBottom) {
+            messageList.current.scrollTop = messageList.current.scrollHeight;
+        }
     });
+
+    useEffect(() => {
+        messageList.current.scrollTop = messageList.current.scrollHeight;
+    },[]);
 
     return (
         <div className='messagePane'>
-            <ol ref={messageList}>
+            <ol ref={messageList} onScroll={scrollHandler}>
                 {
                     props.messages ? Array.from(props.messages.values()).map(
                         (msg) => <Message key={msg.id} message={msg}/>

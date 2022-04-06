@@ -35,7 +35,7 @@ class Users {
 	 * TODO figure out how to make this trigger when a user joins
 	 */
 	* getUserInfo(userId) {
-		if (!this.users.has(userId)) {
+		/*if (!this.users.has(userId)) {
 			try {
 				const response = yield new AccountManagementApi(this.cisConfig()).getAccount({userId:userId});
 				this.users.set(userId,response);
@@ -43,7 +43,7 @@ class Users {
 				console.log(`fetchMessages error: ${error}`);
             	throw error;
 			}
-		}
+		}*/
 		return this.users.get(userId);
 	}
 }
