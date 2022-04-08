@@ -26,7 +26,7 @@ export const TowerDetails = observer(function TowerDetails(props) {
         <div className='serverDetailsPanel'>
             <div className='title'>
                 <h2>{props.tower.name}</h2>
-                <div onClick={inviteHandler} class='inviteButton'>+ Invite others!</div>
+                <div onClick={inviteHandler} className='inviteButton'>+ Invite others!</div>
             </div>
             <ol className='channelList'>
                 {channels}
