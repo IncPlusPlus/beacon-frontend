@@ -10,6 +10,7 @@ export const Messages = observer(function Messages(props) {
     const {towers} = useContext(TowerContext);
     const tower = get(towers, towerId);
     const channelInitialized = tower.channels.get(channelId) !== undefined;
+
     /*
     If the user visits, for example, http://localhost:3000/channels/623de7d41b2b8c392b5e23d0/623f9a06023ebe6403a6446d
     in a fresh new browser tab, this new tab had no state until it starts talking to the API. Because of this, we can't
