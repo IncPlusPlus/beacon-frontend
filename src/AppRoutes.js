@@ -6,7 +6,7 @@ import {UserDetails} from "./routes/user"
 import {SignInContext} from "./context/signInContext";
 import {useContext} from "react";
 import {LoginPage} from "./routes/LoginPage";
-import { SignupPage } from "./routes/SignupPage";
+import {SignupPage} from "./routes/SignupPage";
 
 export const AppRoutes = (props) => <Routes>
     <Route path="/login" element={<LoginPage/>}/>

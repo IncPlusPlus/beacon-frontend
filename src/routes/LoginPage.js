@@ -58,12 +58,14 @@ export const LoginPage = (props, context) => {
                 <>
                     <h1>Sign in</h1>
                     <form onSubmit={tryCredentials}>
-                        <input type="text" placeholder="Username" value={username} onChange={event => setUsername(event.target.value)}/>
-                        <input type="password" placeholder="Password" value={password} onChange={event => setPassword(event.target.value)}/>
+                        <input type="text" placeholder="Username" value={username}
+                               onChange={event => setUsername(event.target.value)}/>
+                        <input type="password" placeholder="Password" value={password}
+                               onChange={event => setPassword(event.target.value)}/>
                         <button type="submit">Submit</button>
                     </form>
 
-                    <button onClick={()=>navigate('/signup')}>Create an account</button>
+                    <button onClick={() => navigate('/signup')}>Create an account</button>
                 </>}
             </div>
         </div>
