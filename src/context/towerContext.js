@@ -3,7 +3,11 @@ import {makeAutoObservable, observable} from "mobx";
 import {Configuration as CityConfiguration, UsersApi} from "beacon-city";
 import {ObservableTower} from "../observables/ObservableTower";
 import {SignInContext} from "./signInContext";
-import {CityManagementApi, Configuration as CisConfiguration} from "beacon-central-identity-server";
+import {
+    CityManagementApi,
+    Configuration as CisConfiguration,
+    TowerUserMembershipApi
+} from "beacon-central-identity-server";
 
 class Towers {
     cisBasePath
@@ -115,6 +119,25 @@ class Towers {
         // TODO: This only checks for any Towers we DON'T know about yet. We should probably also make sure that any
         //  Towers that are present in this.towers but not present in this response get deleted from this.towers.
         //  We could use a method similar to how ObservableTower.refreshChannels() manages deleting old entities.
+    }
+
+    /**
+     * Join a new tower based on the user id
+     * This will not update the tower list
+     */
+    * joinTower(code) {
+        yield new TowerUserMembershipApi(this.cisConfig).joinTowerWithInviteCode({towerInviteCode: code})
+            .then(() => {
+                alert("Joined new tower!");
+            })
+            .catch(reason => {
+                console.log("Error joining new tower");
+                if (reason instanceof Response) {
+                    reason.json().then(value => {
+                        console.log(value)
+                    });
+                }
+            });
     }
 }
 

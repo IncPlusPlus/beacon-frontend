@@ -6,7 +6,7 @@ import {BrowserRouter} from "react-router-dom";
 import {AppRoutes} from './AppRoutes';
 import {TowerContextProvider} from "./context/towerContext";
 import {SignInContextProvider} from "./context/signInContext";
-import { UserContextProvider } from './context/userContext';
+import {UserContextProvider} from './context/userContext';
 
 ReactDOM.render(
     <React.StrictMode>
