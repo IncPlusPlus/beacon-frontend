@@ -65,7 +65,7 @@ export const MessagePane = observer(function MessagePane(props) {
                     ) : <div>No messages</div>
                 }
             </ol>
-            <textarea id="messageInput" rows="1" type="text" placeholder='Message' className='messageInputField'
+            <textarea id="messageInput" rows="1" placeholder='Message' className='messageInputField'
                       onKeyDown={(e) => handleKeyDown(e, this)}/>
         </div>
     );
