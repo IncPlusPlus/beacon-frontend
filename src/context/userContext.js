@@ -8,6 +8,7 @@ class Users {
 	currentUsername
     currentPassword
 	users
+	queuedUserInfoFetchRequests
 
 	constructor(cisBasePath,currentUsername,currentPassword) {
 		makeAutoObservable(this,
@@ -17,6 +18,7 @@ class Users {
 		this.currentUsername = currentUsername;
         this.currentPassword = currentPassword;
 		this.users = observable.map();
+		this.queuedUserInfoFetchRequests = observable.set();
 	}
 
 	/**
@@ -31,22 +33,45 @@ class Users {
     }
 
 	/**
-	 * Update the users object to contain all users in all towers this user is a mamber of. Dispatch this flow when the
-	 * app starts and when the user joins a new server
-	 * TODO figure out how to make this trigger when a user joins
+	 * Fetches information about the provided user ID and adds it to the internal store of this class.
+	 * This flow will not send duplicate requests to the server. If the same ID is provided multiple times in rapid
+	 * succession, only one request will ever be sent. This flow does not have any return value.
+	 * @param userId the ID of a user
 	 */
-	* retrieveUserInfo(userId,callback) {
+	* fetchUserInfo(userId) {
+		// If we don't already have info about this user...
 		if (!this.users.has(userId)) {
-			try {
-				const response = yield new AccountManagementApi(this.cisConfig).getAccount({userAccountId:userId});
-				this.users.set(userId,response);
-			}catch(error) {
-				console.log(`retrieveUserInfo error: ${error}`);
-            	throw error;
+			// and we aren't already looking for information about them...
+			if (!this.queuedUserInfoFetchRequests.has(userId)) {
+				// Make note that we're looking this user up and proceed to do so
+				this.queuedUserInfoFetchRequests.add(userId);
+				try {
+					const response = yield new AccountManagementApi(this.cisConfig).getAccount({userAccountId: userId});
+					this.users.set(userId, response);
+				} catch (error) {
+					console.log(`retrieveUserInfo error: ${error}`);
+					throw error;
+				} finally {
+					// Make note that we are no longer looking up info for this user
+					this.queuedUserInfoFetchRequests.delete(userId);
+				}
 			}
 		}
-		if (callback) {
-			callback();
+	}
+
+	/**
+	 * Retrieves the name of a user by their ID. This action will return the name of the user if it is currently known.
+	 * If the name is not known, the action will dispatch a flow to retrieve the info about that user. This action
+	 * will then return the name of the user on the next render where the info is known. During the time the info is
+	 * not known, the ID will be returned.
+	 * @param userId the ID of a user
+	 */
+	getUsername(userId) {
+		if (!this.users.has(userId)) {
+			this.fetchUserInfo(userId);
+			return userId;
+		} else {
+			return this.users.get(userId).username;
 		}
 	}
 }
