@@ -1,7 +1,7 @@
 import {createContext, useContext} from "react";
 import {makeAutoObservable, observable} from "mobx";
 import {AccountManagementApi, Configuration as CisConfiguration} from "beacon-central-identity-server";
-import { SignInContext } from "./signInContext";
+import {SignInContext} from "./signInContext";
 
 class Users {
 	cisBasePath
@@ -41,7 +41,7 @@ class Users {
 				const response = yield new AccountManagementApi(this.cisConfig).getAccount({userAccountId:userId});
 				this.users.set(userId,response);
 			}catch(error) {
-				console.log(`fetchMessages error: ${error}`);
+				console.log(`retrieveUserInfo error: ${error}`);
             	throw error;
 			}
 		}
