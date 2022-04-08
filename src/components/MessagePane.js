@@ -9,7 +9,7 @@ export const MessagePane = observer(function MessagePane(props) {
     const {towers} = useContext(TowerContext);
     let {channelId, towerId} = useParams();
 
-    const handleKeyDown = (e,field) => {
+    const handleKeyDown = (e, field) => {
         if (e.key === 'Enter' && !e.shiftKey) {
             // Try and send message
             const messageBody = e.target.value;
