@@ -1,11 +1,8 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {observer} from "mobx-react-lite";
 import ReactMarkdown from 'react-markdown'
-import { UserContext } from '../context/userContext';
 
 export const Message = observer(function Message(props) {
-
-    const {getUserInfo} = useContext(UserContext);
 
     /*
      * For editing and deleting messages, we could either do what discord does with showing buttons on a message
@@ -15,7 +12,7 @@ export const Message = observer(function Message(props) {
     return (
         <div className='message'>
             <strong>{props.message.senderId}</strong><br/>
-            <span>{props.message.messageBody}</span>
+            <span><ReactMarkdown>{props.message.messageBody}</ReactMarkdown></span>
         </div>
     );
 });
