@@ -24,7 +24,7 @@ export const MessagePane = observer(function MessagePane(props) {
     };
 
     // Send a message when enter is pressed (ignoring shift)
-    const handleKeyDown = (e,field) => {
+    const handleKeyDown = (e, field) => {
         if (e.key === 'Enter' && !e.shiftKey) {
             // Try and send message
             const messageBody = e.target.value;
@@ -45,7 +45,7 @@ export const MessagePane = observer(function MessagePane(props) {
             messageList.current.scrollTop = messageList.current.scrollHeight;
         }
         setInitialized(true);
-    },[scrollAtBottom, initialized]);
+    }, [scrollAtBottom, initialized]);
 
     // Set the channel name
     useEffect(() => {
@@ -58,12 +58,12 @@ export const MessagePane = observer(function MessagePane(props) {
         <div className='channelPane'>
             <h3 className='messageChannelTitle'>#{channelName}</h3>
             <ol className='messagePane' ref={messageList} onScroll={scrollHandler}>
-                    {
-                        props.messages ? Array.from(props.messages.values()).map(
-                            (msg) => <Message key={msg.id} message={msg}/>
-                            // TODO: Replace this with skeletons from react-content-loader or react-loading-skeleton
-                        ) : <div>No messages</div>
-                    }
+                {
+                    props.messages ? Array.from(props.messages.values()).map(
+                        (msg) => <Message key={msg.id} message={msg}/>
+                        // TODO: Replace this with skeletons from react-content-loader or react-loading-skeleton
+                    ) : <div>No messages</div>
+                }
             </ol>
             <textarea id="messageInput" rows="1" type="text" placeholder='Message' className='messageInputField'
                       onKeyDown={(e) => handleKeyDown(e, this)}/>
