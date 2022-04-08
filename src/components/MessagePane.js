@@ -45,6 +45,7 @@ export const MessagePane = observer(function MessagePane(props) {
             messageList.current.scrollTop = messageList.current.scrollHeight;
         }
         setInitialized(true);
+        // TODO: Currently broken. This needs an additional dependency that triggers when a new message is received.
     }, [scrollAtBottom, initialized]);
 
     // Set the channel name
