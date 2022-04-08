@@ -82,7 +82,7 @@ export class ObservableChannel {
                 message: {messageBody: messageBody}
             };
             yield new MessagesApi(this.cityConfig(this.towerId)).createMessage(request);
-        }catch (error) {
+        } catch (error) {
             // TODO: Make this a snackbar with notistack
             //  see https://github.com/iamhosseindhv/notistack
             console.log(`sendMessage error: ${error}`);
