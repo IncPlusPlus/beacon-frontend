@@ -38,7 +38,7 @@ export const SignupPage = (props, context) => {
             setSignupError(signupState);
         }
 
-    },[signupState]);
+    },[signupState.navigate]);
 
     return (
         <div id='loginPane'>
@@ -52,7 +52,7 @@ export const SignupPage = (props, context) => {
                         <input type="password" placeholder="Confirm Password" value={passwordConfirm} onChange={event => setPasswordConfirm(event.target.value)}/>
                         <button type="submit">Submit</button>
                     </form>
-                    {signupError != '' ? <div className="error">{signupError}</div> : <></>}
+                    {signupError !== '' ? <div className="error">{signupError}</div> : <></>}
                 </> :
                 <Navigate to='/login'/>
             }
