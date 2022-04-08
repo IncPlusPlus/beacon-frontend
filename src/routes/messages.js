@@ -1,9 +1,10 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {MessagePane} from '../components/MessagePane';
 import {useParams} from 'react-router-dom';
 import {TowerContext} from "../context/towerContext";
 import {observer} from "mobx-react-lite";
 import {get} from "mobx";
+import { useInterval } from 'react-use';
 
 export const Messages = observer(function Messages(props) {
     let {channelId, towerId} = useParams();
@@ -25,7 +26,7 @@ export const Messages = observer(function Messages(props) {
             tower.channels.get(channelId).fetchMessages();
         }
     });
-    
+
     // Refresh the messages for the open channel every 10,000 ms. This should be replaced with a better method in the future
     useInterval(() => {
         // Don't dispatch another fetch action if one is already running.
