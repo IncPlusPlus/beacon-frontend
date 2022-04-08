@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext} from 'react';
 import {Message} from './Message';
 import {TowerContext} from "../context/towerContext";
 import {observer} from "mobx-react-lite";
@@ -7,7 +7,6 @@ import {useParams} from 'react-router-dom';
 export const MessagePane = observer(function MessagePane(props) {
 
     const {towers} = useContext(TowerContext);
-    const [fetchMessagesPending, setFetchMessagesPending] = useState(false);
     let {channelId, towerId} = useParams();
 
     const handleKeyDown = (e,field) => {
@@ -21,11 +20,6 @@ export const MessagePane = observer(function MessagePane(props) {
             thePromise.finally(() => {
                 e.target.value = "";
                 e.target.disabled = false;
-
-                // Immediately after sending, force the channel list to update
-                setFetchMessagesPending(true);
-                let theOtherPromise = towers.get(towerId).channels.get(channelId).fetchMessages();
-                theOtherPromise.finally(() => setFetchMessagesPending(false));
             });
         }
     }
