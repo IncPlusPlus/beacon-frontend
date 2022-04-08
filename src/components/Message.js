@@ -1,16 +1,14 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {observer} from "mobx-react-lite";
+import React, { useContext, useEffect, useState } from 'react';
+import { observer } from "mobx-react-lite";
 import ReactMarkdown from 'react-markdown'
-import { useEffectOnce } from 'react-use';
 import { UserContext } from '../context/userContext';
-import { toJS } from 'mobx';
 
 export const Message = observer(function Message(props) {
 
     const [author, setAuthor] = useState('');
     const [refresh, setRefresh] = useState(true);
 
-    const {users, retrieveUserInfo} = useContext(UserContext);
+    const { users, retrieveUserInfo } = useContext(UserContext);
     const senderId = props.message.senderId;
 
     // Called once we're done updating the user list
@@ -22,13 +20,13 @@ export const Message = observer(function Message(props) {
         if (refresh) {
             if (users.has(senderId)) {
                 setAuthor(users.get(senderId));
-            }else{
+            } else {
                 // Tell the user context to get the username needed
-                retrieveUserInfo(senderId,checkUsersCallback);
+                retrieveUserInfo(senderId, checkUsersCallback);
             }
             setRefresh(false);
         }
-    },[users,refresh]);
+    }, [users, refresh, retrieveUserInfo, senderId]);
 
     /*
      * For editing and deleting messages, we could either do what discord does with showing buttons on a message
@@ -37,7 +35,7 @@ export const Message = observer(function Message(props) {
      */
     return (
         <div className='message'>
-            <strong>{author.username}</strong><br/>
+            <strong>{author.username}</strong><br />
             <span><ReactMarkdown>{props.message.messageBody}</ReactMarkdown></span>
         </div>
     );

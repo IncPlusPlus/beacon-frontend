@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useRef} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import {Message} from './Message';
 import {TowerContext} from "../context/towerContext";
 import {observer} from "mobx-react-lite";
@@ -45,7 +45,7 @@ export const MessagePane = observer(function MessagePane(props) {
             messageList.current.scrollTop = messageList.current.scrollHeight;
         }
         setInitialized(true);
-    });
+    },[scrollAtBottom, initialized]);
 
     // Set the channel name
     useEffect(() => {

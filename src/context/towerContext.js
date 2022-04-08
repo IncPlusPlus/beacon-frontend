@@ -3,7 +3,7 @@ import {makeAutoObservable, observable} from "mobx";
 import {Configuration as CityConfiguration, UsersApi} from "beacon-city";
 import {ObservableTower} from "../observables/ObservableTower";
 import {SignInContext} from "./signInContext";
-import {AccountManagementApi, CityManagementApi, Configuration as CisConfiguration, TowerUserMembershipApi} from "beacon-central-identity-server";
+import {CityManagementApi, Configuration as CisConfiguration, TowerUserMembershipApi} from "beacon-central-identity-server";
 
 class Towers {
     cisBasePath
@@ -122,7 +122,7 @@ class Towers {
      * This will not update the tower list
      */
     * joinTower(code) {
-        new TowerUserMembershipApi(this.cisConfig).joinTowerWithInviteCode({towerInviteCode:code})
+        yield new TowerUserMembershipApi(this.cisConfig).joinTowerWithInviteCode({towerInviteCode:code})
         .then(() => {
             alert("Joined new tower!");
         })
