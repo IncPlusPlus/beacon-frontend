@@ -38,7 +38,7 @@ export const SignupPage = (props, context) => {
             setSignupError(signupState);
         }
 
-    },[signupState.navigate]);
+    },[signupState,navigate]);
 
     return (
         <div id='loginPane'>
