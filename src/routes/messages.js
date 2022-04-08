@@ -24,7 +24,7 @@ export const Messages = observer(function Messages(props) {
         if (channelInitialized && !tower.channels.get(channelId).messagesLoadedOnce) {
             tower.channels.get(channelId).fetchMessages();
         }
-    });
+    }, [channelId, channelInitialized, tower.channels, towerId]);
 
     return <MessagePane
         messages={(towerId !== "" && channelId !== "") ? towers.get(towerId).channels.get(channelId)?.messages : []}/>;
