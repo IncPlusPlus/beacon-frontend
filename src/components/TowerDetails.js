@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {observer} from "mobx-react-lite";
 import {useEffectOnce} from "react-use";
+import {TowerContext} from "../context/towerContext";
 
 export const TowerDetails = observer(function TowerDetails(props) {
     // Load channels of a Tower when viewing that tower. useEffectOnce runs when the component is mounted.
-    useEffectOnce(() => props.tower.refreshChannels())
+    useEffectOnce(() => props.tower.refreshChannels());
+
+    const {generateInviteCode} = useContext(TowerContext);
 
     let channels = [];
     Array.from(props.tower.channels.values()).sort((a, b) => a.order - b.order).forEach(channel => {
@@ -19,7 +22,11 @@ export const TowerDetails = observer(function TowerDetails(props) {
 
     // Called when the 'invite people' button is pressed
     const inviteHandler = () => {
-        alert("This doesn't do anything yet! Sorry!");
+        // Get an invite code from the tower
+        generateInviteCode(props.tower.id).then(invite => {
+            navigator.clipboard.writeText(invite.inviteCode);
+            alert("Invite copied to clipboard! This will expire in one hour");
+        });
     };
 
     return (
