@@ -1,17 +1,18 @@
-import React, {useContext, useEffect, useRef, useState} from 'react';
-import {Message} from './Message';
-import {TowerContext} from "../context/towerContext";
-import {observer} from "mobx-react-lite";
-import {get} from "mobx";
-import {useParams} from 'react-router-dom';
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { Message } from './Message';
+import { TowerContext } from "../context/towerContext";
+import { observer } from "mobx-react-lite";
+import { get } from "mobx";
+import { useParams } from 'react-router-dom';
+import { useEffectOnce } from 'react-use';
 
 export const MessagePane = observer(function MessagePane(props) {
 
-    const {towers} = useContext(TowerContext);
+    const { towers } = useContext(TowerContext);
     const [scrollAtBottom, setScrollAtBottom] = useState(false);
-    const [initialized, setInitialized] = useState(false);
+    const [messagesBelow, setMessagesBelow] = useState(false);
     const [channelName, setChannelName] = useState('');
-    let {channelId, towerId} = useParams();
+    let { channelId, towerId } = useParams();
 
     const tower = get(towers, towerId);
     const channelInitialized = tower.channels.get(channelId) !== undefined;
@@ -20,7 +21,14 @@ export const MessagePane = observer(function MessagePane(props) {
 
     // Used to determine whether or not we've scrolled to the bottom of the page
     const scrollHandler = (event) => {
-        setScrollAtBottom(event.target.scrollHeight - event.target.scrollTop === event.target.clientHeight);
+        const atBottom = event.target.scrollHeight - event.target.scrollTop === event.target.clientHeight;
+        if (atBottom !== scrollAtBottom) {
+            setScrollAtBottom(atBottom);
+        }
+    };
+
+    const scrollToBottom = () => {
+        messageList.current.scrollTop = messageList.current.scrollHeight;
     };
 
     // Send a message when enter is pressed (ignoring shift)
@@ -38,15 +46,19 @@ export const MessagePane = observer(function MessagePane(props) {
             });
         }
     }
+    // Move to the bottom of the screen once when we load
+    useEffectOnce(() => {
+        scrollToBottom();
+        setMessagesBelow(false); // This only exists so we dont get an unused warning
+    });
 
     // Scroll to bottom when a message is sent or we just loaded
     useEffect(() => {
-        if (scrollAtBottom || !initialized) {
-            messageList.current.scrollTop = messageList.current.scrollHeight;
+        if (scrollAtBottom) {
+            scrollToBottom();
         }
-        setInitialized(true);
-        // TODO: Currently broken. This needs an additional dependency that triggers when a new message is received.
-    }, [scrollAtBottom, initialized]);
+        // TODO implement the 'more messages below' alert
+    });
 
     // Set the channel name
     useEffect(() => {
@@ -61,13 +73,14 @@ export const MessagePane = observer(function MessagePane(props) {
             <ol className='messagePane' ref={messageList} onScroll={scrollHandler}>
                 {
                     props.messages ? Array.from(props.messages.values()).map(
-                        (msg) => <Message key={msg.id} message={msg}/>
+                        (msg) => <Message key={msg.id} message={msg} />
                         // TODO: Replace this with skeletons from react-content-loader or react-loading-skeleton
                     ) : <div>No messages</div>
                 }
             </ol>
+            {messagesBelow ? <span className='messageAlert' onClick={() => scrollToBottom()}>More messages below</span> : <></>}
             <textarea id="messageInput" rows="1" placeholder='Message' className='messageInputField'
-                      onKeyDown={(e) => handleKeyDown(e, this)}/>
+                onKeyDown={(e) => handleKeyDown(e, this)} />
         </div>
     );
 })
