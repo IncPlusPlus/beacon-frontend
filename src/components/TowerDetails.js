@@ -1,11 +1,12 @@
-import React, { useContext } from 'react';
+import React, {useContext, useEffect} from 'react';
 import {observer} from "mobx-react-lite";
-import {useEffectOnce} from "react-use";
 import {TowerContext} from "../context/towerContext";
 
 export const TowerDetails = observer(function TowerDetails(props) {
-    // Load channels of a Tower when viewing that tower. useEffectOnce runs when the component is mounted.
-    useEffectOnce(() => props.tower.refreshChannels());
+    // Load channels of a Tower when viewing that Tower
+    useEffect(() => {
+        props.tower.initializeChannels();
+    }, [props.tower]);
 
     const {generateInviteCode} = useContext(TowerContext);
 
