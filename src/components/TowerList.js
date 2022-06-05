@@ -13,7 +13,7 @@ export const TowerList = observer(function TowerList(props) {
     useEffectOnce(() => updateTowers());
 
     return (
-        <ol className='towerList'>
+        <ol id='towerList'>
             {/*User profile selector*/}
             <li className={'towerIcon' + (props.selected === "USER" ? ' selected' : '')}
                 key='USER'
@@ -33,6 +33,7 @@ export const TowerList = observer(function TowerList(props) {
             })}
 
             {/*Join new tower button*/}
+            <hr/>
             <li className={'towerIcon'}
                 key='JOIN'
                 onClick={() => props.onJoinTowerSelected()}>

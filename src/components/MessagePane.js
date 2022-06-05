@@ -68,9 +68,9 @@ export const MessagePane = observer(function MessagePane(props) {
     }, [channelId, channelInitialized, tower.channels, towerId]);
 
     return (
-        <div className='channelPane'>
-            <h3 className='messageChannelTitle'>#{channelName}</h3>
-            <ol className='messagePane' ref={messageList} onScroll={scrollHandler}>
+        <div id='channelPane'>
+            <h3 id='messageChannelTitle'>#{channelName}</h3>
+            <ol id='messagePane' ref={messageList} onScroll={scrollHandler}>
                 {
                     props.messages ? Array.from(props.messages.values()).map(
                         (msg) => <Message key={msg.id} message={msg} />
