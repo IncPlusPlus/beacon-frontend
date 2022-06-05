@@ -21,6 +21,10 @@
     "react-use": "^17.3.2",
     "web-vitals": "^2.1.4"
   },
+  "engines": {
+    "node": ">=16.13.2",
+    "npm": ">=8.7.0"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
