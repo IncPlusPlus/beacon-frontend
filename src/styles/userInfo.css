@@ -1,9 +1,9 @@
-.userDetailsPane {
+#userDetailsPane {
 	background-color: #404040;
 	width: 100%;
 	padding: 2em;
   }
-  .userDetails {
+  #userDetails {
 	background-color: #54524A;
 	width:50%;
 	height:100%;
@@ -15,7 +15,7 @@
 	padding: 2em;
 	box-sizing: border-box;
   }
-  .userDetails .username {
+  #userDetails .username {
 	font-weight: bolder;
 	font-size: 3em;
   }

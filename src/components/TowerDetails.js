@@ -31,12 +31,12 @@ export const TowerDetails = observer(function TowerDetails(props) {
     };
 
     return (
-        <div className='serverDetailsPanel'>
+        <div id='towerDetailsPanel'>
             <div className='title'>
                 <h2>{props.tower.name}</h2>
-                <div onClick={inviteHandler} className='inviteButton'>+ Invite others!</div>
+                <div onClick={inviteHandler} id='inviteButton'>+ Invite others!</div>
             </div>
-            <ol className='channelList'>
+            <ol id='channelList'>
                 {channels}
             </ol>
         </div>

@@ -1,45 +1,45 @@
-.towerList {
+#towerList {
 	background-color: #FFD800;
 	padding: 0;
 	list-style: none;
 	margin: 0;
-  }
-  .towerList hr {
+}
+#towerList hr {
 	margin: 0 0.5em;
 	color: black;
-  }
-  
-  .towerIcon {
+}
+
+.towerIcon {
 	margin: 1em 0.5em;
 	width: 72px;
 	height: 72px;
 	background-color: #404040;
-  
+
 	text-align: center;
-  
+
 	overflow: hidden;
-  
+
 	border-radius: 72px;
 	transition: 0.1s;
-  }
-  .towerIcon:hover {
+}
+.towerIcon:hover {
 	cursor: pointer;
 	border-radius: 20px;
 	transition: 0.1s;
-  }
-  .towerIcon.selected {
+}
+.towerIcon.selected {
 	background-color: #404040;
 	border-radius: 20px;
-  }
-  .towerIcon span {
+}
+.towerIcon span {
 	height: 72px;
 	display: table-cell;
 	vertical-align: middle;
 	color:white;
 	font-weight: bold;
-  }
-  .towerIcon img {
+}
+.towerIcon img {
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
-  }
+}

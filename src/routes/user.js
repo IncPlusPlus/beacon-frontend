@@ -9,8 +9,8 @@ export const UserDetails = (props) => {
     const {invalidateSession} = useContext(SignInContext);
 
     return (
-        <div className='userDetailsPane'>
-            <div className='userDetails'>
+        <div id='userDetailsPane'>
+            <div id='userDetails'>
                 <img alt="Your Avatar" src={default_avatar}/>
                 <div className='username'>{currentUsername}</div>
                 <button onClick={() => invalidateSession()}>Sign Out</button>

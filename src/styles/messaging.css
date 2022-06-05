@@ -1,5 +1,5 @@
 
-.channelPane {
+#channelPane {
 	background-color: #72716A;
 	margin: 0;
 	padding: 0;
@@ -12,14 +12,14 @@
 	align-items: stretch;
 	overflow: hidden;
 }
-.messageChannelTitle {
+#messageChannelTitle {
   margin: 0;
   background-color: #a7942d;
   color: white;
   padding: 1em;
   padding-bottom: 0.5em;
 }
-.messagePane {
+#messagePane {
   background-color: #72716A;
   margin: 0;
   padding-left: 1em;
@@ -34,7 +34,7 @@
 
   overflow-y: auto;
 }
-.messageInputField {
+#messageInputField {
   box-sizing: border-box;
   margin: 0.5em;
   padding: 1.5em;
@@ -45,6 +45,7 @@
   color:white;
   border-radius: 1em;
 }
+
 .message {
   color: white;
   background-color: #5f5d59;
@@ -74,4 +75,4 @@ code {
 	padding: 0.25em;
 	border-radius: 0.5em;
 	border: 1px solid #161616;
-  }
+}
