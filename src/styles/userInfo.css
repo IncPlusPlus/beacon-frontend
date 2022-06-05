@@ -1,0 +1,21 @@
+.userDetailsPane {
+	background-color: #404040;
+	width: 100%;
+	padding: 2em;
+  }
+  .userDetails {
+	background-color: #54524A;
+	width:50%;
+	height:100%;
+	border-radius: 2em;
+	box-shadow: inset 0 0 3px black;
+  
+	color: white;
+  
+	padding: 2em;
+	box-sizing: border-box;
+  }
+  .userDetails .username {
+	font-weight: bolder;
+	font-size: 3em;
+  }
