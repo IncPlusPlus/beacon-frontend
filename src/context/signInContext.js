@@ -56,7 +56,8 @@ export function SignInContextProvider({children}) {
     const attemptSignIn = (username, password) => signInWithCredentials(cisBasePath, username, password, signInInProgress, setSignInInProgress, setSignedIn, setCurrentUsername, setCurrentPassword, setCurrentUserId);
     const attemptSignup = (username, email, password) => signUpWithCredentials(cisBasePath, username, email, password, setSignupState);
     /**
-     * To be used
+     * To be used when we encounter a `401` which would indicate our credentials are invalid. Resetting all this info 
+     * will effectively boot the user back to the login screen where they will have to sign in again.
      */
     const invalidateSession = () => {
         setSignedIn(false);
