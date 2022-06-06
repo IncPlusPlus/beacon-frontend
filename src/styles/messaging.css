@@ -1,6 +1,6 @@
 
 #channelPane {
-	background-color: #72716A;
+	background-color: #5e5d59;
 	margin: 0;
 	padding: 0;
 	width: 100%;
@@ -20,7 +20,7 @@
   padding-bottom: 0.5em;
 }
 #messagePane {
-  background-color: #72716A;
+  background-color: #5e5d59;
   margin: 0;
   padding-left: 1em;
 
@@ -48,30 +48,37 @@
 
 .message {
   color: white;
-  background-color: #5f5d59;
-  margin: 0.25em 0.75em 0.25em 0;
-  padding: 0.5em;
-  padding-left: 1em;
-  border-radius: 1em;
+  /*border-radius: 1em;*/
+  margin: 1.5em 0.75em 0 0;
 
   display: flex;
   flex-direction: row;
 }
+.message:hover {
+  background-color: rgb(78, 78, 76);
+  border-radius: 1em;
+}
+.message.minimal {
+  padding-left: 3.5em;
+  margin-top: 0;
+}
+
 
 .message .messageUsername {
   font-weight: 600;
 }
-
 .message .messageUserIcon {
   display: inline-block;
   border-radius: 4em;
   margin-right: 1em;
-  height: 4em;
-  width: 4em;
+  height: 2.5em;
+  width: 2.5em;
 }
-
 .message .messageContent {
   display: inline-block;
+}
+.message .messageContent p {
+  margin: 0;
 }
 
 .messageActionContainer {
