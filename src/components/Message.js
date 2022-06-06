@@ -10,10 +10,14 @@ export const Message = observer(function Message(props) {
      * on hover, or we could make a right click menu. Here's an example button to delete this message instance.
      * <button onClick={() => props.message.deleteMessage()}>Delete</button>
      */
+
+    const messageActions = <span className='messageActions'>Delete</span>;
+
     return (
         <div className='message'>
             <strong>{getUsername(props.message.senderId)}</strong><br/>
             <span><ReactMarkdown>{props.message.messageBody}</ReactMarkdown></span>
+            {messageActions}
         </div>
     );
 });

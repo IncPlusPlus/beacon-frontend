@@ -54,6 +54,18 @@
   padding-left: 1em;
   border-radius: 1em;
 }
+
+.messageActions {
+  float:right;
+}
+
+.message .messageActions {
+  display: none;
+}
+.message:hover .messageActions {
+  display: block;
+}
+
 .messageAlert {
   text-align: center;
   color: white;
