@@ -140,13 +140,4 @@ function signInWithCredentials(cisBasePath, username, password, signInInProgress
         }
         console.log('Sign in failed.');
     });
-
-    /*
-     TODO: Listing the cities isn't necessarily what needs to happen here. All that needs to happen is an API request
-      has to be sent with the correct credentials. An endpoint like /check-authentication will be added to both services
-      in the near future. Upon sending ANY request to the API, authenticated or not, the server will give the browser
-      a JSESSIONID cookie. This cookie will be sent to the server with every request. If the browser had sent a request
-      with the correct credentials, then there is no need to continue to send credentials in subsequent requests as the
-      server will know that this is the same, authenticated client by the JSESSIONID it was assigned.
-    */
 }
