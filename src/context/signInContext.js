@@ -64,6 +64,7 @@ export function SignInContextProvider({children}) {
         setSignupState('');
         setCurrentUsername('');
         setCurrentPassword('');
+        setCurrentUserId('');
     };
 
     return (
