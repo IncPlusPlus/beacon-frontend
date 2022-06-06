@@ -1,6 +1,6 @@
 import {createContext, useState} from "react";
 import {CIS_QA_URL} from "../util/CISApiHelper";
-import {AccountManagementApi, CityManagementApi, Configuration} from "beacon-central-identity-server";
+import {AccountManagementApi, Configuration} from "beacon-central-identity-server";
 import {useLocalStorage} from "react-use";
 
 export const SignInContext = createContext({
