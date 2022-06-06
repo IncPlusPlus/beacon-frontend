@@ -1,6 +1,6 @@
 import {createContext, useState} from "react";
 import {CIS_QA_URL} from "../util/CISApiHelper";
-import {AccountManagementApi, CityManagementApi, Configuration} from "beacon-central-identity-server";
+import {AccountManagementApi, Configuration} from "beacon-central-identity-server";
 import {useLocalStorage} from "react-use";
 
 export const SignInContext = createContext({
@@ -30,6 +30,10 @@ export const SignInContext = createContext({
      */
     accountPassword: '',
     /**
+     * The ID of the currently signed in user
+     */
+     accountId: '',
+    /**
      * Call this function if you receive a 401 back from the API. The signedIn variable in the SignInContext will be set to false and the user will be kicked back to the login screen.
      */
     invalidateSession: () => console.log('WARNING: Attempted to invalidate session but hit a no-op function. This means that the SignInContext was never set up properly!!!'),
@@ -47,17 +51,20 @@ export function SignInContextProvider({children}) {
      */
     const [currentUsername, setCurrentUsername] = useLocalStorage('currentUsername', '');
     const [currentPassword, setCurrentPassword] = useLocalStorage('currentPassword', '');
+    const [currentUserId, setCurrentUserId] = useLocalStorage('currentUserId', '');
     const [cisBasePath] = useLocalStorage('cisBasePath', CIS_QA_URL);
-    const attemptSignIn = (username, password) => signInWithCredentials(cisBasePath, username, password, signInInProgress, setSignInInProgress, setSignedIn, setCurrentUsername, setCurrentPassword);
+    const attemptSignIn = (username, password) => signInWithCredentials(cisBasePath, username, password, signInInProgress, setSignInInProgress, setSignedIn, setCurrentUsername, setCurrentPassword, setCurrentUserId);
     const attemptSignup = (username, email, password) => signUpWithCredentials(cisBasePath, username, email, password, setSignupState);
     /**
-     * To be used
+     * To be used when we encounter a `401` which would indicate our credentials are invalid. Resetting all this info 
+     * will effectively boot the user back to the login screen where they will have to sign in again.
      */
     const invalidateSession = () => {
         setSignedIn(false);
         setSignupState('');
         setCurrentUsername('');
         setCurrentPassword('');
+        setCurrentUserId('');
     };
 
     return (
@@ -70,6 +77,7 @@ export function SignInContextProvider({children}) {
             signInInProgress: signInInProgress,
             accountUsername: currentUsername,
             accountPassword: currentPassword,
+            accountId: currentUserId,
             invalidateSession: invalidateSession,
         }}>
             {children}
@@ -103,7 +111,7 @@ function signUpWithCredentials(cisBasePath, username, email, password, setSignup
 
 }
 
-function signInWithCredentials(cisBasePath, username, password, signInInProgress, setSignInInProgress, setSignedIn, setCurrentUsername, setCurrentPassword) {
+function signInWithCredentials(cisBasePath, username, password, signInInProgress, setSignInInProgress, setSignedIn, setCurrentUsername, setCurrentPassword, setCurrentUserId) {
     console.log('Attempting to sign in');
     if (signInInProgress) {
         console.log('Attempted to sign in while there was already another attempt in progress. This attempt has been cancelled.');
@@ -115,21 +123,16 @@ function signInWithCredentials(cisBasePath, username, password, signInInProgress
         username: username,
         password: password,
     });
-    /*
-     TODO: Listing the cities isn't necessarily what needs to happen here. All that needs to happen is an API request
-      has to be sent with the correct credentials. An endpoint like /check-authentication will be added to both services
-      in the near future. Upon sending ANY request to the API, authenticated or not, the server will give the browser
-      a JSESSIONID cookie. This cookie will be sent to the server with every request. If the browser had sent a request
-      with the correct credentials, then there is no need to continue to send credentials in subsequent requests as the
-      server will know that this is the same, authenticated client by the JSESSIONID it was assigned.
-    */
-    new CityManagementApi(configuration).listRegisteredCities().then(value => {
+
+
+    new AccountManagementApi(configuration).getAccount({userAccountId:''}).then(res => {
         console.log('Sign in succeeded');
         setSignedIn(true);
         setSignInInProgress(false);
         // The credentials tried were valid, save them to the state tree
         setCurrentUsername(username);
         setCurrentPassword(password);
+        setCurrentUserId(res.id);
     }).catch(reason => {
         setSignedIn(false);
         setSignInInProgress(false);
