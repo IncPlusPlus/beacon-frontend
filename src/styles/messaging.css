@@ -74,16 +74,23 @@
   display: inline-block;
 }
 
-.messageActions {
+.messageActionContainer {
   float:right;
   margin-left: auto;
   align-self: center;
 }
 
-.message .messageActions {
+.messageActionButton {
+  cursor: pointer;
+}
+.messageActionButton:hover {
+  text-decoration: underline;
+}
+
+.message .messageActionContainer {
   display: none;
 }
-.message:hover .messageActions {
+.message:hover .messageActionContainer {
   display: inline-block;
 }
 
