@@ -58,6 +58,11 @@
   flex-direction: row;
 }
 
+.message span {
+  flex-grow: 1;
+  margin-right: 0.5em;
+}
+
 .message .messageUsername {
   font-weight: 600;
 }
