@@ -9,7 +9,7 @@ export const Message = observer(function Message(props) {
     const {getUsername} = useContext(UserContext);
     const {accountId} = useContext(SignInContext);
 
-    const [editMode,setEditMode] = useState(false);
+    const [editMode,setEditMode] = useState(false); // True when the message is being edited
     const [editText,setEditText] = useState('');
 
     const enterEditMode = () => {
@@ -32,10 +32,16 @@ export const Message = observer(function Message(props) {
         }else if (e.key === 'Enter' && !e.shiftKey) {
             // Update message
             e.preventDefault();
-            props.message.editMessage(editText)
-                .finally(() => {
-                    setEditMode(false);
-                });
+            // Check if text is unedited
+            if (editText !== props.message.messageBody) {
+                props.message.editMessage(editText)
+                    .finally(() => {
+                        setEditMode(false);
+                    });
+            }else{
+                // Well we didn't change anything, so no need to update
+                setEditMode(false);
+            }
         }
     }
 
