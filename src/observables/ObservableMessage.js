@@ -40,4 +40,21 @@ export class ObservableMessage {
             console.log(`deleteMessage error: ${error}`);
         }
     }
+
+    * editMessage(newMessageBody) {
+        console.log(`Editing message ${this.id} in channel ${this.channelId} in tower ${this.towerId}`);
+        try {
+            yield new MessagesApi(this.cityConfig(this.towerId)).editMessage({
+                towerId: this.towerId,
+                channelId: this.channelId,
+                messageId: this.id,
+                message: {
+                    messageBody: newMessageBody
+                }
+            });
+            console.log(`Edited message ${this.id} in channel ${this.channelId} in tower ${this.towerId}`);
+        } catch (error) {
+            console.log(`editMessage error: ${error}`);
+        }
+    }
 }

@@ -34,7 +34,7 @@
 
   overflow-y: auto;
 }
-#messageInput {
+.messageInput {
   box-sizing: border-box;
   margin: 0.5em;
   padding: 1.5em;
@@ -72,6 +72,12 @@
 
 .message .messageContent {
   display: inline-block;
+}
+
+.messageInput.edit {
+  width: 100%;
+  min-width: 100%;
+  padding: 0.5em;
 }
 
 .messageActionContainer {
