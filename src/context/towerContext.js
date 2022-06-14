@@ -1,8 +1,8 @@
-import {createContext, useContext} from "react";
-import {makeAutoObservable, observable} from "mobx";
-import {Configuration as CityConfiguration, CreateInviteExpiryTimeUnitEnum, InvitesApi, UsersApi} from "beacon-city";
-import {ObservableTower} from "../observables/ObservableTower";
-import {SignInContext} from "./signInContext";
+import { createContext, useContext } from "react";
+import { makeAutoObservable, observable } from "mobx";
+import { Configuration as CityConfiguration, CreateInviteExpiryTimeUnitEnum, InvitesApi, UsersApi } from "beacon-city";
+import { ObservableTower } from "../observables/ObservableTower";
+import { SignInContext } from "./signInContext";
 import {
     CityManagementApi,
     Configuration as CisConfiguration,
@@ -59,7 +59,6 @@ class Towers {
      */
     get cisConfig() {
         return new CisConfiguration({
-            credentials: "include",
             basePath: this.cisBasePath,
             middleware: [this.invalidateWhenUnauthorizedMiddleware],
             username: this.currentUsername,
