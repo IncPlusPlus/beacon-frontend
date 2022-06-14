@@ -19,14 +19,18 @@ export const Towers = observer((props) => {
                 isOpen={isJoinTowerModalOpen}
                 onRequestClose={() => setJoinTowerModalOpen(false)}
                 contentLabel="Join New Tower"
-            >
-                <h3>Join New Tower</h3>
+                className="Modal"
+                overlayClassName="Overlay">
+
+                <h2>Join New Tower</h2>
                 <input type='text' ref={codeInputField} placeholder="Enter tower join code"></input>
-                <button onClick={() => {
-                    const code = codeInputField.current.value;
-                    joinTower(code);
-                    setJoinTowerModalOpen(false);
-                }}>Join Tower</button>
+                <div>
+                    <button onClick={() => {
+                        const code = codeInputField.current.value;
+                        joinTower(code);
+                        setJoinTowerModalOpen(false);
+                    }}>Join Tower</button>
+                </div>
 
             </Modal>
 
