@@ -42,7 +42,7 @@
 	cursor: pointer;
 }
 .channelIcon.selected {
-	background-color: #72716A;
+	background-color: #5e5d59;
 	font-weight: bold;
 	padding: 0.5em;
 	padding-left: 1em;
