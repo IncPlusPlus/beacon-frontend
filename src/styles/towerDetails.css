@@ -23,10 +23,21 @@
 	padding: 0.25em;
 	border-radius: 0.5em;
 	font-weight: bold;
+
+	overflow: hidden;
+	height: 1.5em;
 }
 #inviteButton:hover {
 	color:white;
 	cursor:pointer;
+}
+#inviteButtonText {
+	line-height: 1.5em;
+	transition: 0.1s;
+}
+#inviteButtonText.selected {
+	transform: translateY(-1.5em);
+	transition: 0.1s;
 }
 
 #channelList {

@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {observer} from "mobx-react-lite";
 import {TowerContext} from "../context/towerContext";
 
@@ -9,6 +9,7 @@ export const TowerDetails = observer(function TowerDetails(props) {
     }, [props.tower]);
 
     const {generateInviteCode} = useContext(TowerContext);
+    const [hoveringOverInvite, setHoveringOverInvite] = useState(false);
 
     let channels = [];
     Array.from(props.tower.channels.values()).sort((a, b) => a.order - b.order).forEach(channel => {
@@ -26,7 +27,8 @@ export const TowerDetails = observer(function TowerDetails(props) {
         // Get an invite code from the tower
         generateInviteCode(props.tower.id).then(invite => {
             navigator.clipboard.writeText(invite.inviteCode);
-            alert("Invite copied to clipboard! This will expire in one hour");
+            setHoveringOverInvite(true);
+            //alert("Invite copied to clipboard! This will expire in one hour");
         });
     };
 
@@ -34,7 +36,12 @@ export const TowerDetails = observer(function TowerDetails(props) {
         <div id='towerDetailsPanel'>
             <div className='title'>
                 <h2>{props.tower.name}</h2>
-                <div onClick={inviteHandler} id='inviteButton'>+ Invite others!</div>
+                <div onClick={inviteHandler} onMouseLeave={() => setHoveringOverInvite(false)} id='inviteButton'>
+                    <div id='inviteButtonText' className={hoveringOverInvite ? 'selected' : ''}>
+                        <div>+ Invite others!</div>
+                        <div>Code Copied!</div>
+                    </div>
+                </div>
             </div>
             <ol id='channelList'>
                 {channels}

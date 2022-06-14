@@ -1,16 +1,35 @@
 import {TowerList} from "../components/TowerList";
 import {Outlet, useNavigate, useParams} from "react-router-dom";
-import React, {useContext} from 'react';
+import React, {useContext, useRef, useState} from 'react';
 import {TowerContext} from "../context/towerContext";
 import {observer} from "mobx-react-lite";
+import Modal from 'react-modal';
 
 export const Towers = observer((props) => {
     const {joinTower} = useContext(TowerContext);
+    const [isJoinTowerModalOpen,setJoinTowerModalOpen] = useState(false);
     let {towerId} = useParams();
+    const codeInputField = useRef();
     let navigate = useNavigate();
 
     return (
         <div className='appContainer'>
+
+            <Modal
+                isOpen={isJoinTowerModalOpen}
+                onRequestClose={() => setJoinTowerModalOpen(false)}
+                contentLabel="Join New Tower"
+            >
+                <h3>Join New Tower</h3>
+                <input type='text' ref={codeInputField} placeholder="Enter tower join code"></input>
+                <button onClick={() => {
+                    const code = codeInputField.current.value;
+                    joinTower(code);
+                    setJoinTowerModalOpen(false);
+                }}>Join Tower</button>
+
+            </Modal>
+
             {/*TODO: Show something if there are no towers in the towerContext*/}
             <TowerList selectedTowerId={towerId}
                        onClick={(clickedTower) => {
@@ -21,10 +40,11 @@ export const Towers = observer((props) => {
                        }}
                        onJoinTowerSelected={() => {
                            // TODO implement cool modals or something
-                           const code = prompt("Enter the code for the tower you want to join");
+                           /*const code = prompt("Enter the code for the tower you want to join");
                            if (towerId !== null) {
                                joinTower(code);
-                           }
+                           }*/
+                           setJoinTowerModalOpen(true);
                        }}
             />
             <Outlet/>
