@@ -26,6 +26,7 @@ class Users {
      */
     get cisConfig() {
         return new CisConfiguration({
+            credentials: "include",
             basePath: this.cisBasePath,
             username: this.currentUsername,
             password: this.currentPassword,
