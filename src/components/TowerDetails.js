@@ -33,7 +33,6 @@ export const TowerDetails = observer(function TowerDetails(props) {
         generateInviteCode(props.tower.id).then(invite => {
             navigator.clipboard.writeText(invite.inviteCode);
             setInviteButtonState(INVITE_COPIED);
-            //alert("Invite copied to clipboard! This will expire in one hour");
         });
     };
 

@@ -43,11 +43,6 @@ export const Towers = observer((props) => {
                            navigate(`/me`)
                        }}
                        onJoinTowerSelected={() => {
-                           // TODO implement cool modals or something
-                           /*const code = prompt("Enter the code for the tower you want to join");
-                           if (towerId !== null) {
-                               joinTower(code);
-                           }*/
                            setJoinTowerModalOpen(true);
                        }}
             />
