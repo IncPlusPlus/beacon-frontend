@@ -39,6 +39,11 @@ export const TowerList = observer(function TowerList(props) {
                 onClick={() => props.onJoinTowerSelected()}>
                 <span>Join new Tower</span>
             </li>
+            <li className={'towerIcon'}
+                key='CREATE'
+                onClick={() => props.onCreateNewTowerSelected()}>
+                <span>Create new Tower</span>
+            </li>
         </ol>
     );
 });

@@ -38,7 +38,7 @@
     background-color: rgba(0,0,0,0.5);
 }
 
-.Modal .bigTexInput {
+.Modal .bigTextInput {
     width: 100%;
     padding: 0;
     margin-bottom: 1em;
@@ -50,5 +50,20 @@
 
     color: white;
     text-align: center;
+
+}
+
+.Modal .smallTextInput {
+    width: 75%;
+    padding: 0;
+    margin-bottom: 1em;
+    font-size: 1em;
+    background: none;
+
+    border: none;
+    border-bottom: 0.1em solid #5e5d59;
+
+    color: white;
+    text-align: left;
 
 }
