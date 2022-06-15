@@ -9,7 +9,11 @@ export const TowerDetails = observer(function TowerDetails(props) {
     }, [props.tower]);
 
     const {generateInviteCode} = useContext(TowerContext);
-    const [hoveringOverInvite, setHoveringOverInvite] = useState(false);
+    const [inviteButtonState, setInviteButtonState] = useState(0);
+
+    const INVITE_INACTIVE = 0;
+    const INVITE_WAITING = 1;
+    const INVITE_COPIED = 2;
 
     let channels = [];
     Array.from(props.tower.channels.values()).sort((a, b) => a.order - b.order).forEach(channel => {
@@ -25,9 +29,10 @@ export const TowerDetails = observer(function TowerDetails(props) {
     // Called when the 'invite people' button is pressed
     const inviteHandler = () => {
         // Get an invite code from the tower
+        setInviteButtonState(INVITE_WAITING);
         generateInviteCode(props.tower.id).then(invite => {
             navigator.clipboard.writeText(invite.inviteCode);
-            setHoveringOverInvite(true);
+            setInviteButtonState(INVITE_COPIED);
             //alert("Invite copied to clipboard! This will expire in one hour");
         });
     };
@@ -36,9 +41,9 @@ export const TowerDetails = observer(function TowerDetails(props) {
         <div id='towerDetailsPanel'>
             <div className='title'>
                 <h2>{props.tower.name}</h2>
-                <div onClick={inviteHandler} onMouseLeave={() => setHoveringOverInvite(false)} id='inviteButton'>
-                    <div id='inviteButtonText' className={hoveringOverInvite ? 'selected' : ''}>
-                        <div>+ Invite others!</div>
+                <div onClick={inviteHandler} onMouseLeave={() => setInviteButtonState(INVITE_INACTIVE)} id='inviteButton'>
+                    <div id='inviteButtonText' className={inviteButtonState === INVITE_COPIED ? 'selected' : ''}>
+                        <div>{inviteButtonState === INVITE_WAITING ? "Generating invite..." : "+ Invite others!"}</div>
                         <div>Code Copied!</div>
                     </div>
                 </div>
