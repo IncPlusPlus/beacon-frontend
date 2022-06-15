@@ -6,7 +6,7 @@ import {observer} from "mobx-react-lite";
 import Modal from 'react-modal';
 
 export const Towers = observer((props) => {
-    const {joinTower} = useContext(TowerContext);
+    const {joinTower, createTower} = useContext(TowerContext);
     const [isJoinTowerModalOpen,setJoinTowerModalOpen] = useState(false);
     const [isCreateTowerModalOpen,setCreateTowerModalOpen] = useState(false);
     let {towerId} = useParams();
@@ -53,7 +53,8 @@ export const Towers = observer((props) => {
                 <input className='smallTextInput' type='text' ref={towerCityUrlInputField} placeholder="Optional: Enter City URL to host from"/>
                 <div>
                     <button onClick={() => {
-                        // TODO implement the actual creation functionality
+                        createTower(towerNameInputField.current.value,towerCityUrlInputField.current.value);
+                        setJoinTowerModalOpen(false);
                     }}>Create</button>
                 </div>
 

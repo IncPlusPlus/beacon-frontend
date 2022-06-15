@@ -18,15 +18,20 @@
     top: 30%;
     left: 30%;
     right: 30%;
-    bottom: 30%;
+    bottom: auto;
 
-    padding: 2em;
+    padding: 1em;
     border-radius: 1em;
 
     box-shadow: 0 0 1em black;
 
     animation-name: modal-popup;
     animation-duration: 0.25s;
+}
+
+.Modal h1 {
+    margin: 0;
+    margin-bottom: 0.5em;
 }
 
 .Overlay {
