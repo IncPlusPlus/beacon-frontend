@@ -22,8 +22,8 @@ export const Towers = observer((props) => {
                 className="Modal"
                 overlayClassName="Overlay">
 
-                <h2>Join New Tower</h2>
-                <input type='text' ref={codeInputField} placeholder="Enter tower join code"></input>
+                <h1>Join New Tower</h1>
+                <input className='bigTexInput' type='text' ref={codeInputField} placeholder="Enter Code" maxLength={8}></input>
                 <div>
                     <button onClick={() => {
                         const code = codeInputField.current.value;
