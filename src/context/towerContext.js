@@ -213,13 +213,15 @@ class Towers {
 
         yield new TowersApi(cityConfig).createTower({
             // Provide parameters for tower creation
-            name: name,
-            adminAccountId: myUserId,
-            memberAccountIds: [myUserId]
+            tower: {
+                name: name,
+                adminAccountId: myUserId,
+                memberAccountIds: [myUserId]
+            }
         }).then(tower => {
             // Jump into the new tower
-            let navigate = useNavigate();
-            navigate(`/channels/${tower.id}}`)
+            //let navigate = useNavigate();
+            //navigate(`/channels/${tower.id}}`)
 
         }).catch(reason => {
             console.log("Error creating new tower in city");
