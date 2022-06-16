@@ -3,7 +3,6 @@ import { makeAutoObservable, observable } from "mobx";
 import { Configuration as CityConfiguration, CreateInviteExpiryTimeUnitEnum, InvitesApi, TowersApi, UsersApi } from "beacon-city";
 import { ObservableTower } from "../observables/ObservableTower";
 import { SignInContext } from "./signInContext";
-import {useNavigate} from "react-router-dom";
 import {
     CityManagementApi,
     Configuration as CisConfiguration,
@@ -219,9 +218,7 @@ class Towers {
                 memberAccountIds: [myUserId]
             }
         }).then(tower => {
-            // Jump into the new tower
-            //let navigate = useNavigate();
-            //navigate(`/channels/${tower.id}}`)
+            // TODO verify and switch tab to server
 
         }).catch(reason => {
             console.log("Error creating new tower in city");
