@@ -93,6 +93,13 @@ class Towers {
     }
 
     /**
+     * Get the default URL towers should be created on
+     */
+    defaultCityUrl() {
+        return 'https://beacon-city-main-staging.herokuapp.com';
+    }
+
+    /**
      * Update the towers object to contain only the towers this user is a member of. Dispatch this flow when the app
      * starts and any other applicable time (such as after attempting to join, leave, or create a server)
      */
@@ -200,7 +207,7 @@ class Towers {
      */
      * createTower(name,optionalCityUrl) {
 
-        const cityConfig = this.cityConfigKnownUrl(optionalCityUrl);
+        const cityConfig = this.cityConfigKnownUrl(optionalCityUrl === '' ? this.defaultCityUrl() : optionalCityUrl);
 
         const myUserId = SignInContext.accountId;
 
