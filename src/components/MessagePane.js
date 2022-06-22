@@ -79,7 +79,7 @@ export const MessagePane = observer(function MessagePane(props) {
                 }
             </ol>
             {messagesBelow ? <span className='messageAlert' onClick={() => scrollToBottom()}>More messages below</span> : <></>}
-            <textarea id="messageInput" rows="1" placeholder='Message'
+            <textarea id="messageInput" rows="1" placeholder='Message' className='messageInput'
                 onKeyDown={(e) => handleKeyDown(e, this)} />
         </div>
     );
