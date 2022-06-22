@@ -1,0 +1,20 @@
+name: Delete PR Environments
+
+on:
+  pull_request:
+    branches: [ main ]
+    types: [ closed, converted_to_draft ]
+
+jobs:
+  delete:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: strumwolf/delete-deployment-environment@v2
+        with:
+          # ⚠️ The provided token needs permission for admin write:org
+          token: ${{ secrets.ENV_DEL_TOKEN }}
+          environment: beacon-frontend-pr-${{ github.event.number }}
+      - run: |
+          echo github.event.number = ${{ github.event.number  }}
+          echo github.event.pull_request.number = ${{ github.event.pull_request.number }}
+          echo github.event.issue.number = ${{ github.event.issue.number }`}
