@@ -3,7 +3,6 @@ import {observer} from "mobx-react-lite";
 import ReactMarkdown from 'react-markdown'
 import {UserContext} from '../context/userContext';
 import default_avatar from '../assets/default-avatar.png';
-import { SignInContext } from '../context/signInContext';
 
 export const Message = observer(function Message(props) {
     const {getUsername} = useContext(UserContext);
@@ -47,9 +46,9 @@ export const Message = observer(function Message(props) {
 
     const senderUsername = getUsername(props.message.senderId);
     return (
-        <div className='message'>
+        <div className={'message' + (props.minimal ? ' minimal' : '')}>
 
-            <img className='messageUserIcon' alt={senderUsername} src={default_avatar}/>
+            {!props.minimal && <img className='messageUserIcon' alt={senderUsername} src={default_avatar}/>}
 
             <span>
                 <div className='messageUsername'>{senderUsername}</div>
@@ -69,6 +68,9 @@ export const Message = observer(function Message(props) {
                     <span className='messageActionButton' onClick={() => props.message.deleteMessage() }>Delete</span>
                 </span>
             }
+                {!props.minimal && <div className='messageUsername'>{senderUsername}</div>}
+                <div className='messageContent'><ReactMarkdown>{props.message.messageBody}</ReactMarkdown></div>
+            </span>
         </div>
     );
 });

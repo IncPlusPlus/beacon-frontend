@@ -73,7 +73,7 @@ export const MessagePane = observer(function MessagePane(props) {
             <ol id='messagePane' ref={messageList} onScroll={scrollHandler}>
                 {
                     props.messages ? Array.from(props.messages.values()).map(
-                        (msg) => <Message key={msg.id} message={msg} />
+                        (msg, index, arr) => <Message key={msg.id} message={msg} minimal={index > 0 && arr[index-1].senderId === msg.senderId} />
                         // TODO: Replace this with skeletons from react-content-loader or react-loading-skeleton
                     ) : <div>No messages</div>
                 }
