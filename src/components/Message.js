@@ -3,6 +3,7 @@ import {observer} from "mobx-react-lite";
 import ReactMarkdown from 'react-markdown'
 import {UserContext} from '../context/userContext';
 import default_avatar from '../assets/default-avatar.png';
+import { SignInContext } from '../context/signInContext';
 
 export const Message = observer(function Message(props) {
     const {getUsername} = useContext(UserContext);
@@ -51,7 +52,7 @@ export const Message = observer(function Message(props) {
             {!props.minimal && <img className='messageUserIcon' alt={senderUsername} src={default_avatar}/>}
 
             <span>
-                <div className='messageUsername'>{senderUsername}</div>
+                {!props.minimal && <div className='messageUsername'>{senderUsername}</div>}
                 {
                     editMode ?
                         <textarea className='messageInput edit' rows="1" value={editText} onChange={handleChange} onKeyDown={(e) => handleKeyDown(e, this)}/>
@@ -68,9 +69,6 @@ export const Message = observer(function Message(props) {
                     <span className='messageActionButton' onClick={() => props.message.deleteMessage() }>Delete</span>
                 </span>
             }
-                {!props.minimal && <div className='messageUsername'>{senderUsername}</div>}
-                <div className='messageContent'><ReactMarkdown>{props.message.messageBody}</ReactMarkdown></div>
-            </span>
         </div>
     );
 });
