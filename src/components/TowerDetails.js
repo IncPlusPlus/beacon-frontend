@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {observer} from "mobx-react-lite";
 import {TowerContext} from "../context/towerContext";
 
@@ -9,6 +9,11 @@ export const TowerDetails = observer(function TowerDetails(props) {
     }, [props.tower]);
 
     const {generateInviteCode} = useContext(TowerContext);
+    const [inviteButtonState, setInviteButtonState] = useState(0);
+
+    const INVITE_INACTIVE = 0;
+    const INVITE_WAITING = 1;
+    const INVITE_COPIED = 2;
 
     let channels = [];
     Array.from(props.tower.channels.values()).sort((a, b) => a.order - b.order).forEach(channel => {
@@ -24,9 +29,10 @@ export const TowerDetails = observer(function TowerDetails(props) {
     // Called when the 'invite people' button is pressed
     const inviteHandler = () => {
         // Get an invite code from the tower
+        setInviteButtonState(INVITE_WAITING);
         generateInviteCode(props.tower.id).then(invite => {
             navigator.clipboard.writeText(invite.inviteCode);
-            alert("Invite copied to clipboard! This will expire in one hour");
+            setInviteButtonState(INVITE_COPIED);
         });
     };
 
@@ -34,7 +40,12 @@ export const TowerDetails = observer(function TowerDetails(props) {
         <div id='towerDetailsPanel'>
             <div className='title'>
                 <h2>{props.tower.name}</h2>
-                <div onClick={inviteHandler} id='inviteButton'>+ Invite others!</div>
+                <div onClick={inviteHandler} onMouseLeave={() => setInviteButtonState(INVITE_INACTIVE)} id='inviteButton'>
+                    <div id='inviteButtonText' className={inviteButtonState === INVITE_COPIED ? 'selected' : ''}>
+                        <div>{inviteButtonState === INVITE_WAITING ? "Generating invite..." : "+ Invite others!"}</div>
+                        <div>Code Copied!</div>
+                    </div>
+                </div>
             </div>
             <ol id='channelList'>
                 {channels}

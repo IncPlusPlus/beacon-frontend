@@ -6,6 +6,7 @@ import {AppRoutes} from './AppRoutes';
 import {TowerContextProvider} from "./context/towerContext";
 import {SignInContextProvider} from "./context/signInContext";
 import {UserContextProvider} from './context/userContext';
+import Modal from 'react-modal';
 
 // Import all stylesheets
 import './styles/index.css';
@@ -14,6 +15,9 @@ import './styles/towerList.css';
 import './styles/towerDetails.css';
 import './styles/messaging.css';
 import './styles/userInfo.css';
+import './styles/modal.css';
+
+Modal.setAppElement('#root');
 
 ReactDOM.render(
     <React.StrictMode>
