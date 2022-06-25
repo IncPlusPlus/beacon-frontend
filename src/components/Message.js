@@ -58,7 +58,6 @@ export const Message = observer(function Message(props) {
                         <textarea className='messageInput edit' rows="1" value={editText} onChange={handleChange} onKeyDown={(e) => handleKeyDown(e, this)}/>
                         :
                         <><div className='messageContent'><ReactMarkdown>{props.message.messageBody}</ReactMarkdown></div>
-                        {console.log(props.message)}
                             {props.message.edited && <span class='editedLabel'>Edited</span>}
                         </>
                 }
