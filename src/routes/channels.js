@@ -29,8 +29,10 @@ export const Channels = observer((props) => {
                 <div>
                     <button onClick={() => {
                         const name = channelNameInputField.current.value;
-                        createChannel(towerId,name)
-                        setCreateChannelModalOpen(false);
+                        if (name.length > 0) {
+                            createChannel(towerId,name)
+                            setCreateChannelModalOpen(false);
+                        }
                     }}>Create Channel</button>
                 </div>
 
