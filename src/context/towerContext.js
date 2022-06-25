@@ -200,8 +200,6 @@ class Towers {
         yield new ChannelsApi(this.cityConfig(towerId)).createChannel({
             towerId: towerId,
             channel: {name: newChannelName}
-        }).then(channel => {
-
         }).catch(reason => {
             console.log("Error creating new channel");
             console.log(reason);

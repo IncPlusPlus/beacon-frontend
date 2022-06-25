@@ -13,7 +13,6 @@ export const Channels = observer((props) => {
     const channelNameInputField = useRef();
 
     return <>{
-        // The towerContext may be empty at this time (might have only just initialized)
         <>
 
         {/* Channel creation modal*/}
@@ -37,7 +36,7 @@ export const Channels = observer((props) => {
 
             </Modal>
 
-
+            {/* The towerContext may be empty at this time (might have only just initialized */}
             {towers.get(towerId) ? <>
                 <TowerDetails tower={towers.get(towerId)}
                             selected={channelId}
