@@ -22,7 +22,7 @@ export const TowerDetails = observer(function TowerDetails(props) {
         channels.push(<li className={'channelIcon' + (channel.id === props.selected ? ' selected' : '')}
                           key={channel.id}
                           onClick={() => props.onClick(channel.id)}>
-            {displayedName}
+            #{displayedName}
         </li>);
     })
 
@@ -49,6 +49,11 @@ export const TowerDetails = observer(function TowerDetails(props) {
             </div>
             <ol id='channelList'>
                 {channels}
+                <li className='channelIcon'
+                          key='CREATE_NEW'
+                          onClick={props.createChannel}>
+                    + Create new channel
+                </li>
             </ol>
         </div>
     );

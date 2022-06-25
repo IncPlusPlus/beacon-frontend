@@ -1,6 +1,6 @@
 import { createContext, useContext } from "react";
 import { makeAutoObservable, observable } from "mobx";
-import { Configuration as CityConfiguration, CreateInviteExpiryTimeUnitEnum, InvitesApi, UsersApi } from "beacon-city";
+import { ChannelsApi, Configuration as CityConfiguration, CreateInviteExpiryTimeUnitEnum, InvitesApi, UsersApi } from "beacon-city";
 import { ObservableTower } from "../observables/ObservableTower";
 import { SignInContext } from "./signInContext";
 import {
@@ -184,6 +184,24 @@ class Towers {
         // Something went wrong getting invite info
         }).catch(reason => {
             console.log("Error getting invite info from CIS");
+            console.log(reason);
+            if (reason instanceof Response) {
+                reason.json().then(value => {
+                    console.log(value);
+                });
+            }
+        });
+    }
+
+    /**
+     * Create a new channel given a name
+     */
+    * createChannel(towerId, newChannelName) {
+        yield new ChannelsApi(this.cityConfig(towerId)).createChannel({
+            towerId: towerId,
+            channel: {name: newChannelName}
+        }).catch(reason => {
+            console.log("Error creating new channel");
             console.log(reason);
             if (reason instanceof Response) {
                 reason.json().then(value => {
