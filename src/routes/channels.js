@@ -12,6 +12,14 @@ export const Channels = observer((props) => {
     const [createChannelModalOpen,setCreateChannelModalOpen] = useState(false);
     const channelNameInputField = useRef();
 
+    const tryCreateChannel = () => {
+        const name = channelNameInputField.current.value;
+        if (name.length > 0) {
+            createChannel(towerId,name)
+            setCreateChannelModalOpen(false);
+        }
+    };
+
     return <>{
         <>
 
@@ -25,15 +33,9 @@ export const Channels = observer((props) => {
 
                 <h1>Enter new channel name</h1>
                 {/*TODO: prevent user from inputting invalid characters*/}
-                <input className='bigTexInput' type='text' ref={channelNameInputField} placeholder="general" maxLength={64}></input>
+                <input className='bigTexInput' type='text' ref={channelNameInputField} placeholder="general" maxLength={64} onKeyDown={(e) => {if (e.key === 'Enter') tryCreateChannel()}}></input>
                 <div>
-                    <button onClick={() => {
-                        const name = channelNameInputField.current.value;
-                        if (name.length > 0) {
-                            createChannel(towerId,name)
-                            setCreateChannelModalOpen(false);
-                        }
-                    }}>Create Channel</button>
+                    <button onClick={tryCreateChannel}>Create Channel</button>
                 </div>
 
             </Modal>
