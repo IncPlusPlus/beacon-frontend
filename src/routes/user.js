@@ -4,13 +4,13 @@ import { SignInContext } from "../context/signInContext";
 import { UserContext } from "../context/userContext";
 import { AccountManagementApi } from "beacon-central-identity-server";
 import Modal from 'react-modal';
-import { useEffectOnce, useInterval } from "react-use";
+import { useInterval } from "react-use";
 
 export const UserDetails = (props) => {
 
     const {currentUsername} = useContext(TowerContext);
     const {accountId} = useContext(SignInContext);
-    const {getAvatarUrl, cisConfig} = useContext(UserContext);
+    const {getAvatarUrl, updateAvatarUrl, cisConfig} = useContext(UserContext);
     const {invalidateSession} = useContext(SignInContext);
 
     const [isAvatarConfirmModalVisible, setIsAvatarConfirmModalVisible] = useState(false);
@@ -25,7 +25,11 @@ export const UserDetails = (props) => {
             //console.log(img);
             new AccountManagementApi(cisConfig).updateProfilePicture({picture: img})
             .then((res) => {
-                setIsAvatarConfirmModalVisible(true);
+                //setIsAvatarConfirmModalVisible(true);
+                updateAvatarUrl(accountId,res.profilePictureUrl);
+
+                //TODO fix hack
+                window.location.reload();
             })
             .catch(reason => {
                 console.log("Error updating pfp");
@@ -43,7 +47,7 @@ export const UserDetails = (props) => {
     // By telling it to re-render after the image has been successfully pulled, we fix the problem
     // That said this feels like a hack
     const [hackValue, setHackValue] = useState(0);
-    useInterval(() => setHackValue(1),500);
+    useInterval(() => setHackValue(1),500+hackValue);
 
     return (
         <div id='userDetailsPane'>

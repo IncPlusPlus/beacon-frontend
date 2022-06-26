@@ -88,6 +88,16 @@ class Users {
             return this.users.get(userId).profilePictureUrl;
         }
     }
+
+    /**
+     * Updates an existing user's avatar url
+     * @param userId the ID of a user
+     */
+    updateAvatarUrl(userId,newAvatarUrl) {
+        if (this.users.has(userId)) {
+            this.users.get(userId).profilePictureUrl = newAvatarUrl;
+        }
+    }
 }
 
 export const UserContext = createContext(new Users());
