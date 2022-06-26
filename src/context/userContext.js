@@ -74,6 +74,19 @@ class Users {
             return this.users.get(userId).username;
         }
     }
+
+    /**
+     * Retrieves the profile picture url of a user by their ID. It follows the same logic as getUsername
+     * @param userId the ID of a user
+     */
+    getAvatarUrl(userId) {
+        if (!this.users.has(userId)) {
+            this.fetchUserInfo(userId);
+            return null;
+        } else {
+            return this.users.get(userId).profilePictureUrl;
+        }
+    }
 }
 
 export const UserContext = createContext(new Users());
