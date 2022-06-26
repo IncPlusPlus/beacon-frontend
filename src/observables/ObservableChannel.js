@@ -37,7 +37,7 @@ export class ObservableChannel {
             });
             this.messages.clear();
             response.forEach(message => {
-                this.messages.set(message.id, new ObservableMessage(this.cityConfig, message.id, message.channelId, message.towerId, message.senderId, message.sentTime, message.messageBody, message.attachments));
+                this.messages.set(message.id, new ObservableMessage(this.cityConfig, message.id, message.channelId, message.towerId, message.senderId, message.sentTime, message.messageBody, message.attachments, message.edited));
             });
             this.messagesLoadedOnce = true;
             console.log(`Updated messages for tower ${this.towerId}, and channel ${this.id}`);
@@ -56,7 +56,7 @@ export class ObservableChannel {
     handleMessageCreated(message) {
         console.log(`Received new message for tower ${this.towerId}, channel ${this.id}`);
         // Field names use snake_case for some reason when we receive objects through STOMP/Websockets
-        this.messages.set(message.id, new ObservableMessage(this.cityConfig, message.id, message.channel_id, message.tower_id, message.sender_id, message.sent_time, message.message_body, message.attachments));
+        this.messages.set(message.id, new ObservableMessage(this.cityConfig, message.id, message.channel_id, message.tower_id, message.sender_id, message.sent_time, message.message_body, message.attachments, false));
     }
 
     handleMessageEdited(message) {
@@ -65,6 +65,7 @@ export class ObservableChannel {
         const existingMessage = this.messages.get(message.id);
         // Only the message body is editable
         existingMessage.messageBody = message.message_body;
+        existingMessage.edited = true;
     }
 
     handleMessageDeleted(message) {

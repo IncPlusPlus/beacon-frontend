@@ -1,6 +1,6 @@
 import { createContext, useContext } from "react";
 import { makeAutoObservable, observable } from "mobx";
-import { Configuration as CityConfiguration, CreateInviteExpiryTimeUnitEnum, InvitesApi, TowersApi, UsersApi } from "beacon-city";
+import { ChannelsApi, Configuration as CityConfiguration, CreateInviteExpiryTimeUnitEnum, InvitesApi, UsersApi } from "beacon-city";
 import { ObservableTower } from "../observables/ObservableTower";
 import { SignInContext } from "./signInContext";
 import {
@@ -201,27 +201,14 @@ class Towers {
     }
 
     /**
-     * Create a new tower given a name and optional city URL
-     * This also assigns the creator as the tower admin
+     * Create a new channel given a name
      */
-     * createTower(name,optionalCityUrl) {
-
-        const cityConfig = this.cityConfigKnownUrl(optionalCityUrl === '' ? this.defaultCityUrl() : optionalCityUrl);
-
-        const myUserId = SignInContext.accountId;
-
-        yield new TowersApi(cityConfig).createTower({
-            // Provide parameters for tower creation
-            tower: {
-                name: name,
-                adminAccountId: myUserId,
-                memberAccountIds: [myUserId]
-            }
-        }).then(tower => {
-            // TODO verify and switch tab to server
-
+    * createChannel(towerId, newChannelName) {
+        yield new ChannelsApi(this.cityConfig(towerId)).createChannel({
+            towerId: towerId,
+            channel: {name: newChannelName}
         }).catch(reason => {
-            console.log("Error creating new tower in city");
+            console.log("Error creating new channel");
             console.log(reason);
             if (reason instanceof Response) {
                 reason.json().then(value => {
@@ -229,8 +216,7 @@ class Towers {
                 });
             }
         });
-
-     }
+    }
 }
 
 export const TowerContext = createContext(new Towers());

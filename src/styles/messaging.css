@@ -34,7 +34,7 @@
 
   overflow-y: auto;
 }
-#messageInput {
+.messageInput {
   box-sizing: border-box;
   margin: 0.5em;
   padding: 1.5em;
@@ -64,6 +64,11 @@
 }
 
 
+.message span {
+  flex-grow: 1;
+  margin-right: 0.5em;
+}
+
 .message .messageUsername {
   font-weight: 600;
 }
@@ -76,14 +81,31 @@
 }
 .message .messageContent {
   display: inline-block;
+  flex-grow: 2;
 }
 .message .messageContent p {
   margin: 0;
+}
+.message .editedLabel {
+  color: lightgray;
+  margin-left: 1em;
+  margin-top: auto;
+  margin-bottom: auto;
+  font-size: 0.75em;
+
+  user-select: none;
+}
+
+.messageInput.edit {
+  width: 100%;
+  min-width: 100%;
+  padding: 0.5em;
 }
 
 .messageActionContainer {
   float:right;
   margin-left: auto;
+  margin-right: 2px;
   align-self: center;
 }
 
