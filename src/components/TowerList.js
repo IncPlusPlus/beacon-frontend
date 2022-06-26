@@ -1,5 +1,4 @@
 import React, {useContext} from 'react';
-import default_avatar from '../assets/default-avatar.png';
 import {observer} from "mobx-react-lite";
 import {TowerContext} from "../context/towerContext";
 import {useEffectOnce} from "react-use";
@@ -23,7 +22,7 @@ export const TowerList = observer(function TowerList(props) {
             <li className={'towerIcon' + (props.selected === "USER" ? ' selected' : '')}
                 key='USER'
                 onClick={() => props.onUserIconSelected()}>
-                <img src={getAvatarUrl(accountId) || default_avatar} alt="Your Profile"/>
+                <img src={getAvatarUrl(accountId)} alt="Your Profile"/>
             </li>
             <hr/>
 

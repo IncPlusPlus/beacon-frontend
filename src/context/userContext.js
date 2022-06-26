@@ -2,6 +2,7 @@ import {createContext, useContext} from "react";
 import {makeAutoObservable, observable} from "mobx";
 import {AccountManagementApi, Configuration as CisConfiguration} from "beacon-central-identity-server";
 import {SignInContext} from "./signInContext";
+import default_avatar from '../assets/default-avatar.png';
 
 class Users {
     cisBasePath
@@ -82,7 +83,7 @@ class Users {
     getAvatarUrl(userId) {
         if (!this.users.has(userId)) {
             this.fetchUserInfo(userId);
-            return null;
+            return default_avatar;
         } else {
             return this.users.get(userId).profilePictureUrl;
         }

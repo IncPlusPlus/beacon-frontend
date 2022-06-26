@@ -1,10 +1,10 @@
 import React, { useContext, useState } from "react";
-import default_avatar from '../assets/default-avatar.png';
 import { TowerContext } from "../context/towerContext";
 import { SignInContext } from "../context/signInContext";
 import { UserContext } from "../context/userContext";
 import { AccountManagementApi } from "beacon-central-identity-server";
 import Modal from 'react-modal';
+import { useEffectOnce, useInterval } from "react-use";
 
 export const UserDetails = (props) => {
 
@@ -38,7 +38,12 @@ export const UserDetails = (props) => {
         }
     }
 
-    const currentAvatarUrl = getAvatarUrl(accountId) || default_avatar;
+    // TODO this sucks please get rid of it
+    // Context: when starting on the user route, the profile picture preview fails to load initially
+    // By telling it to re-render after the image has been successfully pulled, we fix the problem
+    // That said this feels like a hack
+    const [hackValue, setHackValue] = useState(0);
+    useInterval(() => setHackValue(1),500);
 
     return (
         <div id='userDetailsPane'>
@@ -56,7 +61,7 @@ export const UserDetails = (props) => {
             <input id="f" style={{display:'none'}} type='file' accept='image/png' onChange={onNewAvatarSelected}/>
             <div id='userDetails'>
                 <div id="avatarContainer" onClick={openFilePicker}>
-                    <img id='userAvatar' alt="Your Avatar" src={currentAvatarUrl}/>
+                    <img id='userAvatar' alt="Your Avatar" src={getAvatarUrl(accountId)}/>
                     <div id='avatarEdit'><span>Edit</span></div>
                 </div>
                 <div className='username'>{currentUsername}</div>

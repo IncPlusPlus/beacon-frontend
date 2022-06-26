@@ -2,7 +2,6 @@ import React, {useContext, useState} from 'react';
 import {observer} from "mobx-react-lite";
 import ReactMarkdown from 'react-markdown'
 import {UserContext} from '../context/userContext';
-import default_avatar from '../assets/default-avatar.png';
 import { SignInContext } from '../context/signInContext';
 
 export const Message = observer(function Message(props) {
@@ -50,7 +49,7 @@ export const Message = observer(function Message(props) {
     return (
         <div className={'message' + (props.minimal ? ' minimal' : '')}>
 
-            {!props.minimal && <img className='messageUserIcon' alt={senderUsername} src={senderAvatarUrl || default_avatar}/>}
+            {!props.minimal && <img className='messageUserIcon' alt={senderUsername} src={senderAvatarUrl}/>}
 
             <span>
                 {!props.minimal && <div className='messageUsername'>{senderUsername}</div>}
