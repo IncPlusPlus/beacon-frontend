@@ -5,7 +5,6 @@ import {SignInContext} from "../context/signInContext";
 import {UserContext} from "../context/userContext";
 import {AccountManagementApi} from "beacon-central-identity-server";
 import Modal from 'react-modal';
-import {useInterval} from "react-use";
 import {observer} from "mobx-react-lite";
 
 export const UserDetails = observer(function UserDetails(props) {
@@ -27,11 +26,7 @@ export const UserDetails = observer(function UserDetails(props) {
             //console.log(img);
             new AccountManagementApi(cisConfig).updateProfilePicture({picture: img})
             .then((res) => {
-                //setIsAvatarConfirmModalVisible(true);
                 updateAvatarUrl(accountId,res.profilePictureUrl);
-
-                //TODO fix hack
-                window.location.reload();
             })
             .catch(reason => {
                 console.log("Error updating pfp");
@@ -43,13 +38,6 @@ export const UserDetails = observer(function UserDetails(props) {
             });
         }
     }
-
-    // TODO this sucks please get rid of it
-    // Context: when starting on the user route, the profile picture preview fails to load initially
-    // By telling it to re-render after the image has been successfully pulled, we fix the problem
-    // That said this feels like a hack
-    const [hackValue, setHackValue] = useState(0);
-    useInterval(() => setHackValue(1),500+hackValue);
 
     const currentAvatarUrl = getAvatarUrl(accountId) || default_avatar;
 
