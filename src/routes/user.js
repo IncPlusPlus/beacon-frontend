@@ -1,12 +1,13 @@
-import React, { useContext, useState } from "react";
-import { TowerContext } from "../context/towerContext";
-import { SignInContext } from "../context/signInContext";
-import { UserContext } from "../context/userContext";
-import { AccountManagementApi } from "beacon-central-identity-server";
+import React, {useContext, useState} from "react";
+import {TowerContext} from "../context/towerContext";
+import {SignInContext} from "../context/signInContext";
+import {UserContext} from "../context/userContext";
+import {AccountManagementApi} from "beacon-central-identity-server";
 import Modal from 'react-modal';
-import { useInterval } from "react-use";
+import {useInterval} from "react-use";
+import {observer} from "mobx-react-lite";
 
-export const UserDetails = (props) => {
+export const UserDetails = observer(function UserDetails(props) {
 
     const {currentUsername} = useContext(TowerContext);
     const {accountId} = useContext(SignInContext);
@@ -73,4 +74,4 @@ export const UserDetails = (props) => {
             </div>
         </div>
     );
-};
+});
