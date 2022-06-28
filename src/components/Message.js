@@ -2,15 +2,15 @@ import React, {useContext, useState} from 'react';
 import {observer} from "mobx-react-lite";
 import ReactMarkdown from 'react-markdown'
 import {UserContext} from '../context/userContext';
-import default_avatar from '../assets/default-avatar.png';
-import { SignInContext } from '../context/signInContext';
+import {SignInContext} from '../context/signInContext';
+import default_avatar from "../assets/default-avatar.png";
 
 export const Message = observer(function Message(props) {
-    const {getUsername} = useContext(UserContext);
+    const {getUsername, getAvatarUrl} = useContext(UserContext);
     const {accountId} = useContext(SignInContext);
 
-    const [editMode,setEditMode] = useState(false); // True when the message is being edited
-    const [editText,setEditText] = useState('');
+    const [editMode, setEditMode] = useState(false); // True when the message is being edited
+    const [editText, setEditText] = useState('');
 
     const enterEditMode = () => {
         setEditMode(true);
@@ -46,10 +46,12 @@ export const Message = observer(function Message(props) {
     }
 
     const senderUsername = getUsername(props.message.senderId);
+    const senderAvatarUrl = getAvatarUrl(props.message.senderId);
     return (
         <div className={'message' + (props.minimal ? ' minimal' : '')}>
 
-            {!props.minimal && <img className='messageUserIcon' alt={senderUsername} src={default_avatar}/>}
+            {!props.minimal &&
+                <img className='messageUserIcon' alt={senderUsername} src={senderAvatarUrl || default_avatar}/>}
 
             <span>
                 {!props.minimal && <div className='messageUsername'>{senderUsername}</div>}
