@@ -23,19 +23,19 @@ export const UserDetails = observer(function UserDetails(props) {
     const onNewAvatarSelected = (e) => {
         const img = e.target.files[0];
         if (img) {
-            //console.log(img);
+            setIsAvatarConfirmModalVisible(true);
             new AccountManagementApi(cisConfig).updateProfilePicture({picture: img})
-            .then((res) => {
-                updateAvatarUrl(accountId,res.profilePictureUrl);
-            })
-            .catch(reason => {
-                console.log("Error updating pfp");
-                if (reason instanceof Response) {
-                    reason.json().then(value => {
-                        console.log(value);
-                    });
-                }
-            });
+                .then((res) => {
+                    updateAvatarUrl(accountId, res.profilePictureUrl);
+                })
+                .catch(reason => {
+                    console.log("Error updating pfp");
+                    if (reason instanceof Response) {
+                        reason.json().then(value => {
+                            console.log(value);
+                        });
+                    }
+                }).finally(() => setIsAvatarConfirmModalVisible(false));
         }
     }
 
@@ -54,7 +54,7 @@ export const UserDetails = observer(function UserDetails(props) {
                 <h2>It may take a moment for changes to show</h2>
             </Modal>
 
-            <input id="f" style={{display:'none'}} type='file' accept='image/png' onChange={onNewAvatarSelected}/>
+            <input id="f" style={{display: 'none'}} type='file' accept='image/png' onChange={onNewAvatarSelected}/>
             <div id='userDetails'>
                 <div id="avatarContainer" onClick={openFilePicker}>
                     <img id='userAvatar' alt="Your Avatar" src={currentAvatarUrl}/>
