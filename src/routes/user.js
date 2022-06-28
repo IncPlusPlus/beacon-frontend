@@ -1,4 +1,5 @@
 import React, {useContext, useState} from "react";
+import default_avatar from '../assets/default-avatar.png';
 import {TowerContext} from "../context/towerContext";
 import {SignInContext} from "../context/signInContext";
 import {UserContext} from "../context/userContext";
@@ -50,6 +51,8 @@ export const UserDetails = observer(function UserDetails(props) {
     const [hackValue, setHackValue] = useState(0);
     useInterval(() => setHackValue(1),500+hackValue);
 
+    const currentAvatarUrl = getAvatarUrl(accountId) || default_avatar;
+
     return (
         <div id='userDetailsPane'>
 
@@ -66,7 +69,7 @@ export const UserDetails = observer(function UserDetails(props) {
             <input id="f" style={{display:'none'}} type='file' accept='image/png' onChange={onNewAvatarSelected}/>
             <div id='userDetails'>
                 <div id="avatarContainer" onClick={openFilePicker}>
-                    <img id='userAvatar' alt="Your Avatar" src={getAvatarUrl(accountId)}/>
+                    <img id='userAvatar' alt="Your Avatar" src={currentAvatarUrl}/>
                     <div id='avatarEdit'><span>Edit</span></div>
                 </div>
                 <div className='username'>{currentUsername}</div>
