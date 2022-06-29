@@ -1,6 +1,6 @@
 import { createContext, useContext } from "react";
 import { makeAutoObservable, observable } from "mobx";
-import { ChannelsApi, Configuration as CityConfiguration, CreateInviteExpiryTimeUnitEnum, InvitesApi, UsersApi } from "beacon-city";
+import { ChannelsApi, Configuration as CityConfiguration, InvitesApi, UsersApi } from "beacon-city";
 import { ObservableTower } from "../observables/ObservableTower";
 import { SignInContext } from "./signInContext";
 import {
@@ -125,12 +125,12 @@ class Towers {
      * Generate and return an invite code for a tower
      * @param towerId the identifier for the tower to generate a code for
      */
-    * generateInviteCode(towerId) {
+    * generateInviteCode(towerId,expiryTime,expiryTimeUnit,maxUses) {
         return yield new InvitesApi(this.cityConfig(towerId)).createInvite({
             towerId: towerId,
-            expiryTime: 1,
-            expiryTimeUnit: CreateInviteExpiryTimeUnitEnum.Hours,
-            maxUses: 0 // 0 = infinite uses
+            expiryTime: expiryTime,
+            expiryTimeUnit: expiryTimeUnit,
+            maxUses: maxUses // 0 = infinite uses
         }).catch(reason => {
             console.log("Error generating new join code");
             if (reason instanceof Response) {
