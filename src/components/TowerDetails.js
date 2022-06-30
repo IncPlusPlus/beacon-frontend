@@ -14,6 +14,8 @@ export const TowerDetails = observer(function TowerDetails(props) {
     const [inviteButtonState, setInviteButtonState] = useState(0);
     const [isInviteCustomizerOpen, setIsInviteCustomizerOpen] = useState(false);
 
+    const [isAppearanceCustomizerOpen, setIsAppearanceCustomizerOpen] = useState(false);
+
     const inputInviteDuration = useRef();
     const inputInviteUses = useRef();
 
@@ -115,6 +117,20 @@ export const TowerDetails = observer(function TowerDetails(props) {
                 <div>
                     <button onClick={generateInvite}>Create Invite</button>
                 </div>
+            </Modal>
+
+            <Modal
+                isOpen={isAppearanceCustomizerOpen}
+                onRequestClose={() => setIsAppearanceCustomizerOpen(false)}
+                contentLabel="Cuztomize your tower"
+                className="Modal"
+                overlayClassName="Overlay">
+
+                <h2>Customize <i>{props.tower.name}</i></h2>
+                
+                <div>
+                    <button>Apply</button>
+                </div>
 
             </Modal>
 		
@@ -130,7 +146,7 @@ export const TowerDetails = observer(function TowerDetails(props) {
                         </div>
                     </div>
 
-                    <div className='towerControlButton'>
+                    <div className='towerControlButton' onClick={() => setIsAppearanceCustomizerOpen(true)}>
                         Edit
                     </div>
                 </div>
