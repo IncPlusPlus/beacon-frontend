@@ -12,7 +12,7 @@ export const TowerDetails = observer(function TowerDetails(props) {
 
     const {generateInviteCode} = useContext(TowerContext);
     const [inviteButtonState, setInviteButtonState] = useState(0);
-    const [isInviteCustomizerOpen,setIsInviteCustomizerOpen] = useState(false);
+    const [isInviteCustomizerOpen, setIsInviteCustomizerOpen] = useState(false);
 
     const inputInviteDuration = useRef();
     const inputInviteUses = useRef();
