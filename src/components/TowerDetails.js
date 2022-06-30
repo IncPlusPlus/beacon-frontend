@@ -38,6 +38,7 @@ export const TowerDetails = observer(function TowerDetails(props) {
 
     return (
         <div id='towerDetailsPanel'>
+            {props.tower.bannerUrl && <img id='banner' src={props.tower.bannerUrl} alt='Tower Banner'/>}
             <div className='title'>
                 <h2>{props.tower.name}</h2>
                 <div onClick={inviteHandler} onMouseLeave={() => setInviteButtonState(INVITE_INACTIVE)} id='inviteButton'>
