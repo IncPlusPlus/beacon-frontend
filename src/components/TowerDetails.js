@@ -41,10 +41,16 @@ export const TowerDetails = observer(function TowerDetails(props) {
             {props.tower.bannerUrl && <img id='banner' src={props.tower.bannerUrl} alt='Tower Banner'/>}
             <div className='title'>
                 <h2>{props.tower.name}</h2>
-                <div onClick={inviteHandler} onMouseLeave={() => setInviteButtonState(INVITE_INACTIVE)} id='inviteButton'>
-                    <div id='inviteButtonText' className={inviteButtonState === INVITE_COPIED ? 'selected' : ''}>
-                        <div>{inviteButtonState === INVITE_WAITING ? "Generating invite..." : "+ Invite others!"}</div>
-                        <div>Code Copied!</div>
+                <div id='towerControls'>
+                    <div onClick={inviteHandler} onMouseLeave={() => setInviteButtonState(INVITE_INACTIVE)} className='towerControlButton' id='inviteButton'>
+                        <div id='inviteButtonText' className={inviteButtonState === INVITE_COPIED ? 'selected' : ''}>
+                            <div>{inviteButtonState === INVITE_WAITING ? "Generating invite..." : "+ Invite others!"}</div>
+                            <div>Code Copied!</div>
+                        </div>
+                    </div>
+
+                    <div className='towerControlButton'>
+                        Edit
                     </div>
                 </div>
             </div>

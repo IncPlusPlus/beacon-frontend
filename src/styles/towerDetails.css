@@ -29,19 +29,31 @@
 	background: linear-gradient(#FFFFFF00,#292929);
 }
 
-#inviteButton {
+#towerControls {
+	display: flex;
+}
+
+.towerControlButton {
 	background-color: #54524A;
 	color:#cac7bb;
 	padding: 0.25em;
 	border-radius: 0.5em;
 	font-weight: bold;
 
+	margin: 0 0.25em;
+
 	overflow: hidden;
 	height: 1.5em;
 }
-#inviteButton:hover {
+
+.towerControlButton:hover {
 	color:white;
 	cursor:pointer;
+}
+
+#inviteButton {
+	overflow: hidden;
+	flex-grow: 2;
 }
 #inviteButtonText {
 	line-height: 1.5em;
