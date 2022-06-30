@@ -84,10 +84,10 @@ export const TowerDetails = observer(function TowerDetails(props) {
             props.tower.id,
             time, units,
             selectedUses)
-                .then(invite => {
-                    navigator.clipboard.writeText(invite.inviteCode);
-                    setInviteButtonState(INVITE_COPIED);
-                })
+            .then(invite => {
+                navigator.clipboard.writeText(invite.inviteCode);
+                setInviteButtonState(INVITE_COPIED);
+            })
     };
 
     return (
