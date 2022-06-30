@@ -105,7 +105,7 @@ export const TowerDetails = observer(function TowerDetails(props) {
                 <div>When should the invite expire?</div>
                 <select ref={inputInviteDuration}>
                     {
-                        AVAILABLE_EXPIRY_TIMES.map((val,idx) => {
+                        AVAILABLE_EXPIRY_TIMES.map((val, idx) => {
                             return (<option value={idx} key={idx}>{val.display}</option>)
                         })
                     }
