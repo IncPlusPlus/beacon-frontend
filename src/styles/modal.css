@@ -1,54 +1,53 @@
 @keyframes modal-popup {
-    from {
-        transform: translateY(5em);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
+  from {
+    transform: translateY(5em);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 .Modal {
-    color: white;
-    background-color: #404040;
+  color: white;
+  background-color: #404040;
 
-    position: absolute;
-    
-    top: 30%;
-    left: 30%;
-    right: 30%;
-    bottom: 30%;
+  position: absolute;
 
-    padding: 2em;
-    border-radius: 1em;
+  top: 30%;
+  left: 30%;
+  right: 30%;
+  bottom: 30%;
 
-    box-shadow: 0 0 1em black;
+  padding: 2em;
+  border-radius: 1em;
 
-    animation-name: modal-popup;
-    animation-duration: 0.25s;
+  box-shadow: 0 0 1em black;
+
+  animation-name: modal-popup;
+  animation-duration: 0.25s;
 }
 
 .Overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0,0,0,0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .Modal .bigTexInput {
-    width: 100%;
-    padding: 0;
-    margin-bottom: 1em;
-    font-size: 3em;
-    background: none;
+  width: 100%;
+  padding: 0;
+  margin-bottom: 1em;
+  font-size: 3em;
+  background: none;
 
-    border: none;
-    border-bottom: 0.1em solid #5e5d59;
+  border: none;
+  border-bottom: 0.1em solid #5e5d59;
 
-    color: white;
-    text-align: center;
-
+  color: white;
+  text-align: center;
 }

@@ -2,8 +2,8 @@ name: Delete PR Environments
 
 on:
   pull_request:
-    branches: [ main ]
-    types: [ closed, converted_to_draft ]
+    branches: [main]
+    types: [closed, converted_to_draft]
 
 jobs:
   delete:

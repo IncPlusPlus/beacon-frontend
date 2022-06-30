@@ -1,63 +1,63 @@
 #towerDetailsPanel {
-	color: white;
-	background-color: #404040;
-	max-width: 300px;
-	width: 50%;
-	min-width: 15%;
-	margin: 0;
+  color: white;
+  background-color: #404040;
+  max-width: 300px;
+  width: 50%;
+  min-width: 15%;
+  margin: 0;
 }
 #towerDetailsPanel .title {
-	background-color:#292929;
-	padding: 1em;
-	margin-top: 0;
-	border-radius: 0 0 1em 1em;
+  background-color: #292929;
+  padding: 1em;
+  margin-top: 0;
+  border-radius: 0 0 1em 1em;
 }
 #towerDetailsPanel h2 {
-	margin: 0;
-	margin-bottom: 1em;
+  margin: 0;
+  margin-bottom: 1em;
 }
 
 #inviteButton {
-	background-color: #54524A;
-	color:#cac7bb;
-	padding: 0.25em;
-	border-radius: 0.5em;
-	font-weight: bold;
+  background-color: #54524a;
+  color: #cac7bb;
+  padding: 0.25em;
+  border-radius: 0.5em;
+  font-weight: bold;
 
-	overflow: hidden;
-	height: 1.5em;
+  overflow: hidden;
+  height: 1.5em;
 }
 #inviteButton:hover {
-	color:white;
-	cursor:pointer;
+  color: white;
+  cursor: pointer;
 }
 #inviteButtonText {
-	line-height: 1.5em;
-	transition: 0.1s;
+  line-height: 1.5em;
+  transition: 0.1s;
 }
 #inviteButtonText.selected {
-	transform: translateY(-1.5em);
-	transition: 0.1s;
+  transform: translateY(-1.5em);
+  transition: 0.1s;
 }
 
 #channelList {
-	list-style: none;
-	padding-left: 1em;
+  list-style: none;
+  padding-left: 1em;
 }
 
 .channelIcon {
-	margin: 1em 0
+  margin: 1em 0;
 }
 .channelIcon:hover {
-	font-weight: bold;
-	cursor: pointer;
+  font-weight: bold;
+  cursor: pointer;
 }
 .channelIcon.selected {
-	background-color: #5e5d59;
-	font-weight: bold;
-	padding: 0.5em;
-	padding-left: 1em;
-	width: 100%;
+  background-color: #5e5d59;
+  font-weight: bold;
+  padding: 0.5em;
+  padding-left: 1em;
+  width: 100%;
 
-	border-radius: 1em 0 0 1em;
+  border-radius: 1em 0 0 1em;
 }

@@ -1,16 +1,15 @@
-
 #channelPane {
-	background-color: #5e5d59;
-	margin: 0;
-	padding: 0;
-	width: 100%;
-	height: 100%;
-	box-sizing: border-box;
+  background-color: #5e5d59;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
 
-	display: flex;
-	flex-direction: column;
-	align-items: stretch;
-	overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  overflow: hidden;
 }
 #messageChannelTitle {
   margin: 0;
@@ -41,8 +40,8 @@
 
   resize: none;
   background-color: #404040;
-  border:none;
-  color:white;
+  border: none;
+  color: white;
   border-radius: 1em;
 }
 
@@ -62,7 +61,6 @@
   padding-left: 3.5em;
   margin-top: 0;
 }
-
 
 .message span {
   flex-grow: 1;
@@ -103,7 +101,7 @@
 }
 
 .messageActionContainer {
-  float:right;
+  float: right;
   margin-left: auto;
   margin-right: 2px;
   align-self: center;
@@ -126,12 +124,12 @@
 .messageAlert {
   text-align: center;
   color: white;
-  background-color:#a7942d;
+  background-color: #a7942d;
   padding: 4px;
   cursor: pointer;
 }
 .messageAlert:hover {
-  background-color: #FFD800;
+  background-color: #ffd800;
   color: black;
 }
 
@@ -140,8 +138,8 @@
 }
 
 code {
-	background-color: #404040;
-	padding: 0.25em;
-	border-radius: 0.5em;
-	border: 1px solid #161616;
+  background-color: #404040;
+  padding: 0.25em;
+  border-radius: 0.5em;
+  border: 1px solid #161616;
 }

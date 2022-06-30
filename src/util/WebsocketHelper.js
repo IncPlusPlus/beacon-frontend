@@ -13,14 +13,14 @@
  * @return {string} the entity the event is about. This may be 'message', 'channel', or 'tower'
  */
 export const TopicForPath = (path) => {
-    if (path.includes('message')) {
-        // Event relates to creation/edit/deletion of a message
-        return "message";
-    } else if (path.includes('channel')) {
-        // Event relates to the creation/edit/deletion of a channel
-        return "channel";
-    } else if (path.includes('tower')) {
-        // Event relates to the creation/edit/deletion of a tower
-        return "tower";
-    }
-}
+  if (path.includes("message")) {
+    // Event relates to creation/edit/deletion of a message
+    return "message";
+  } else if (path.includes("channel")) {
+    // Event relates to the creation/edit/deletion of a channel
+    return "channel";
+  } else if (path.includes("tower")) {
+    // Event relates to the creation/edit/deletion of a tower
+    return "tower";
+  }
+};
