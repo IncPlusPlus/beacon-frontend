@@ -101,7 +101,6 @@ export const TowerDetails = observer(function TowerDetails(props) {
                 overlayClassName="Overlay">
 
                 <h1>Invite someone to <i>{props.tower.name}</i></h1>
-                
                 <div>When should the invite expire?</div>
                 <select ref={inputInviteDuration}>
                     {
