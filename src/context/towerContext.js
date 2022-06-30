@@ -125,7 +125,7 @@ class Towers {
      * Generate and return an invite code for a tower
      * @param towerId the identifier for the tower to generate a code for
      */
-    * generateInviteCode(towerId,expiryTime,expiryTimeUnit,maxUses) {
+    * generateInviteCode(towerId, expiryTime, expiryTimeUnit, maxUses) {
         return yield new InvitesApi(this.cityConfig(towerId)).createInvite({
             towerId: towerId,
             expiryTime: expiryTime,
