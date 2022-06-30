@@ -12,7 +12,13 @@ export class ObservableTower {
     member_account_ids = observable.array()
     channels = observable.map()
 
-    constructor(cityConfig, id, cityId, name, adminAccountId, moderator_account_ids, member_account_ids) {
+    // Appearance customization
+    primaryColor
+    secondaryColor
+    iconUrl
+    bannerUrl
+
+    constructor(cityConfig, id, cityId, name, adminAccountId, moderator_account_ids, member_account_ids, primaryColor, secondaryColor, iconUrl, bannerUrl) {
         makeAutoObservable(this,
             {},
             // https://mobx.js.org/actions.html#actionbound to allow for "this" in actions
@@ -25,6 +31,11 @@ export class ObservableTower {
         this.adminAccountId = adminAccountId;
         this.moderator_account_ids = observable.array(moderator_account_ids);
         this.member_account_ids = observable.array(member_account_ids);
+
+        this.primaryColor = primaryColor;
+        this.secondaryColor = secondaryColor;
+        this.iconUrl = iconUrl;
+        this.bannerUrl = bannerUrl;
     }
 
     /**

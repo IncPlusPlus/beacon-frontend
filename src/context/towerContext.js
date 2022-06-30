@@ -112,7 +112,7 @@ class Towers {
             for (const memberTower of towersFromThisCity) {
                 // If this tower is not present in our Map, we should add it!
                 if (!this.towers.has(memberTower.id)) {
-                    this.towers.set(memberTower.id, new ObservableTower(this.cityConfig, memberTower.id, city.id, memberTower.name, memberTower.adminAccountId, memberTower.moderatorAccountIds, memberTower.memberAccountIds));
+                    this.towers.set(memberTower.id, new ObservableTower(this.cityConfig, memberTower.id, city.id, memberTower.name, memberTower.adminAccountId, memberTower.moderatorAccountIds, memberTower.memberAccountIds, memberTower.primaryColor, memberTower.secondaryColor, memberTower.iconUrl, memberTower.bannerUrl));
                 }
             }
         }
