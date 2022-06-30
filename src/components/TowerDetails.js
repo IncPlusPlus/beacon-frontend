@@ -82,7 +82,7 @@ export const TowerDetails = observer(function TowerDetails(props) {
 
         generateInviteCode(
             props.tower.id,
-            time,units,
+            time, units,
             selectedUses)
                 .then(invite => {
                     navigator.clipboard.writeText(invite.inviteCode);
