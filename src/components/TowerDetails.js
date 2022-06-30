@@ -74,7 +74,7 @@ export const TowerDetails = observer(function TowerDetails(props) {
 
     // Called when we finish configuring the invite
     const generateInvite = () => {
-        const {time,units} = AVAILABLE_EXPIRY_TIMES[parseInt(inputInviteDuration.current.value) || 0];
+        const {time, units} = AVAILABLE_EXPIRY_TIMES[parseInt(inputInviteDuration.current.value) || 0];
         const selectedUses = parseInt(inputInviteDuration.current.value) || 0;
 
         setInviteButtonState(INVITE_WAITING);
