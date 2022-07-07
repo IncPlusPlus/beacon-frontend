@@ -1,6 +1,6 @@
 import { createContext, useContext } from "react";
 import { makeAutoObservable, observable } from "mobx";
-import { ChannelsApi, Configuration as CityConfiguration, InvitesApi, UsersApi } from "beacon-city";
+import { ChannelsApi, Configuration as CityConfiguration, InvitesApi, TowersApi, UsersApi } from "beacon-city";
 import { ObservableTower } from "../observables/ObservableTower";
 import { SignInContext } from "./signInContext";
 import {
@@ -202,6 +202,24 @@ class Towers {
             channel: {name: newChannelName}
         }).catch(reason => {
             console.log("Error creating new channel");
+            console.log(reason);
+            if (reason instanceof Response) {
+                reason.json().then(value => {
+                    console.log(value);
+                });
+            }
+        });
+    }
+
+    *updateTowerAppearance(towerId, primaryColor, secondaryColor) {
+        yield new TowersApi(this.cityConfig(towerId)).editTower({
+            towerId: towerId,
+            tower:{
+                primaryColor: primaryColor,
+                secondaryColor:secondaryColor
+            }
+        }).catch(reason => {
+            console.log("Error updating tower appearance");
             console.log(reason);
             if (reason instanceof Response) {
                 reason.json().then(value => {

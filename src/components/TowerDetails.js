@@ -10,7 +10,7 @@ export const TowerDetails = observer(function TowerDetails(props) {
         props.tower.initializeChannels();
     }, [props.tower]);
 
-    const {generateInviteCode} = useContext(TowerContext);
+    const {generateInviteCode, updateTowerAppearance} = useContext(TowerContext);
     const [inviteButtonState, setInviteButtonState] = useState(0);
     const [isInviteCustomizerOpen, setIsInviteCustomizerOpen] = useState(false);
 
@@ -92,6 +92,20 @@ export const TowerDetails = observer(function TowerDetails(props) {
             })
     };
 
+    const primaryColorSelector = useRef();
+    const secondaryColorSelector = useRef();
+    const applyNewAppearance = () => {
+
+        // Get colors
+        const primaryColor = primaryColorSelector.current.value.substring(1);
+        const seconaryColor = secondaryColorSelector.current.value.substring(1);
+
+        // Send request
+        updateTowerAppearance(props.tower.id,primaryColor,seconaryColor);
+
+        setIsAppearanceCustomizerOpen(false);
+    };
+
     return (
         <div id='towerDetailsPanel'>
 		
@@ -131,15 +145,15 @@ export const TowerDetails = observer(function TowerDetails(props) {
                 <div id='customizer'>
 
                     <div>
-                        <input type='color' id='colPrimary'/>
-                        <label for='colPrimary'>Primary Color</label>
+                        <input ref={primaryColorSelector} type='color' id='colPrimary'/>
+                        <label htmlFor='colPrimary'>Primary Color</label>
                         <br/>
                         <button>Reset to Default</button>
                     </div>
 
                     <div>
-                        <input type='color' id='colSecondary'/>
-                        <label for='colSecondary'>Secondary Color</label>
+                        <input ref={secondaryColorSelector} type='color' id='colSecondary'/>
+                        <label htmlFor='colSecondary'>Secondary Color</label>
                         <br/>
                         <button>Reset to Default</button>
                     </div>
@@ -155,7 +169,7 @@ export const TowerDetails = observer(function TowerDetails(props) {
                 </div>
 
                 <div>
-                    <button>Apply</button>
+                    <button onClick={applyNewAppearance}>Apply</button>
                 </div>
 
             </Modal>
