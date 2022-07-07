@@ -128,6 +128,32 @@ export const TowerDetails = observer(function TowerDetails(props) {
 
                 <h2>Customize <i>{props.tower.name}</i></h2>
                 
+                <div id='customizer'>
+
+                    <div>
+                        <input type='color' id='colPrimary'/>
+                        <label for='colPrimary'>Primary Color</label>
+                        <br/>
+                        <button>Reset to Default</button>
+                    </div>
+
+                    <div>
+                        <input type='color' id='colSecondary'/>
+                        <label for='colSecondary'>Secondary Color</label>
+                        <br/>
+                        <button>Reset to Default</button>
+                    </div>
+
+                    <div>
+                        Choose Icon
+                    </div>
+
+                    <div>
+                        Choose Banner
+                    </div>
+
+                </div>
+
                 <div>
                     <button>Apply</button>
                 </div>
