@@ -20,6 +20,9 @@ export const TowerDetails = observer(function TowerDetails(props) {
     const inputInviteDuration = useRef();
     const inputInviteUses = useRef();
 
+    const primaryColorSelector = useRef();
+    const secondaryColorSelector = useRef();
+
     const INVITE_INACTIVE = 0;
     const INVITE_WAITING = 1;
     const INVITE_COPIED = 2;
@@ -58,6 +61,7 @@ export const TowerDetails = observer(function TowerDetails(props) {
     ];
 
     // Get colors
+    const towerPrimaryColor = props.tower && props.tower.primaryColor ? props.tower.primaryColor : 'a7942d';
     const towerSecondaryColorDefault = props.tower && props.tower.secondaryColor ? darkenHex(props.tower.secondaryColor) : '5e5d59';
     const towerSecondaryColorDarkened = props.tower && props.tower.secondaryColor ? props.tower.secondaryColor : '404040';
     const mainTextColor = props.tower && props.tower.secondaryColor ? getContrastingTextColor(towerSecondaryColorDarkened) : 'FFFFFF';
@@ -99,8 +103,7 @@ export const TowerDetails = observer(function TowerDetails(props) {
             })
     };
 
-    const primaryColorSelector = useRef();
-    const secondaryColorSelector = useRef();
+    // Call this to apply the current colors picked in 
     const applyNewAppearance = () => {
 
         // Get colors
@@ -110,6 +113,7 @@ export const TowerDetails = observer(function TowerDetails(props) {
         // Send request
         updateTowerAppearance(props.tower.id,primaryColor,seconaryColor);
 
+        // Close ui
         setIsAppearanceCustomizerOpen(false);
     };
 
@@ -143,6 +147,9 @@ export const TowerDetails = observer(function TowerDetails(props) {
             <Modal
                 isOpen={isAppearanceCustomizerOpen}
                 onRequestClose={() => setIsAppearanceCustomizerOpen(false)}
+                onAfterOpen={() => {
+                    
+                }}
                 contentLabel="Cuztomize your tower"
                 className="Modal"
                 overlayClassName="Overlay">
@@ -155,14 +162,14 @@ export const TowerDetails = observer(function TowerDetails(props) {
                         <input ref={primaryColorSelector} type='color' id='colPrimary'/>
                         <label htmlFor='colPrimary'>Primary Color</label>
                         <br/>
-                        <button>Reset to Default</button>
+                        <button onClick={(e) => {primaryColorSelector.current.value = '#FFD800'}}>Reset to Default</button>
                     </div>
 
                     <div>
                         <input ref={secondaryColorSelector} type='color' id='colSecondary'/>
                         <label htmlFor='colSecondary'>Secondary Color</label>
                         <br/>
-                        <button>Reset to Default</button>
+                        <button onClick={(e) => {secondaryColorSelector.current.value = '#5e5d59'}}>Reset to Default</button>
                     </div>
 
                     <div>

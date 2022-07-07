@@ -20,9 +20,9 @@ export const MessagePane = observer(function MessagePane(props) {
 
     const messageList = useRef(null);
 
-    const towerPrimaryColor = tower && tower.primaryColor ? darkenHex(tower.primaryColor) : 'a7942d';
-    const towerSecondaryColor = tower && tower.secondaryColor ? darkenHex(tower.secondaryColor) : '5e5d59';
-    const mainTextColor = tower && tower.secondaryColor ? getContrastingTextColor(towerSecondaryColor) : 'FFFFFF';
+    const towerPrimaryColor = (tower && tower.primaryColor) ? darkenHex(tower.primaryColor) : 'a7942d';
+    const towerSecondaryColor = (tower && tower.secondaryColor) ? darkenHex(tower.secondaryColor) : '5e5d59';
+    const mainTextColor = (tower && tower.secondaryColor) ? getContrastingTextColor(towerSecondaryColor) : 'FFFFFF';
 
     // Used to determine whether or not we've scrolled to the bottom of the page
     const scrollHandler = (event) => {
