@@ -215,6 +215,7 @@ class Towers {
         yield new TowersApi(this.cityConfig(towerId)).editTower({
             towerId: towerId,
             tower:{
+                name: this.towers.get(towerId).name,
                 primaryColor: primaryColor,
                 secondaryColor:secondaryColor
             }

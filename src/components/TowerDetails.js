@@ -3,6 +3,7 @@ import {observer} from "mobx-react-lite";
 import {TowerContext} from "../context/towerContext";
 import {CreateInviteExpiryTimeUnitEnum} from 'beacon-city';
 import Modal from 'react-modal';
+import { darkenHex, getContrastingTextColor } from '../util/colorHelper';
 
 export const TowerDetails = observer(function TowerDetails(props) {
     // Load channels of a Tower when viewing that Tower
@@ -56,13 +57,19 @@ export const TowerDetails = observer(function TowerDetails(props) {
         },
     ];
 
+    // Get colors
+    const towerSecondaryColorDefault = props.tower && props.tower.secondaryColor ? darkenHex(props.tower.secondaryColor) : '5e5d59';
+    const towerSecondaryColorDarkened = props.tower && props.tower.secondaryColor ? props.tower.secondaryColor : '404040';
+    const mainTextColor = props.tower && props.tower.secondaryColor ? getContrastingTextColor(towerSecondaryColorDarkened) : 'FFFFFF';
+
     let channels = [];
     Array.from(props.tower.channels.values()).sort((a, b) => a.order - b.order).forEach(channel => {
         let displayedName = channel.name;
         // create list element
         channels.push(<li className={'channelIcon' + (channel.id === props.selected ? ' selected' : '')}
                           key={channel.id}
-                          onClick={() => props.onClick(channel.id)}>
+                          onClick={() => props.onClick(channel.id)}
+                          style={channel.id === props.selected ? {backgroundColor: '#'+towerSecondaryColorDefault} : {}}>
             #{displayedName}
         </li>);
     })
@@ -107,7 +114,7 @@ export const TowerDetails = observer(function TowerDetails(props) {
     };
 
     return (
-        <div id='towerDetailsPanel'>
+        <div id='towerDetailsPanel' style={{backgroundColor:'#'+towerSecondaryColorDarkened, color:'#'+mainTextColor}}>
 		
 			<Modal
                 isOpen={isInviteCustomizerOpen}

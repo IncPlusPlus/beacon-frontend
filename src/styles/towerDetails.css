@@ -5,6 +5,7 @@
 	width: 50%;
 	min-width: 15%;
 	margin: 0;
+	transition: 0.1s;
 }
 #towerDetailsPanel .title {
 	background-color:#292929;

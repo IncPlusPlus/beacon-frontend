@@ -20,10 +20,8 @@ export const TowerList = observer(function TowerList(props) {
     const currentAvatarUrl = getAvatarUrl(accountId) || default_avatar;
 
     // Determine color of tower list
-    const selectedTower = Array.from(towers.values()).find(tower => tower.id === props.selectedTowerId);
-    const selectedTowerPrimaryColor = selectedTower ? selectedTower.primaryColor : 'FFD800';
-
-    console.log(selectedTowerPrimaryColor);
+    const selectedTower = towers.get(props.selectedTowerId);
+    const selectedTowerPrimaryColor = selectedTower && selectedTower.primaryColor ? selectedTower.primaryColor : 'FFD800';
 
     return (
         <ol id='towerList'  style={{backgroundColor:'#'+selectedTowerPrimaryColor}}>
