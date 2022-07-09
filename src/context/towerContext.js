@@ -211,14 +211,20 @@ class Towers {
         });
     }
 
-    *updateTowerAppearance(towerId, primaryColor, secondaryColor) {
+    *updateTowerAppearance(towerId, primaryColor, secondaryColor, icon, banner) {
+
+        console.log(icon);
+        console.log(banner);
+
         yield new TowersApi(this.cityConfig(towerId)).editTower({
             towerId: towerId,
-            tower:{
+            tower: {
                 name: this.towers.get(towerId).name,
                 primaryColor: primaryColor,
                 secondaryColor:secondaryColor
-            }
+            },
+            icon: icon,
+            banner: banner
         }).catch(reason => {
             console.log("Error updating tower appearance");
             console.log(reason);

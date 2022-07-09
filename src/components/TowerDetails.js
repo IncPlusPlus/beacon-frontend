@@ -23,6 +23,9 @@ export const TowerDetails = observer(function TowerDetails(props) {
     const primaryColorSelector = useRef();
     const secondaryColorSelector = useRef();
 
+    const iconSelector = useRef();
+    const bannerSelector = useRef();
+
     const INVITE_INACTIVE = 0;
     const INVITE_WAITING = 1;
     const INVITE_COPIED = 2;
@@ -61,7 +64,7 @@ export const TowerDetails = observer(function TowerDetails(props) {
     ];
 
     // Get colors
-    const towerPrimaryColor = props.tower && props.tower.primaryColor ? props.tower.primaryColor : 'a7942d';
+    //const towerPrimaryColor = props.tower && props.tower.primaryColor ? props.tower.primaryColor : 'a7942d';
     const towerSecondaryColorDefault = props.tower && props.tower.secondaryColor ? darkenHex(props.tower.secondaryColor) : '5e5d59';
     const towerSecondaryColorDarkened = props.tower && props.tower.secondaryColor ? props.tower.secondaryColor : '404040';
     const mainTextColor = props.tower && props.tower.secondaryColor ? getContrastingTextColor(towerSecondaryColorDarkened) : 'FFFFFF';
@@ -103,6 +106,7 @@ export const TowerDetails = observer(function TowerDetails(props) {
             })
     };
 
+
     // Call this to apply the current colors picked in 
     const applyNewAppearance = () => {
 
@@ -110,8 +114,11 @@ export const TowerDetails = observer(function TowerDetails(props) {
         const primaryColor = primaryColorSelector.current.value.substring(1);
         const seconaryColor = secondaryColorSelector.current.value.substring(1);
 
+        const icon = iconSelector.current.files[0];
+        const banner = bannerSelector.current.files[0];
+
         // Send request
-        updateTowerAppearance(props.tower.id,primaryColor,seconaryColor);
+        updateTowerAppearance(props.tower.id,primaryColor,seconaryColor,icon,banner);
 
         // Close ui
         setIsAppearanceCustomizerOpen(false);
@@ -173,11 +180,13 @@ export const TowerDetails = observer(function TowerDetails(props) {
                     </div>
 
                     <div>
-                        Choose Icon
+                        Update icon
+                        <input ref={iconSelector} type='file' accept='image/png'/>
                     </div>
 
                     <div>
-                        Choose Banner
+                        Update banner
+                        <input ref={bannerSelector} type='file' accept='image/png'/>
                     </div>
 
                 </div>
