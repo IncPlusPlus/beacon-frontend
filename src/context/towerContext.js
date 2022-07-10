@@ -211,17 +211,17 @@ class Towers {
         });
     }
 
-    *updateTowerAppearance(towerId, primaryColor, secondaryColor, icon, banner) {
+    *updateTowerAppearance(towerId, name, primaryColor, secondaryColor, icon, banner) {
 
-        console.log(icon);
-        console.log(banner);
+        const existingTower = this.towers.get(towerId);
 
         yield new TowersApi(this.cityConfig(towerId)).editTower({
             towerId: towerId,
             tower: {
-                name: this.towers.get(towerId).name,
+                name: name,
                 primaryColor: primaryColor,
-                secondaryColor:secondaryColor
+                secondaryColor:secondaryColor,
+                adminAccountId: existingTower.adminAccountId
             },
             icon: icon,
             banner: banner
