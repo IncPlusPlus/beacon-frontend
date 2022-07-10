@@ -18,15 +18,27 @@
 	margin-bottom: 1em;
 }
 
-#banner {
+#bannerContainer {
+	width: 100%;
+	height: 6em;
+	overflow-y: hidden;
 	position: relative;
+
+	transition: 0.2s;
 }
 
-#banner::after {
+#banner {
+	position: relative;
+	width: 100%;
+	height: auto;
+}
+
+#bannerContainer::after {
 	content: '';
 	position: absolute;
-	left: 0; top: 0;
-	width: 100%; height: 100%;
+	left: 0;
+	bottom: 0;
+	width: 100%; height: 40%;
 	background: linear-gradient(#FFFFFF00,#292929);
 }
 

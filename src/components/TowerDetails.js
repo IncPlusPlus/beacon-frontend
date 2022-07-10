@@ -124,7 +124,9 @@ export const TowerDetails = observer(function TowerDetails(props) {
         updateTowerAppearance(props.tower.id,name,primaryColor,seconaryColor,icon,banner);
 
         // Close ui
-        setIsAppearanceCustomizerOpen(false);
+        setIsAppearanceCustomizerOpen(false).finally(() => {
+            window.location.reload();
+        });
     };
 
     return (
@@ -205,7 +207,7 @@ export const TowerDetails = observer(function TowerDetails(props) {
 
             </Modal>
 		
-            {props.tower.bannerUrl && <img id='banner' src={props.tower.bannerUrl} alt='Tower Banner'/>}
+            <div id='bannerContainer' style={{height: props.tower.bannerUrl ? '6em' : 0}}>{props.tower.bannerUrl && <img id='banner' src={props.tower.bannerUrl} alt='Tower Banner'/>}</div>
 
             <div className='title'>
                 <h2>{props.tower.name}</h2>
