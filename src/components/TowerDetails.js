@@ -120,11 +120,11 @@ export const TowerDetails = observer(function TowerDetails(props) {
 
         const name = towerNameInput.current.value;
 
-        // Send request
-        updateTowerAppearance(props.tower.id,name,primaryColor,seconaryColor,icon,banner);
-
         // Close ui
-        setIsAppearanceCustomizerOpen(false).finally(() => {
+        setIsAppearanceCustomizerOpen(false);
+
+        // Send request
+        updateTowerAppearance(props.tower.id,name,primaryColor,seconaryColor,icon,banner).finally(() => {
             window.location.reload();
         });
     };
