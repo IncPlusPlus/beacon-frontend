@@ -17,6 +17,8 @@ export const Towers = observer((props) => {
 
     let navigate = useNavigate();
 
+    const DEFAULT_CITY_URL = "https://beacon-city-main-staging.herokuapp.com";
+
     return (
         <div className='appContainer'>
 
@@ -53,7 +55,9 @@ export const Towers = observer((props) => {
                 <input className='smallTextInput' type='text' ref={towerCityUrlInputField} placeholder="Optional: Enter City URL to host from"/>
                 <div>
                     <button onClick={() => {
-                        createTower(towerNameInputField.current.value,towerCityUrlInputField.current.value);
+                        const url = towerCityUrlInputField.current.value.length === 0 ? DEFAULT_CITY_URL : towerCityUrlInputField.current.value;
+                        createTower(towerNameInputField.current.value,url);
+                        window.location.reload();
                         setJoinTowerModalOpen(false);
                     }}>Create</button>
                 </div>
