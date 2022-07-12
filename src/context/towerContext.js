@@ -1,6 +1,6 @@
 import { createContext, useContext } from "react";
 import { makeAutoObservable, observable } from "mobx";
-import { ChannelsApi, Configuration as CityConfiguration, CreateInviteExpiryTimeUnitEnum, InvitesApi, TowersApi, UsersApi } from "beacon-city";
+import { ChannelsApi, Configuration as CityConfiguration, InvitesApi, TowersApi, UsersApi } from "beacon-city";
 import { ObservableTower } from "../observables/ObservableTower";
 import { SignInContext } from "./signInContext";
 import {
