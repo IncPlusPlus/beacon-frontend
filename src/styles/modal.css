@@ -4,7 +4,7 @@
         opacity: 0;
     }
     to {
-        transform: translateY(0);
+        transform: translateY(-50%);
         opacity: 1;
     }
 }
@@ -15,10 +15,13 @@
 
     position: absolute;
     
-    top: 30%;
     left: 30%;
     right: 30%;
-    bottom: 30%;
+
+    top: 50%;
+    transform: translateY(-50%);
+
+    height: max-content;
 
     padding: 2em;
     border-radius: 1em;

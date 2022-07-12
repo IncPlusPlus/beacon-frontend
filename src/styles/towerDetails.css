@@ -5,6 +5,7 @@
 	width: 50%;
 	min-width: 15%;
 	margin: 0;
+	transition: 0.1s;
 }
 #towerDetailsPanel .title {
 	background-color:#292929;
@@ -17,19 +18,55 @@
 	margin-bottom: 1em;
 }
 
-#inviteButton {
+#bannerContainer {
+	width: 100%;
+	height: 6em;
+	overflow-y: hidden;
+	position: relative;
+
+	transition: 0.2s;
+}
+
+#banner {
+	position: relative;
+	width: 100%;
+	height: auto;
+}
+
+#bannerContainer::after {
+	content: '';
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 100%; height: 40%;
+	background: linear-gradient(#FFFFFF00,#292929);
+}
+
+#towerControls {
+	display: flex;
+}
+
+.towerControlButton {
 	background-color: #54524A;
 	color:#cac7bb;
 	padding: 0.25em;
 	border-radius: 0.5em;
 	font-weight: bold;
 
+	margin: 0 0.25em;
+
 	overflow: hidden;
 	height: 1.5em;
 }
-#inviteButton:hover {
+
+.towerControlButton:hover {
 	color:white;
 	cursor:pointer;
+}
+
+#inviteButton {
+	overflow: hidden;
+	flex-grow: 2;
 }
 #inviteButtonText {
 	line-height: 1.5em;
@@ -60,4 +97,11 @@
 	width: 100%;
 
 	border-radius: 1em 0 0 1em;
+}
+
+#customizer {
+	display: grid;
+	grid-template-columns: auto auto;
+	grid-template-rows: auto auto;
+	grid-gap: 1.5em;
 }
