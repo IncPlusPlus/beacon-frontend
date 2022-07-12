@@ -5,6 +5,7 @@ import { observer } from "mobx-react-lite";
 import { get } from "mobx";
 import { useParams } from 'react-router-dom';
 import { useEffectOnce } from 'react-use';
+import { darkenHex, getContrastingTextColor } from '../util/colorHelper';
 
 export const MessagePane = observer(function MessagePane(props) {
 
@@ -18,6 +19,10 @@ export const MessagePane = observer(function MessagePane(props) {
     const channelInitialized = tower.channels.get(channelId) !== undefined;
 
     const messageList = useRef(null);
+
+    const towerPrimaryColor = (tower && tower.primaryColor) ? darkenHex(tower.primaryColor) : 'a7942d';
+    const towerSecondaryColor = (tower && tower.secondaryColor) ? darkenHex(tower.secondaryColor) : '5e5d59';
+    const mainTextColor = (tower && tower.secondaryColor) ? getContrastingTextColor(towerSecondaryColor) : 'FFFFFF';
 
     // Used to determine whether or not we've scrolled to the bottom of the page
     const scrollHandler = (event) => {
@@ -68,9 +73,9 @@ export const MessagePane = observer(function MessagePane(props) {
     }, [channelId, channelInitialized, tower.channels, towerId]);
 
     return (
-        <div id='channelPane'>
-            <h3 id='messageChannelTitle'>#{channelName}</h3>
-            <ol id='messagePane' ref={messageList} onScroll={scrollHandler}>
+        <div id='channelPane' style={{backgroundColor:'#'+towerSecondaryColor,color:'#'+mainTextColor}}>
+            <h3 id='messageChannelTitle' style={{backgroundColor:'#'+towerPrimaryColor}}>#{channelName}</h3>
+            <ol id='messagePane' ref={messageList} onScroll={scrollHandler} style={{backgroundColor:'#'+towerSecondaryColor}}>
                 {
                     props.messages ? Array.from(props.messages.values()).map(
                         (msg, index, arr) => <Message key={msg.id} message={msg} minimal={index > 0 && arr[index-1].senderId === msg.senderId} />

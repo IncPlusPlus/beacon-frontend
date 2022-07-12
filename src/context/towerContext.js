@@ -119,7 +119,7 @@ class Towers {
             for (const memberTower of towersFromThisCity) {
                 // If this tower is not present in our Map, we should add it!
                 if (!this.towers.has(memberTower.id)) {
-                    this.towers.set(memberTower.id, new ObservableTower(this.cityConfig, memberTower.id, city.id, memberTower.name, memberTower.adminAccountId, memberTower.moderatorAccountIds, memberTower.memberAccountIds));
+                    this.towers.set(memberTower.id, new ObservableTower(this.cityConfig, memberTower.id, city.id, memberTower.name, memberTower.adminAccountId, memberTower.moderatorAccountIds, memberTower.memberAccountIds, memberTower.primaryColor, memberTower.secondaryColor, memberTower.iconUrl, memberTower.bannerUrl));
                 }
             }
         }
@@ -228,6 +228,31 @@ class Towers {
             channel: {name: newChannelName}
         }).catch(reason => {
             console.log("Error creating new channel");
+            console.log(reason);
+            if (reason instanceof Response) {
+                reason.json().then(value => {
+                    console.log(value);
+                });
+            }
+        });
+    }
+
+    *updateTowerAppearance(towerId, name, primaryColor, secondaryColor, icon, banner) {
+
+        const existingTower = this.towers.get(towerId);
+
+        yield new TowersApi(this.cityConfig(towerId)).editTower({
+            towerId: towerId,
+            tower: {
+                name: name,
+                primaryColor: primaryColor,
+                secondaryColor:secondaryColor,
+                adminAccountId: existingTower.adminAccountId
+            },
+            icon: icon,
+            banner: banner
+        }).catch(reason => {
+            console.log("Error updating tower appearance");
             console.log(reason);
             if (reason instanceof Response) {
                 reason.json().then(value => {
