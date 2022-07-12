@@ -1,16 +1,23 @@
 import React, {useContext} from 'react';
-import default_avatar from '../assets/default-avatar.png';
 import {observer} from "mobx-react-lite";
 import {TowerContext} from "../context/towerContext";
 import {useEffectOnce} from "react-use";
 import {TowerListElement} from "./TowerListElement";
+import {SignInContext} from '../context/signInContext';
+import {UserContext} from '../context/userContext';
+import default_avatar from "../assets/default-avatar.png";
 
 export const TowerList = observer(function TowerList(props) {
     const {towers, updateTowers} = useContext(TowerContext);
 
+    const {accountId} = useContext(SignInContext);
+    const {getAvatarUrl} = useContext(UserContext);
+
     // Update the towers ONCE upon mounting this component. We should make a better system for determining when to
     // update the Towers list at some point.
     useEffectOnce(() => updateTowers());
+
+    const currentAvatarUrl = getAvatarUrl(accountId) || default_avatar;
 
     return (
         <ol id='towerList'>
@@ -18,7 +25,7 @@ export const TowerList = observer(function TowerList(props) {
             <li className={'towerIcon' + (props.selected === "USER" ? ' selected' : '')}
                 key='USER'
                 onClick={() => props.onUserIconSelected()}>
-                <img src={default_avatar} alt="Your Profile"/>
+                <img src={currentAvatarUrl} alt="Your Profile"/>
             </li>
             <hr/>
 
