@@ -115,8 +115,11 @@ export const TowerDetails = observer(function TowerDetails(props) {
         const primaryColor = primaryColorSelector.current.value.substring(1);
         const seconaryColor = secondaryColorSelector.current.value.substring(1);
 
-        const icon = iconSelector.current.files[0];
-        const banner = bannerSelector.current.files[0];
+        const icon = iconSelector.current.files.clear ? new Blob([]) : iconSelector.current.files[0];
+        const banner = bannerSelector.current.files.clear ? new Blob([]) :  bannerSelector.current.files[0];
+
+        iconSelector.current.files.clear = false;
+        bannerSelector.current.files.clear = false;
 
         const name = towerNameInput.current.value;
 
@@ -192,11 +195,13 @@ export const TowerDetails = observer(function TowerDetails(props) {
                     <div>
                         Update icon
                         <input ref={iconSelector} type='file' accept='image/png'/>
+                        <button onClick={(e) => {iconSelector.current.files.clear=true;}}>Clear Icon</button>
                     </div>
 
                     <div>
                         Update banner
                         <input ref={bannerSelector} type='file' accept='image/png'/>
+                        <button onClick={(e) => {bannerSelector.current.files.clear=true;}}>Clear Banner</button>
                     </div>
 
                 </div>
