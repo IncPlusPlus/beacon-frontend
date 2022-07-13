@@ -4,6 +4,7 @@ import {useParams} from 'react-router-dom';
 import {TowerContext} from "../context/towerContext";
 import {observer} from "mobx-react-lite";
 import {get} from "mobx";
+import { MemberList } from '../components/MemberList';
 
 export const Messages = observer(function Messages(props) {
     let {channelId, towerId} = useParams();
@@ -26,6 +27,9 @@ export const Messages = observer(function Messages(props) {
         }
     }, [channelId, channelInitialized, tower.channels, towerId]);
 
-    return <MessagePane
-        messages={(towerId !== "" && channelId !== "") ? towers.get(towerId).channels.get(channelId)?.messages : []}/>;
+    return <>
+        <MessagePane
+            messages={(towerId !== "" && channelId !== "") ? towers.get(towerId).channels.get(channelId)?.messages : []}/>
+        <MemberList tower={tower}/>
+    </>;
 });

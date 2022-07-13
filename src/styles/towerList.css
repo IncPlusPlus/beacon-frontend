@@ -4,6 +4,13 @@
 	list-style: none;
 	margin: 0;
 	transition: 0.1s;
+
+	min-width: 5em;
+
+	overflow-y: auto;
+	overflow-x: hidden;
+
+	scrollbar-width: thin;
 }
 #towerList hr {
 	margin: 0 0.5em;
@@ -12,15 +19,15 @@
 
 .towerIcon {
 	margin: 1em 0.5em;
-	width: 72px;
-	height: 72px;
+	width: 4em;
+	height: 4em;
 	background-color: #404040;
 
 	text-align: center;
 
 	overflow: hidden;
 
-	border-radius: 72px;
+	border-radius: 4em;
 	transition: 0.1s;
 }
 .towerIcon:hover {
@@ -33,7 +40,7 @@
 	border-radius: 20px;
 }
 .towerIcon span {
-	height: 72px;
+	height: 4em;
 	display: table-cell;
 	vertical-align: middle;
 	color:white;

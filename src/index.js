@@ -16,6 +16,7 @@ import './styles/towerDetails.css';
 import './styles/messaging.css';
 import './styles/userInfo.css';
 import './styles/modal.css';
+import './styles/memberlist.css';
 
 Modal.setAppElement('#root');
 
