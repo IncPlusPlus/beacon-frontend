@@ -92,6 +92,13 @@ class Towers {
     }
 
     /**
+     * Get the default URL towers should be created on
+     */
+    defaultCityUrl() {
+        return 'https://beacon-city-main-staging.herokuapp.com';
+    }
+
+    /**
      * Update the towers object to contain only the towers this user is a member of. Dispatch this flow when the app
      * starts and any other applicable time (such as after attempting to join, leave, or create a server)
      */
@@ -143,7 +150,7 @@ class Towers {
 
     /**
      * Join a new tower based on the user id
-     * This will not update the tower list odTtwnfT
+     * This will not update the tower list
      */
     * joinTower(code) {
         const context = this;
@@ -184,6 +191,25 @@ class Towers {
         // Something went wrong getting invite info
         }).catch(reason => {
             console.log("Error getting invite info from CIS");
+            console.log(reason);
+            if (reason instanceof Response) {
+                reason.json().then(value => {
+                    console.log(value);
+                });
+            }
+        });
+    }
+
+    /**
+     * Create a new tower on a given city
+     */
+    * createTower(name, cityUrl) {
+        yield new TowersApi(this.cityConfigKnownUrl(cityUrl)).createTower({
+            tower: {
+                name: name
+            }
+        }).catch(reason => {
+            console.log("Error creating new tower");
             console.log(reason);
             if (reason instanceof Response) {
                 reason.json().then(value => {
