@@ -1,0 +1,40 @@
+#memberList {
+	list-style: none;
+	color: white;
+	font-weight: bold;
+
+	margin: 0;
+	padding: 1em;
+
+	min-width: 18em;
+	width: max-content;
+
+	box-sizing: border-box;
+
+	overflow-y: scroll;
+	overflow-x: hidden;
+	scrollbar-width: thin;
+}
+
+#memberList ol {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+#memberList li {
+	display: table;
+	margin-bottom: 0.2em;
+}
+
+#memberList li span {
+	vertical-align: middle;
+	display: table-cell;
+}
+
+#memberList li img {
+	max-width: 2.5em;
+	max-height: 2.5em;
+	border-radius: 4em;
+	margin-right: 0.5em;
+}
