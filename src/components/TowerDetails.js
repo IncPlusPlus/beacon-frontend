@@ -212,7 +212,7 @@ export const TowerDetails = observer(function TowerDetails(props) {
 
             </Modal>
 		
-            <div id='bannerContainer' style={{height: props.tower.bannerUrl ? '6em' : 0}}>{props.tower.bannerUrl && <img id='banner' src={props.tower.bannerUrl} alt='Tower Banner'/>}</div>
+            <div id='bannerContainer' style={{height: props.tower.bannerUrl ? '10em' : 0}}>{props.tower.bannerUrl && <img id='banner' src={props.tower.bannerUrl} alt='Tower Banner'/>}</div>
 
             <div className='title'>
                 <h2>{props.tower.name}</h2>

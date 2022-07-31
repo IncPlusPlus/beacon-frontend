@@ -56,9 +56,10 @@ export const Towers = observer((props) => {
                 <div>
                     <button onClick={() => {
                         const url = towerCityUrlInputField.current.value.length === 0 ? DEFAULT_CITY_URL : towerCityUrlInputField.current.value;
-                        createTower(towerNameInputField.current.value,url);
-                        window.location.reload();
-                        setJoinTowerModalOpen(false);
+                        createTower(towerNameInputField.current.value,url).then(() => {
+                            window.location.reload();
+                            setJoinTowerModalOpen(false);
+                        })
                     }}>Create</button>
                 </div>
 
